@@ -4,140 +4,14 @@ import com.company.digisavingscore.dto.request.TransactionRequest;
 import com.company.digisavingscore.dto.response.AccountDetailsResponse;
 import com.company.digisavingscore.dto.response.TransactionHistoryResponse;
 import com.company.digisavingscore.dto.response.TransactionResponse;
-import com.company.digisavingscore.entity.AccountTransaction;
-import com.company.digisavingscore.entity.SavingsAccount;
-import com.company.digisavingscore.entity.enums.TransactionType;
-import com.company.digisavingscore.entity.enums.AccountStatus;
-import com.company.digisavingscore.exception.AccountInactiveException;
-import com.company.digisavingscore.exception.BusinessRuleViolationException;
-import com.company.digisavingscore.exception.InsufficientBalanceException;
-import com.company.digisavingscore.exception.ResourceNotFoundException;
-import com.company.digisavingscore.mapper.TransactionMapper;
-import com.company.digisavingscore.repository.SavingsAccountRepository;
-import com.company.digisavingscore.repository.AccountTransactionRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
+public interface IAccountService {
 
-@Service
-@RequiredArgsConstructor
-@Transactional
-public class IAccountService implements AccountService {
+    AccountDetailsResponse getAccountDetails(Long accountId);
 
-    private final SavingsAccountRepository savingsAccountRepository;
-    private final AccountTransactionRepository accountTransactionRepository;
-    private final TransactionMapper transactionMapper;
+    TransactionResponse deposit(TransactionRequest request);
 
-    @Override
-    @Transactional(readOnly = true)
-    public AccountDetailsResponse getAccountDetails(Long accountId) {
+    TransactionResponse withdraw(TransactionRequest request);
 
-        SavingsAccount account = getAccountOrThrow(accountId);
-
-        return AccountDetailsResponse.builder()
-                .accountId(account.getId())
-                .accountNumber(account.getAccountNumber())
-                .accountHolderName(account.getCustomer().getFullName())
-                .balance(account.getBalance())
-                .status(account.getStatus())
-                .build();
-    }
-
-    @Override
-    public TransactionResponse deposit(TransactionRequest request) {
-
-        SavingsAccount account = getActiveAccount(request.getAccountId());
-        BigDecimal amount = validateAmount(request.getAmount());
-
-        account.setBalance(account.getBalance().add(amount));
-        savingsAccountRepository.save(account);
-
-        AccountTransaction transaction = saveTransaction(
-                account,
-                TransactionType.DEPOSIT,
-                amount,
-                request.getDescription()
-        );
-        return transactionMapper.toResponse(transaction, "Deposit successful for accountId: " + request.getAccountId() + ", deposited: " + amount);
-    }
-
-    @Override
-    public TransactionResponse withdraw(TransactionRequest request) {
-
-        SavingsAccount account = getActiveAccount(request.getAccountId());
-        BigDecimal amount = validateAmount(request.getAmount());
-
-        if (account.getBalance().compareTo(amount) < 0) {
-            throw new InsufficientBalanceException();
-        }
-
-        account.setBalance(account.getBalance().subtract(amount));
-        savingsAccountRepository.save(account);
-
-        AccountTransaction transaction = saveTransaction(
-                account,
-                TransactionType.WITHDRAWAL,
-                amount,
-                request.getDescription()
-        );
-        return transactionMapper.toResponse(transaction, "Withdrawal successful for accountId: " + request.getAccountId() + ", withdrawn: " + amount);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public TransactionHistoryResponse getTransactionHistory(Long accountId) {
-
-        getAccountOrThrow(accountId);
-        List<AccountTransaction> transactions = accountTransactionRepository.findByAccountIdOrderByTransactionDateDesc(accountId);
-
-        return transactionMapper.toHistoryResponse(
-                accountId,
-                transactionMapper.toHistoryItems(transactions)
-        );
-    }
-
-    private SavingsAccount getAccountOrThrow(Long accountId) {
-        return savingsAccountRepository.findById(accountId)
-                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));
-    }
-
-    private SavingsAccount getActiveAccount(Long accountId) {
-        SavingsAccount account = savingsAccountRepository.findById(accountId)
-                .orElseThrow(() -> new ResourceNotFoundException("Account not found with id: " + accountId));
-
-        if (account.getStatus() != AccountStatus.ACTIVE) {
-            throw new AccountInactiveException();
-        }
-
-        return account;
-    }
-
-    private BigDecimal validateAmount(BigDecimal amount) {
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new BusinessRuleViolationException("Requesting amount must be greater than zero");
-        }
-
-        return amount;
-    }
-
-    private AccountTransaction saveTransaction(
-            SavingsAccount account,
-            TransactionType type,
-            BigDecimal amount,
-            String description
-    ) {
-        AccountTransaction tx = AccountTransaction.builder()
-                .account(account)
-                .transactionType(type)
-                .amount(amount)
-                .transactionDate(LocalDateTime.now())
-                .description(description)
-                .build();
-
-        return accountTransactionRepository.save(tx);
-    }
+    TransactionHistoryResponse getTransactionHistory(Long accountId);
 }
