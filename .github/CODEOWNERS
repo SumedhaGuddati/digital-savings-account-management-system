@@ -1,0 +1,5 @@
+# CODEOWNERS file
+# Any change in the repository will require review from the code owner(s)
+
+# Entire repository is responsibility of team-lead for merging PR's and reviewing PR's.
+* @ChandanKhamitkar

@@ -23,4 +23,5 @@ public class SavingsAccountResponse {
     private AccountStatus status;
     private BigDecimal interestRate;
     private LocalDate openedDate;
+    private String message;
 }
