@@ -23,7 +23,7 @@ public class SavingsAccount {
     @Column(name = "account_number", unique = true, nullable = false, length = 30)
     private String accountNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

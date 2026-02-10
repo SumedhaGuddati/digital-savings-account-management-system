@@ -8,7 +8,6 @@ import com.company.digisavingscore.entity.SavingsAccount;
 import com.company.digisavingscore.entity.enums.AccountStatus;
 import com.company.digisavingscore.entity.enums.ApplicationStatus;
 import com.company.digisavingscore.exception.ResourceNotFoundException;
-import com.company.digisavingscore.repository.AccountApplicationRepository;
 import com.company.digisavingscore.repository.SavingsAccountRepository;
 import com.company.digisavingscore.service.IAdminAccountService;
 import lombok.RequiredArgsConstructor;
