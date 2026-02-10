@@ -1,4 +1,4 @@
-package com.company.digisavingscore.service.impl;
+package com.company.digisavingscore.service;
 
 import com.company.digisavingscore.dto.request.AccountApprovalRequest;
 import com.company.digisavingscore.dto.response.SavingsAccountResponse;
@@ -8,10 +8,10 @@ import com.company.digisavingscore.entity.SavingsAccount;
 import com.company.digisavingscore.entity.enums.AccountStatus;
 import com.company.digisavingscore.entity.enums.ApplicationStatus;
 import com.company.digisavingscore.exception.ResourceNotFoundException;
+import com.company.digisavingscore.repository.AccountApplicationRepository;
 import com.company.digisavingscore.repository.SavingsAccountRepository;
-import com.company.digisavingscore.service.IAdminAccountService;
 import lombok.RequiredArgsConstructor;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,12 +22,11 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class AdminAccountService implements IAdminAccountService {
-
-    private static final Logger log = Logger.getLogger(AdminAccountService.class);
 
     private final AccountApplicationRepository applicationRepository;
     private final SavingsAccountRepository savingsAccountRepository;
@@ -56,7 +55,7 @@ public class AdminAccountService implements IAdminAccountService {
 
         app.setStatus(ApplicationStatus.APPROVED);
         app.setReviewedBy(admin);
-        app.setReviewDate(LocalDate.now());
+        app.setReviewDate(LocalDateTime.now());
 
         SavingsAccount account = SavingsAccount.builder()
                 .accountNumber("SAV-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase())
@@ -64,13 +63,10 @@ public class AdminAccountService implements IAdminAccountService {
                 .balance(BigDecimal.ZERO)
                 .status(AccountStatus.ACTIVE)
                 .openedDate(LocalDate.now())
-                .accountApplication(app)
-                .createdBy(admin)
-                .createdDate(LocalDateTime.now())
                 .build();
 
         SavingsAccount savedAccount = savingsAccountRepository.save(account);
-        log.info("Account created successfully: " + savedAccount.getAccountNumber());
+        log.info("Account created successfully: {}", savedAccount.getAccountNumber());
 
         return mapToAccountResponse(savedAccount, "Account successfully created");
     }
@@ -80,10 +76,10 @@ public class AdminAccountService implements IAdminAccountService {
         AccountApplication app = findPendingApp(id);
         app.setStatus(ApplicationStatus.REJECTED);
         app.setReviewedBy(admin);
-        app.setReviewDate(LocalDate.now());
+        app.setReviewDate(LocalDateTime.now());
         applicationRepository.save(app);
 
-        log.info("Application rejected: " + id + " by " + admin);
+        log.info("Application rejected: {} by {}", id, admin);
 
         return SavingsAccountResponse.builder()
                 .status(AccountStatus.CLOSED)
@@ -92,11 +88,11 @@ public class AdminAccountService implements IAdminAccountService {
     }
 
     @Override
-    public SavingsAccountResponse processApplication(Long id, AccountApprovalRequest req, String admin) {
-        String decision = req.getDecision().toUpperCase();
+    public SavingsAccountResponse processApplication(Long applicationId, AccountApprovalRequest request, String adminUsername) {
+        String decision = request.getDecision().toUpperCase();
         return switch (decision) {
-            case "APPROVE" -> approveApplication(id, req, admin);
-            case "REJECT" -> rejectApplication(id, req, admin);
+            case "APPROVE" -> approveApplication(applicationId, request, adminUsername);
+            case "REJECT" -> rejectApplication(applicationId, request, adminUsername);
             default -> throw new IllegalArgumentException("Invalid Decision: " + decision);
         };
     }
@@ -122,9 +118,8 @@ public class AdminAccountService implements IAdminAccountService {
         SavingsAccount acc = savingsAccountRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Account Not Found"));
         acc.setStatus(status);
-        acc.setUpdatedDate(LocalDateTime.now());
         SavingsAccount saved = savingsAccountRepository.save(acc);
-        log.info("Updated account status for " + id + " to " + status);
+        log.info("Updated account status for {} to {}", id, status);
         return mapToAccountResponse(saved, "Status updated to " + status);
     }
 

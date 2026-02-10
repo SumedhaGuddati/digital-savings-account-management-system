@@ -3,7 +3,7 @@ package com.company.digisavingscore.controller.auth;
 import com.company.digisavingscore.dto.request.LoginRequest;
 import com.company.digisavingscore.dto.request.SignupRequest;
 import com.company.digisavingscore.dto.response.auth.AuthResponse;
-import com.company.digisavingscore.service.impl.auth.IAuthService;
+import com.company.digisavingscore.service.auth.IAuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
