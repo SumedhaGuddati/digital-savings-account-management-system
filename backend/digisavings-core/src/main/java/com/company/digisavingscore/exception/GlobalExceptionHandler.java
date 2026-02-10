@@ -25,4 +25,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ApiError(ex.getMessage()));
     }
+
+    @ExceptionHandler(org.springframework.web.bind.method.annotation.MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiError> handleValidationErrors(org.springframework.web.bind.MethodArgumentNotValidException ex) {
+        String message = ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiError(message));
+    }
 }
