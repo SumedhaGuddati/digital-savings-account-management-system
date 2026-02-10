@@ -14,7 +14,7 @@ public class AccountApplicationMapper {
 
         AccountApplicationResponse response = new AccountApplicationResponse();
         response.setId(entity.getId());
-        response.setAccountType(entity.getAccountType());
+        response.setAccountType(entity.getAccountType().name());
         response.setApplicationDate(entity.getApplicationDate());
         response.setStatus(entity.getStatus().name());
 

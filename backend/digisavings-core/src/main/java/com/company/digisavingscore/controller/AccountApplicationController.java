@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AccountApplicationController {
 
-    private final AccountApplicationService service;
+    private final IAccountApplicationService service;
 
     @PostMapping("/apply")
     public ResponseEntity<AccountApplicationResponse> apply(@Valid @RequestBody AccountApplicationRequest request) {
@@ -23,10 +23,11 @@ public class AccountApplicationController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/application/status/{userId}")
-    public ResponseEntity<AccountApplicationResponse> getApplicationStatus(@PathVariable Long userId) {
+    @GetMapping("/application/status") // Path parameter removed for security
+    public ResponseEntity<AccountApplicationResponse> getApplicationStatus(Authentication authentication) {
+        Long userId = Long.parseLong(authentication.getName());
+
         AccountApplicationResponse response = service.getApplicationStatus(userId);
-        // Returns 200 OK
         return ResponseEntity.ok(response);
     }
 }

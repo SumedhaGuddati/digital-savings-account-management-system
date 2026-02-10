@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class AccountApplicationServiceImpl implements AccountApplicationService {
+public class AccountApplicationService implements AccountApplicationService {
 
     private final AccountApplicationRepository repository;
     private final AccountApplicationMapper mapper;
@@ -34,8 +34,8 @@ public class AccountApplicationServiceImpl implements AccountApplicationService 
         AccountApplication entity = new AccountApplication();
         entity.setUserId(request.getUserId());
         entity.setAccountType(request.getAccountType());
-        entity.setApplicationDate(LocalDate.now()); // Set automatically as per Module 2 rules
-        entity.setStatus(ApplicationStatus.PENDING); // Default status as per checklist
+        entity.setApplicationDate(LocalDate.now());
+        entity.setStatus(ApplicationStatus.PENDING);
 
         AccountApplication saved = repository.save(entity);
         log.info("Application saved with ID: {}", saved.getId());

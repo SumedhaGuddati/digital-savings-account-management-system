@@ -10,5 +10,5 @@ public class AccountApplicationRequest {
     private Long userId;
 
     @NotBlank(message = "Account type cannot be blank")
-    private String accountType; // Should be "SAVINGS"
+    private AccountType accountType; // Should be "SAVINGS"
 }
