@@ -7,11 +7,11 @@ import com.company.digisavingscore.dto.response.TransactionResponse;
 
 public interface IAccountService {
 
-    AccountDetailsResponse getAccountDetails(Long accountId);
+    AccountDetailsResponse getAccountDetails();
 
     TransactionResponse deposit(TransactionRequest request);
 
     TransactionResponse withdraw(TransactionRequest request);
 
-    TransactionHistoryResponse getTransactionHistory(Long accountId);
+    TransactionHistoryResponse getTransactionHistory();
 }

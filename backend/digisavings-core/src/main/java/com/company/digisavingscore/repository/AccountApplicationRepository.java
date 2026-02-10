@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccountApplicationRepository extends JpaRepository<AccountApplication, Long> {
-    // Used to check if user already has an application
     Optional<AccountApplication> findByUserId(Long userId);
 
     List<AccountApplication> findByStatus(ApplicationStatus status);
