@@ -2,6 +2,7 @@ package com.company.digisavingscore.controller;
 
 import com.company.digisavingscore.entity.User;
 import com.company.digisavingscore.entity.enums.Role;
+import com.company.digisavingscore.exception.ResourceNotFoundException;
 import com.company.digisavingscore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class AdminController {
     public ResponseEntity<String> promoteUserToAdmin(@PathVariable Long userId) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         user.setRole(Role.ADMIN); // promote to ADMIN
         userRepository.save(user);
