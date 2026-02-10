@@ -1,4 +1,4 @@
-package com.company.digisavingscore.service.impl;
+package com.company.digisavingscore.service;
 
 import com.company.digisavingscore.entity.User;
 import com.company.digisavingscore.entity.enums.Role;

@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -15,8 +15,8 @@ public class AdminApplicationViewResponse {
     private Long applicationId;
     private String applicantName;
     private String applicantEmail;
-    private LocalDate applicationDate;
+    private LocalDateTime applicationDate;
     private String status;
     private String reviewedBy;
-    private LocalDate reviewDate;
+    private LocalDateTime reviewDate;
 }

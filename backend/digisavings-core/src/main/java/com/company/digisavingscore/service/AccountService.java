@@ -48,7 +48,7 @@ public class AccountService implements IAccountService {
         return AccountDetailsResponse.builder()
                 .accountId(account.getId())
                 .accountNumber(account.getAccountNumber())
-                .accountHolderName(account.getCustomer().getFullName())
+                .accountHolderName(account.getUser().getName())
                 .balance(account.getBalance())
                 .status(account.getStatus())
                 .build();

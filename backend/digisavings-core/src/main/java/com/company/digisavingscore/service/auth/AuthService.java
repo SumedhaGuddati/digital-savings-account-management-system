@@ -1,4 +1,4 @@
-package com.company.digisavingscore.service.impl.auth;
+package com.company.digisavingscore.service.auth;
 
 import com.company.digisavingscore.dto.request.LoginRequest;
 import com.company.digisavingscore.dto.request.SignupRequest;

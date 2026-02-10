@@ -3,7 +3,7 @@ package com.company.digisavingscore.controller;
 import com.company.digisavingscore.dto.request.AccountApprovalRequest;
 import com.company.digisavingscore.dto.response.AdminApplicationViewResponse;
 import com.company.digisavingscore.dto.response.SavingsAccountResponse;
-import com.company.digisavingscore.service.impl.IAdminAccountService;
+import com.company.digisavingscore.service.IAdminAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

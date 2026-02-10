@@ -1,6 +1,6 @@
 package com.company.digisavingscore.controller;
 
-import com.company.digisavingscore.service.impl.AdminService;
+import com.company.digisavingscore.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

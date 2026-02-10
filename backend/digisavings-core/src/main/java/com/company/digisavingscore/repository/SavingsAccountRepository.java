@@ -13,4 +13,5 @@ public interface SavingsAccountRepository extends JpaRepository<SavingsAccount, 
     List<SavingsAccount> findByStatus(AccountStatus status);
     Optional<SavingsAccount> findByUser(User user);
     boolean existsByUser(User user);
+
 }
