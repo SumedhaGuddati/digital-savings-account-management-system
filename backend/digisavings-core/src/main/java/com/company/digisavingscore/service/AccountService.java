@@ -40,11 +40,9 @@ public class AccountService implements IAccountService {
     @Override
     @Transactional(readOnly = true)
     public AccountDetailsResponse getAccountDetails() {
-
         SavingsAccount account = getCurrentUserAccount();
 
         log.info("Account details fetched | accountId={}", account.getId());
-
         return AccountDetailsResponse.builder()
                 .accountId(account.getId())
                 .accountNumber(account.getAccountNumber())
@@ -56,10 +54,12 @@ public class AccountService implements IAccountService {
 
     @Override
     public TransactionResponse deposit(TransactionRequest request) {
-        log.info("Deposit request received | accountId={} | amount={}", request.getAccountId(), request.getAmount());
 
-        SavingsAccount account = getActiveAccount(request.getAccountId());
+        SavingsAccount account = getCurrentActiveUserAccount();
         BigDecimal amount = validateAmount(request.getAmount());
+
+        log.info("Deposit request received | accountId={} | amount={}",
+                account.getId(), request.getAmount());
 
         account.setBalance(account.getBalance().add(amount));
         savingsAccountRepository.save(account);
@@ -75,15 +75,16 @@ public class AccountService implements IAccountService {
 
         log.info("Deposit successful | accountId={} | transactionId={} | deposited amount={}", account.getId(), transaction.getId(), amount);
 
-        return transactionMapper.toResponse(transaction, "Deposit successful for accountId: " + request.getAccountId() + ", deposited: " + amount);
+        return transactionMapper.toResponse(transaction, "Deposit successful for accountId: " + account.getId() + ", deposited: " + amount);
     }
 
     @Override
     public TransactionResponse withdraw(TransactionRequest request) {
-        log.info("Withdraw request received | accountId={} | amount={}", request.getAccountId(), request.getAmount());
 
-        SavingsAccount account = getActiveAccount(request.getAccountId());
+        SavingsAccount account = getCurrentActiveUserAccount();
         BigDecimal amount = validateAmount(request.getAmount());
+
+        log.info("Withdraw request received | accountId={} | amount={}", account.getId(), request.getAmount());
 
         if (account.getBalance().compareTo(amount) < 0) {
             log.warn("Withdrawal failed — insufficient balance | accountId={} | balance={} | amount={}",
@@ -105,7 +106,7 @@ public class AccountService implements IAccountService {
 
         log.info("Withdraw successful | accountId={} | transactionId={} | withdrawn amount={}", account.getId(), transaction.getId(), amount);
 
-        return transactionMapper.toResponse(transaction, "Withdrawal successful for accountId: " + request.getAccountId() + ", withdrawn: " + amount);
+        return transactionMapper.toResponse(transaction, "Withdrawal successful for accountId: " + account.getId() + ", withdrawn: " + amount);
     }
 
     @Override
@@ -132,19 +133,11 @@ public class AccountService implements IAccountService {
                 });
     }
 
-    private SavingsAccount getAccountOrThrow(Long accountId) {
-        return savingsAccountRepository.findById(accountId)
-                .orElseThrow(() -> {
-                    log.warn("Account not found | accountId={}", accountId);
-                    return new ResourceNotFoundException("Account not found with id: " + accountId);
-                });
-    }
-
-    private SavingsAccount getActiveAccount(Long accountId) {
-        SavingsAccount account = getAccountOrThrow(accountId);
+    private SavingsAccount getCurrentActiveUserAccount() {
+        SavingsAccount account = getCurrentUserAccount();
 
         if (account.getStatus() != AccountStatus.ACTIVE) {
-            log.warn("Account inactive | accountId={} | status={}", accountId, account.getStatus());
+            log.warn("Account inactive | accountId={} | status={}", account.getId(), account.getStatus());
             throw new AccountInactiveException();
         }
         return account;

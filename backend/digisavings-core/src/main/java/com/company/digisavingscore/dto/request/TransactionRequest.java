@@ -12,9 +12,6 @@ import java.math.BigDecimal;
 @Setter
 public class TransactionRequest {
 
-    @NotNull
-    private Long accountId;
-
     @NotBlank
     private BigDecimal amount;
 
