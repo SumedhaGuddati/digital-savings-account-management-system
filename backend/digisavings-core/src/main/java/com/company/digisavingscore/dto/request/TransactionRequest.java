@@ -2,6 +2,7 @@ package com.company.digisavingscore.dto.request;
 
 import com.company.digisavingscore.entity.enums.TransactionType;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,11 +12,8 @@ import java.math.BigDecimal;
 @Setter
 public class TransactionRequest {
 
-    @NotBlank
+    @NotNull
     private Long accountId;
-
-    @NotBlank
-    private TransactionType transactionType;
 
     @NotBlank
     private BigDecimal amount;

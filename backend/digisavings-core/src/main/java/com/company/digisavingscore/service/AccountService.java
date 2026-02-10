@@ -15,6 +15,7 @@ import com.company.digisavingscore.exception.ResourceNotFoundException;
 import com.company.digisavingscore.mapper.TransactionMapper;
 import com.company.digisavingscore.repository.SavingsAccountRepository;
 import com.company.digisavingscore.repository.AccountTransactionRepository;
+import com.company.digisavingscore.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -38,12 +39,11 @@ public class AccountService implements IAccountService {
 
     @Override
     @Transactional(readOnly = true)
-    public AccountDetailsResponse getAccountDetails(Long accountId) {
-        log.debug("Fetching account details | accountId={}", accountId);
+    public AccountDetailsResponse getAccountDetails() {
 
-        SavingsAccount account = getAccountOrThrow(accountId);
+        SavingsAccount account = getCurrentUserAccount();
 
-        log.info("Account details fetched | accountId={}", accountId);
+        log.info("Account details fetched | accountId={}", account.getId());
 
         return AccountDetailsResponse.builder()
                 .accountId(account.getId())
@@ -110,25 +110,33 @@ public class AccountService implements IAccountService {
 
     @Override
     @Transactional(readOnly = true)
-    public TransactionHistoryResponse getTransactionHistory(Long accountId) {
-        log.debug("Fetching transaction history | accountId={}", accountId);
+    public TransactionHistoryResponse getTransactionHistory() {
+        SavingsAccount account = getCurrentUserAccount();
 
-        getAccountOrThrow(accountId);
-        List<AccountTransaction> transactions = accountTransactionRepository.findByAccountIdOrderByTransactionDateDesc(accountId);
+        List<AccountTransaction> transactions = accountTransactionRepository.findByAccountIdOrderByTransactionDateDesc(account.getId());
 
-        log.info("Transaction history fetched | accountId={} | count={}", accountId, transactions.size());
+        log.info("Transaction history fetched | accountId={} | count={}", account.getId(), transactions.size());
 
         return transactionMapper.toHistoryResponse(
-                accountId,
+                account.getId(),
                 transactionMapper.toHistoryItems(transactions)
         );
+    }
+
+    private SavingsAccount getCurrentUserAccount() {
+        String email = SecurityUtils.getCurrentUserEmail();
+        return savingsAccountRepository.findByUserEmail(email)
+                .orElseThrow(() -> {
+                    log.warn("Account not found for user email={}", email);
+                    return new ResourceNotFoundException("Account not found for current user");
+                });
     }
 
     private SavingsAccount getAccountOrThrow(Long accountId) {
         return savingsAccountRepository.findById(accountId)
                 .orElseThrow(() -> {
                     log.warn("Account not found | accountId={}", accountId);
-                    throw new ResourceNotFoundException("Account not found with id: " + accountId);
+                    return new ResourceNotFoundException("Account not found with id: " + accountId);
                 });
     }
 

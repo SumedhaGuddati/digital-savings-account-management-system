@@ -19,8 +19,7 @@ public class AccountController {
 
     @GetMapping
     public ResponseEntity<AccountDetailsResponse> getMyAccount() {
-        Long accountId = getCurrentUserAccountId();
-        return ResponseEntity.ok(accountService.getAccountDetails(accountId));
+        return ResponseEntity.ok(accountService.getAccountDetails());
     }
 
     @PostMapping("/deposit")
@@ -37,11 +36,6 @@ public class AccountController {
 
     @GetMapping("/transactions")
     public ResponseEntity<TransactionHistoryResponse> getMyTransactions() {
-        return ResponseEntity.ok(accountService.getTransactionHistory(getCurrentUserAccountId()));
-    }
-
-    private Long getCurrentUserAccountId() {
-        // TODO: Replace with auth context
-        return 1L;
+        return ResponseEntity.ok(accountService.getTransactionHistory());
     }
 }
