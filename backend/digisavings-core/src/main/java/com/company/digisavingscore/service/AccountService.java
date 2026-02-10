@@ -15,6 +15,7 @@ import com.company.digisavingscore.exception.ResourceNotFoundException;
 import com.company.digisavingscore.mapper.TransactionMapper;
 import com.company.digisavingscore.repository.SavingsAccountRepository;
 import com.company.digisavingscore.repository.AccountTransactionRepository;
+import com.company.digisavingscore.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -38,13 +39,10 @@ public class AccountService implements IAccountService {
 
     @Override
     @Transactional(readOnly = true)
-    public AccountDetailsResponse getAccountDetails(Long accountId) {
-        log.debug("Fetching account details | accountId={}", accountId);
+    public AccountDetailsResponse getAccountDetails() {
+        SavingsAccount account = getCurrentUserAccount();
 
-        SavingsAccount account = getAccountOrThrow(accountId);
-
-        log.info("Account details fetched | accountId={}", accountId);
-
+        log.info("Account details fetched | accountId={}", account.getId());
         return AccountDetailsResponse.builder()
                 .accountId(account.getId())
                 .accountNumber(account.getAccountNumber())
@@ -56,10 +54,12 @@ public class AccountService implements IAccountService {
 
     @Override
     public TransactionResponse deposit(TransactionRequest request) {
-        log.info("Deposit request received | accountId={} | amount={}", request.getAccountId(), request.getAmount());
 
-        SavingsAccount account = getActiveAccount(request.getAccountId());
+        SavingsAccount account = getCurrentActiveUserAccount();
         BigDecimal amount = validateAmount(request.getAmount());
+
+        log.info("Deposit request received | accountId={} | amount={}",
+                account.getId(), request.getAmount());
 
         account.setBalance(account.getBalance().add(amount));
         savingsAccountRepository.save(account);
@@ -75,15 +75,16 @@ public class AccountService implements IAccountService {
 
         log.info("Deposit successful | accountId={} | transactionId={} | deposited amount={}", account.getId(), transaction.getId(), amount);
 
-        return transactionMapper.toResponse(transaction, "Deposit successful for accountId: " + request.getAccountId() + ", deposited: " + amount);
+        return transactionMapper.toResponse(transaction, "Deposit successful for accountId: " + account.getId() + ", deposited: " + amount);
     }
 
     @Override
     public TransactionResponse withdraw(TransactionRequest request) {
-        log.info("Withdraw request received | accountId={} | amount={}", request.getAccountId(), request.getAmount());
 
-        SavingsAccount account = getActiveAccount(request.getAccountId());
+        SavingsAccount account = getCurrentActiveUserAccount();
         BigDecimal amount = validateAmount(request.getAmount());
+
+        log.info("Withdraw request received | accountId={} | amount={}", account.getId(), request.getAmount());
 
         if (account.getBalance().compareTo(amount) < 0) {
             log.warn("Withdrawal failed — insufficient balance | accountId={} | balance={} | amount={}",
@@ -105,38 +106,38 @@ public class AccountService implements IAccountService {
 
         log.info("Withdraw successful | accountId={} | transactionId={} | withdrawn amount={}", account.getId(), transaction.getId(), amount);
 
-        return transactionMapper.toResponse(transaction, "Withdrawal successful for accountId: " + request.getAccountId() + ", withdrawn: " + amount);
+        return transactionMapper.toResponse(transaction, "Withdrawal successful for accountId: " + account.getId() + ", withdrawn: " + amount);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public TransactionHistoryResponse getTransactionHistory(Long accountId) {
-        log.debug("Fetching transaction history | accountId={}", accountId);
+    public TransactionHistoryResponse getTransactionHistory() {
+        SavingsAccount account = getCurrentUserAccount();
 
-        getAccountOrThrow(accountId);
-        List<AccountTransaction> transactions = accountTransactionRepository.findByAccountIdOrderByTransactionDateDesc(accountId);
+        List<AccountTransaction> transactions = accountTransactionRepository.findByAccountIdOrderByTransactionDateDesc(account.getId());
 
-        log.info("Transaction history fetched | accountId={} | count={}", accountId, transactions.size());
+        log.info("Transaction history fetched | accountId={} | count={}", account.getId(), transactions.size());
 
         return transactionMapper.toHistoryResponse(
-                accountId,
+                account.getId(),
                 transactionMapper.toHistoryItems(transactions)
         );
     }
 
-    private SavingsAccount getAccountOrThrow(Long accountId) {
-        return savingsAccountRepository.findById(accountId)
+    private SavingsAccount getCurrentUserAccount() {
+        String email = SecurityUtils.getCurrentUserEmail();
+        return savingsAccountRepository.findByUserEmail(email)
                 .orElseThrow(() -> {
-                    log.warn("Account not found | accountId={}", accountId);
-                    throw new ResourceNotFoundException("Account not found with id: " + accountId);
+                    log.warn("Account not found for user email={}", email);
+                    return new ResourceNotFoundException("Account not found for current user");
                 });
     }
 
-    private SavingsAccount getActiveAccount(Long accountId) {
-        SavingsAccount account = getAccountOrThrow(accountId);
+    private SavingsAccount getCurrentActiveUserAccount() {
+        SavingsAccount account = getCurrentUserAccount();
 
         if (account.getStatus() != AccountStatus.ACTIVE) {
-            log.warn("Account inactive | accountId={} | status={}", accountId, account.getStatus());
+            log.warn("Account inactive | accountId={} | status={}", account.getId(), account.getStatus());
             throw new AccountInactiveException();
         }
         return account;
