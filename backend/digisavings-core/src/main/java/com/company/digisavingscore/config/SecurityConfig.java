@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll() // login/signup
                         .requestMatchers("/users/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers("/admin/**").hasRole("SUPER_ADMIN")
                         .anyRequest().authenticated()
                 );
 
