@@ -42,9 +42,9 @@ public class SecurityConfig {
                 )
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll() // login/signup
-                        .requestMatchers("/users/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
-                        .requestMatchers("/admin/**").hasRole("SUPER_ADMIN")
+                        .requestMatchers("/api/auth/**").permitAll() // login/signup
+                        .requestMatchers("/api/users/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers("/api/admin/**").hasRole("SUPER_ADMIN")
                         .anyRequest().authenticated()
                 );
 
