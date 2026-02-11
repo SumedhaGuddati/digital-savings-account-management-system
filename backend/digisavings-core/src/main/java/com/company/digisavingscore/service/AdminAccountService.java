@@ -1,13 +1,15 @@
 package com.company.digisavingscore.service;
 
 import com.company.digisavingscore.dto.request.AccountApprovalRequest;
-import com.company.digisavingscore.dto.response.SavingsAccountResponse;
 import com.company.digisavingscore.dto.response.AdminApplicationViewResponse;
+import com.company.digisavingscore.dto.response.SavingsAccountResponse;
 import com.company.digisavingscore.entity.AccountApplication;
 import com.company.digisavingscore.entity.SavingsAccount;
+import com.company.digisavingscore.entity.User;
 import com.company.digisavingscore.entity.enums.AccountStatus;
 import com.company.digisavingscore.entity.enums.ApplicationStatus;
 import com.company.digisavingscore.exception.ResourceNotFoundException;
+import com.company.digisavingscore.mapper.AdminAccountMapper;
 import com.company.digisavingscore.repository.AccountApplicationRepository;
 import com.company.digisavingscore.repository.SavingsAccountRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,129 +32,125 @@ public class AdminAccountService implements IAdminAccountService {
 
     private final AccountApplicationRepository applicationRepository;
     private final SavingsAccountRepository savingsAccountRepository;
+    private final AdminAccountMapper adminAccountMapper;
 
     @Override
     @Transactional(readOnly = true)
     public List<AdminApplicationViewResponse> getPendingApplications() {
-        return getAllApplications(ApplicationStatus.PENDING);
+        log.info("Fetching pending applications");
+
+        List<AccountApplication> applications =
+                applicationRepository.findByStatus(ApplicationStatus.PENDING);
+
+        return applications.stream()
+                .map(adminAccountMapper::toAdminApplicationView)
+                .collect(Collectors.toList());
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<AdminApplicationViewResponse> getAllApplications(ApplicationStatus status) {
-        List<AccountApplication> apps = (status != null) ?
-                applicationRepository.findByStatus(status) : applicationRepository.findAll();
-        return apps.stream().map(this::mapToViewResponse).collect(Collectors.toList());
-    }
+    @Transactional
+    public SavingsAccountResponse approveApplication(
+            Long applicationId,
+            AccountApprovalRequest request,
+            String adminUsername
+    ) {
 
-    @Override
-    public SavingsAccountResponse approveApplication(Long applicationId, AccountApprovalRequest request, String admin) {
-        AccountApplication app = findPendingApp(applicationId);
+        AccountApplication application = applicationRepository.findById(applicationId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Application with ID " + applicationId + " not found"
+                        )
+                );
 
-        if (savingsAccountRepository.existsByUser(app.getUser())) {
-            throw new IllegalStateException("User already has an account");
+        if (application.getStatus() != ApplicationStatus.PENDING) {
+            throw new IllegalStateException(
+                    "Application is already " + application.getStatus()
+            );
         }
 
-        app.setStatus(ApplicationStatus.APPROVED);
-        app.setReviewedBy(admin);
-        app.setReviewDate(LocalDateTime.now());
+        User user = application.getUser();
+        if (user == null) {
+            throw new IllegalStateException("Application has no associated user");
+        }
+
+        if (savingsAccountRepository.existsByUser(user)) {
+            throw new IllegalStateException(
+                    "User " + user.getEmail() + " already has a savings account"
+            );
+        }
+
+        application.setStatus(ApplicationStatus.APPROVED);
+        application.setReviewedBy(adminUsername);
+        application.setReviewDate(LocalDateTime.now());
+        applicationRepository.save(application);
 
         SavingsAccount account = SavingsAccount.builder()
                 .accountNumber("SAV-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase())
-                .user(app.getUser())
+                .user(user)
                 .balance(BigDecimal.ZERO)
                 .status(AccountStatus.ACTIVE)
+                .interestRate(BigDecimal.valueOf(3.5))
                 .openedDate(LocalDate.now())
                 .build();
 
         SavingsAccount savedAccount = savingsAccountRepository.save(account);
-        log.info("Account created successfully: {}", savedAccount.getAccountNumber());
-
-        return mapToAccountResponse(savedAccount, "Account successfully created");
-    }
-
-    @Override
-    public SavingsAccountResponse rejectApplication(Long id, AccountApprovalRequest req, String admin) {
-        AccountApplication app = findPendingApp(id);
-        app.setStatus(ApplicationStatus.REJECTED);
-        app.setReviewedBy(admin);
-        app.setReviewDate(LocalDateTime.now());
-        applicationRepository.save(app);
-
-        log.info("Application rejected: {} by {}", id, admin);
 
         return SavingsAccountResponse.builder()
-                .status(AccountStatus.CLOSED)
-                .message("Application Rejected by " + admin)
+                .id(savedAccount.getId())
+                .accountNumber(savedAccount.getAccountNumber())
+                .userId(user.getId())
+                .userName(user.getName())
+                .userEmail(user.getEmail())
+                .balance(savedAccount.getBalance())
+                .status(savedAccount.getStatus())
+                .interestRate(savedAccount.getInterestRate())
+                .openedDate(savedAccount.getOpenedDate())
+                .message("Account approved successfully by " + adminUsername)
                 .build();
     }
 
     @Override
-    public SavingsAccountResponse processApplication(Long applicationId, AccountApprovalRequest request, String adminUsername) {
-        String decision = request.getDecision().toUpperCase();
-        return switch (decision) {
-            case "APPROVE" -> approveApplication(applicationId, request, adminUsername);
-            case "REJECT" -> rejectApplication(applicationId, request, adminUsername);
-            default -> throw new IllegalArgumentException("Invalid Decision: " + decision);
-        };
-    }
+    @Transactional
+    public SavingsAccountResponse rejectApplication(
+            Long applicationId,
+            AccountApprovalRequest request,
+            String adminUsername
+    ) {
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<SavingsAccountResponse> getAllSavingsAccounts(AccountStatus status) {
-        List<SavingsAccount> accounts = (status != null) ?
-                savingsAccountRepository.findByStatus(status) : savingsAccountRepository.findAll();
-        return accounts.stream().map(acc -> mapToAccountResponse(acc, null)).collect(Collectors.toList());
-    }
+        AccountApplication application = applicationRepository.findById(applicationId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Application with ID " + applicationId + " not found"
+                        )
+                );
 
-    @Override
-    @Transactional(readOnly = true)
-    public SavingsAccountResponse getAccountDetails(Long id) {
-        SavingsAccount acc = savingsAccountRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Account ID " + id + " not found"));
-        return mapToAccountResponse(acc, null);
-    }
-
-    @Override
-    public SavingsAccountResponse updateAccountStatus(Long id, AccountStatus status, String admin) {
-        SavingsAccount acc = savingsAccountRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Account Not Found"));
-        acc.setStatus(status);
-        SavingsAccount saved = savingsAccountRepository.save(acc);
-        log.info("Updated account status for {} to {}", id, status);
-        return mapToAccountResponse(saved, "Status updated to " + status);
-    }
-
-    private AccountApplication findPendingApp(Long id) {
-        AccountApplication app = applicationRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Application ID " + id + " not found"));
-        if (app.getStatus() != ApplicationStatus.PENDING) {
-            throw new IllegalStateException("Application is already " + app.getStatus());
+        if (application.getStatus() != ApplicationStatus.PENDING) {
+            throw new IllegalStateException(
+                    "Application is already " + application.getStatus()
+            );
         }
-        return app;
-    }
 
-    private AdminApplicationViewResponse mapToViewResponse(AccountApplication app) {
-        return AdminApplicationViewResponse.builder()
-                .applicationId(app.getId())
-                .applicantName(app.getUser().getName())
-                .status(app.getStatus().name())
-                .applicationDate(app.getApplicationDate())
-                .build();
-    }
+        User user = application.getUser();
+        if (user == null) {
+            throw new IllegalStateException("Application has no associated user");
+        }
 
-    private SavingsAccountResponse mapToAccountResponse(SavingsAccount acc, String msg) {
+        application.setStatus(ApplicationStatus.REJECTED);
+        application.setReviewedBy(adminUsername);
+        application.setReviewDate(LocalDateTime.now());
+        applicationRepository.save(application);
+
         return SavingsAccountResponse.builder()
-                .id(acc.getId())
-                .accountNumber(acc.getAccountNumber())
-                .userId(acc.getUser().getId())
-                .userName(acc.getUser().getName())
-                .userEmail(acc.getUser().getEmail())
-                .balance(acc.getBalance())
-                .status(acc.getStatus())
-                .openedDate(acc.getOpenedDate())
-                .interestRate(acc.getInterestRate())
-                .message(msg)
+                .id(null)
+                .accountNumber(null)
+                .userId(user.getId())
+                .userName(user.getName())
+                .userEmail(user.getEmail())
+                .balance(BigDecimal.ZERO)
+                .status(AccountStatus.CLOSED)
+                .interestRate(BigDecimal.ZERO)
+                .openedDate(null)
+                .message("Application rejected by " + adminUsername)
                 .build();
     }
 }

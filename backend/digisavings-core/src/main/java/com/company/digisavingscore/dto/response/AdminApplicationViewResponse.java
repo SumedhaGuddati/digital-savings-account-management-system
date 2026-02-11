@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class AdminApplicationViewResponse {
     private Long applicationId;
     private String applicantName;

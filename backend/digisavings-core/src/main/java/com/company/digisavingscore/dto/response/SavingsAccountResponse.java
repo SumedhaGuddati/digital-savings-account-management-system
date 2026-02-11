@@ -11,8 +11,6 @@ import java.time.LocalDate;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class SavingsAccountResponse {
     private Long id;
     private String accountNumber;

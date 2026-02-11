@@ -8,7 +8,14 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "savings_accounts")
+@Table(
+        name = "savings_accounts",
+        indexes = {
+                @Index(name = "idx_savings_account_number", columnList = "account_number"),
+                @Index(name = "idx_savings_user_id", columnList = "user_id"),
+                @Index(name = "idx_savings_status", columnList = "status")
+        }
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,11 +27,11 @@ public class SavingsAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "account_number", unique = true, nullable = false, length = 30)
+    @Column(name = "account_number", nullable = false, unique = true, length = 30)
     private String accountNumber;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
     @Column(nullable = false, precision = 19, scale = 2)
