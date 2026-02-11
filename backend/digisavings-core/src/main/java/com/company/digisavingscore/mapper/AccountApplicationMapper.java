@@ -12,12 +12,11 @@ public class AccountApplicationMapper {
             return null;
         }
 
-        AccountApplicationResponse response = new AccountApplicationResponse();
-        response.setId(entity.getId());
-        response.setAccountType(entity.getAccountType().name());
-        response.setApplicationDate(entity.getApplicationDate());
-        response.setStatus(entity.getStatus().name());
-
-        return response;
+        return AccountApplicationResponse.builder()
+                .id(entity.getId())
+                .accountType(entity.getAccountType().name())
+                .applicationDate(entity.getApplicationDate())
+                .status(entity.getStatus().name())
+                .build();
     }
 }

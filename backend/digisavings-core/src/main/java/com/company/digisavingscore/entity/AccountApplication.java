@@ -4,10 +4,16 @@ import com.company.digisavingscore.entity.enums.AccountType;
 import com.company.digisavingscore.entity.enums.ApplicationStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "account_applications")
+@Table(name = "account_applications", indexes = {
+        @Index(name = "idx_user_id", columnList = "user_id"),
+        @Index(name = "idx_status", columnList = "application_status")
+})
 @Data
 @Getter
 @Setter
@@ -19,7 +25,9 @@ public class AccountApplication {
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
+
 
     @Enumerated(EnumType.STRING)
     @Column(name = "account_type", nullable = false)
