@@ -19,13 +19,14 @@ public class UserService implements IUserService {
     @Override
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll().stream()
-                .map(user -> new UserResponse(
-                        user.getId(),
-                        user.getName(),
-                        user.getEmail(),
-                        user.getRole().name(),
-                        user.getCreatedAt()
-                ))
+                .map(user -> UserResponse.builder()
+                        .id(user.getId())
+                        .name(user.getName())
+                        .email(user.getEmail())
+                        .role(user.getRole().name())
+                        .createdAt(user.getCreatedAt())
+                        .build()
+                )
                 .collect(Collectors.toList());
     }
 }

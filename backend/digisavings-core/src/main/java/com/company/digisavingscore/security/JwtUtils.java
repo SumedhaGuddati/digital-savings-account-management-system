@@ -3,6 +3,7 @@ package com.company.digisavingscore.security;
 import com.company.digisavingscore.entity.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -12,8 +13,14 @@ import java.util.Date;
 @Component
 public class JwtUtils {
 
-    private static final String jwtSecret = "secret_key_secret_key_secret_key_123";
-    private static final long jwtExpirationMs = 86400000;
+    private final String jwtSecret;
+    private final long jwtExpirationMs;
+
+    public JwtUtils(@Value("${jwt.secret}") String jwtSecret,
+                    @Value("${jwt.expiration-ms}") long jwtExpirationMs) {
+        this.jwtSecret = jwtSecret;
+        this.jwtExpirationMs = jwtExpirationMs;
+    }
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
@@ -21,10 +28,10 @@ public class JwtUtils {
 
     public String generateToken(User user) {
         return Jwts.builder()
-                .subject(user.getEmail())
+                .setSubject(user.getEmail())
                 .claim("role", user.getRole().name())
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(getSigningKey())
                 .compact();
     }
