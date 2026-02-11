@@ -12,9 +12,6 @@ import lombok.Setter;
 @Setter
 @Data
 public class AccountApplicationRequest {
-    @NotBlank(message = "User ID is required")
-    private Long userId;
-
     @NotBlank(message = "Account type cannot be blank")
-    private AccountType accountType; // Should be "SAVINGS"
+    private AccountType accountType;
 }

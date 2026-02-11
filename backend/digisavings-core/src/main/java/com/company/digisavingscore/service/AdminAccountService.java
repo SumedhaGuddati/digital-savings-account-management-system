@@ -8,6 +8,7 @@ import com.company.digisavingscore.entity.SavingsAccount;
 import com.company.digisavingscore.entity.User;
 import com.company.digisavingscore.entity.enums.AccountStatus;
 import com.company.digisavingscore.entity.enums.ApplicationStatus;
+import com.company.digisavingscore.exception.BusinessRuleViolationException;
 import com.company.digisavingscore.exception.ResourceNotFoundException;
 import com.company.digisavingscore.mapper.AdminAccountMapper;
 import com.company.digisavingscore.repository.AccountApplicationRepository;
@@ -76,18 +77,18 @@ public class AdminAccountService implements IAdminAccountService {
                 );
 
         if (application.getStatus() != ApplicationStatus.PENDING) {
-            throw new IllegalStateException(
+            throw new BusinessRuleViolationException(
                     "Application is already " + application.getStatus()
             );
         }
 
         User user = application.getUser();
         if (user == null) {
-            throw new IllegalStateException("Application has no associated user");
+            throw new BusinessRuleViolationException("Application has no associated user");
         }
 
         if (savingsAccountRepository.existsByUser(user)) {
-            throw new IllegalStateException(
+            throw new BusinessRuleViolationException(
                     "User " + user.getEmail() + " already has a savings account"
             );
         }
@@ -138,14 +139,14 @@ public class AdminAccountService implements IAdminAccountService {
                 );
 
         if (application.getStatus() != ApplicationStatus.PENDING) {
-            throw new IllegalStateException(
+            throw new BusinessRuleViolationException(
                     "Application is already " + application.getStatus()
             );
         }
 
         User user = application.getUser();
         if (user == null) {
-            throw new IllegalStateException("Application has no associated user");
+            throw new BusinessRuleViolationException("Application has no associated user");
         }
 
         application.setStatus(ApplicationStatus.REJECTED);

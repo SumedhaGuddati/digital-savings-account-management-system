@@ -5,5 +5,5 @@ import com.company.digisavingscore.dto.response.AccountApplicationResponse;
 
 public interface IAccountApplicationService {
     AccountApplicationResponse applyForAccount(AccountApplicationRequest request);
-    AccountApplicationResponse getApplicationStatus(Long userId);
+    AccountApplicationResponse getApplicationStatus();
 }

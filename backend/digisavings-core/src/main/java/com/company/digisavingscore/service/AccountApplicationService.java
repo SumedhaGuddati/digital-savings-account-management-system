@@ -10,9 +10,11 @@ import com.company.digisavingscore.exception.ResourceNotFoundException;
 import com.company.digisavingscore.mapper.AccountApplicationMapper;
 import com.company.digisavingscore.repository.AccountApplicationRepository;
 import com.company.digisavingscore.repository.UserRepository;
+import com.company.digisavingscore.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 
 @Service
@@ -26,14 +28,17 @@ public class AccountApplicationService implements IAccountApplicationService {
 
     @Override
     public AccountApplicationResponse applyForAccount(AccountApplicationRequest request) {
-        log.info("Processing account application for user ID: {}", request.getUserId());
 
-        if (repository.findByUserId(request.getUserId()).isPresent()) {
-            log.warn("Duplicate application attempt for user ID: {}", request.getUserId());
+        Long userId = getCurrentUserId();
+
+        log.info("Processing account application for user ID: {}", userId);
+
+        if (repository.findByUserId(userId).isPresent()) {
+            log.warn("Duplicate application attempt for user ID: {}", userId);
             throw new AccountAlreadyExistsException("A savings account application already exists for this user.");
         }
 
-        User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         AccountApplication entity = new AccountApplication();
         entity.setUser(user);
@@ -48,12 +53,23 @@ public class AccountApplicationService implements IAccountApplicationService {
     }
 
     @Override
-    public AccountApplicationResponse getApplicationStatus(Long userId) {
+    public AccountApplicationResponse getApplicationStatus() {
+        Long userId = getCurrentUserId();
+
         log.info("Retrieving status for user ID: {}", userId);
 
         AccountApplication application = repository.findByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("No application found for user ID: " + userId));
 
         return mapper.toResponse(application);
+    }
+
+    private Long getCurrentUserId() {
+        String email = SecurityUtils.getCurrentUserEmail();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> {
+                    log.warn("User not found for user email={}", email);
+                    return new ResourceNotFoundException("User not found for current user");
+                }).getId();
     }
 }
