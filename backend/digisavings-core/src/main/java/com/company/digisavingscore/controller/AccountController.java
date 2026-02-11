@@ -14,28 +14,43 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/accounts/me")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('USER')")
 public class AccountController {
 
     private final IAccountService accountService;
 
+    /**
+     * User: get my account details
+     * URL: GET /api/accounts/me
+     */
     @GetMapping
     public ResponseEntity<AccountDetailsResponse> getMyAccount() {
         return ResponseEntity.ok(accountService.getAccountDetails());
     }
 
+    /**
+     * User: deposit transaction
+     * URL: POST /api/accounts/me/deposit
+     */
     @PostMapping("/deposit")
     public ResponseEntity<TransactionResponse> deposit(@RequestBody TransactionRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(accountService.deposit(request));
     }
 
+    /**
+     * User: withdraw transaction
+     * URL: POST /api/accounts/me/withdraw
+     */
     @PostMapping("/withdraw")
     public ResponseEntity<TransactionResponse> withdraw(@RequestBody TransactionRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(accountService.withdraw(request));
     }
 
+    /**
+     * User: get all transactions
+     * URL: GET /api/accounts/me/transactions
+     */
     @GetMapping("/transactions")
     public ResponseEntity<TransactionHistoryResponse> getMyTransactions() {
         return ResponseEntity.ok(accountService.getTransactionHistory());
