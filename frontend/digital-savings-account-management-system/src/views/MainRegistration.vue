@@ -7,9 +7,7 @@
         <div class="brand-top">
           <div class="brand-logo">Zeta<span>rise</span></div>
           <h1 class="sidebar-hero">
-            Elevate your <br /><span class="text-indigo-400"
-              >Financial Future.</span
-            >
+            Elevate your <br /><span class="text-indigo-400">Financial Future.</span>
           </h1>
         </div>
         <div class="brand-bottom">
@@ -43,11 +41,7 @@
             </p>
           </div>
 
-          <button
-            @click="handleSubmit"
-            :disabled="!isFormValid || isSubmitting"
-            class="submit-button"
-          >
+          <button @click="handleSubmit" :disabled="!isFormValid || isSubmitting" class="submit-button">
             <span v-if="!isSubmitting">Submit Application</span>
             <span v-else>Processing...</span>
           </button>
@@ -111,7 +105,7 @@ const handleSubmit = async () => {
 
     const token = signupRes.data.token;
     if (token) {
-      localStorage.setItem("zeta_token", token);
+      sessionStorage.setItem("zeta_token", token);
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     }
 
@@ -128,12 +122,12 @@ const handleSubmit = async () => {
     });
 
     toast.success("Application Submitted!", { id: toastId });
-    setTimeout(() => router.push("/status"), 1000);
+    setTimeout(() => router.push("/me/application"), 1000);
   } catch (error) {
     const msg = error.response?.data?.message;
     if (msg === "A savings account application already exists for this user.") {
       toast.success("Redirecting to your application...", { id: toastId });
-      setTimeout(() => router.push("/status"), 1000);
+      setTimeout(() => router.push("/me/application"), 1000);
     } else {
       toast.error(msg || "Request failed", { id: toastId });
     }
@@ -149,6 +143,7 @@ const handleSubmit = async () => {
   grid-template-columns: 280px 1fr;
   min-height: 100vh;
 }
+
 .branding-sidebar {
   position: sticky;
   top: 0;
@@ -158,6 +153,7 @@ const handleSubmit = async () => {
   flex-direction: column;
   overflow: hidden;
 }
+
 .sidebar-image-bg {
   position: absolute;
   inset: 0;
@@ -166,16 +162,16 @@ const handleSubmit = async () => {
   background-position: center;
   z-index: 0;
 }
+
 .sidebar-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(15, 23, 42, 0.85) 0%,
-    rgba(79, 70, 229, 0.4) 100%
-  );
+  background: linear-gradient(to bottom,
+      rgba(15, 23, 42, 0.85) 0%,
+      rgba(79, 70, 229, 0.4) 100%);
   z-index: 1;
 }
+
 .content-layer {
   position: relative;
   z-index: 2;
@@ -186,14 +182,17 @@ const handleSubmit = async () => {
   justify-content: space-between;
   color: white;
 }
+
 .brand-logo {
   font-size: 1.5rem;
   font-weight: 900;
   letter-spacing: -1px;
 }
+
 .brand-logo span {
   color: #818cf8;
 }
+
 .sidebar-hero {
   font-size: 2rem;
   font-weight: 700;
@@ -201,35 +200,42 @@ const handleSubmit = async () => {
   line-height: 1.1;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
+
 .form-viewport {
   padding: 40px 60px;
   display: flex;
   justify-content: center;
   background: #fff;
 }
+
 .form-centering-wrapper {
   width: 100%;
   max-width: 700px;
 }
+
 .spacer {
   height: 40px;
 }
+
 .page-title {
   font-size: 2.2rem;
   font-weight: 900;
   color: #0f172a;
   letter-spacing: -1px;
 }
+
 .page-subtitle {
   font-size: 0.95rem;
   color: #64748b;
   margin-top: 5px;
 }
+
 .form-actions {
   margin-top: 40px;
   padding-top: 20px;
   border-top: 1px solid #f1f5f9;
 }
+
 .agreement-row {
   display: flex;
   align-items: center;
@@ -237,6 +243,7 @@ const handleSubmit = async () => {
   margin-bottom: 20px;
   cursor: pointer;
 }
+
 .custom-checkbox {
   width: 18px;
   height: 18px;
@@ -247,16 +254,19 @@ const handleSubmit = async () => {
   justify-content: center;
   font-size: 0.7rem;
 }
+
 .custom-checkbox.is-checked {
   background: #6366f1;
   color: white;
   border-color: #6366f1;
 }
+
 .agreement-text {
   font-size: 0.85rem;
   color: #64748b;
   font-weight: 500;
 }
+
 .submit-button {
   width: 100%;
   padding: 16px;
@@ -269,18 +279,22 @@ const handleSubmit = async () => {
   cursor: pointer;
   transition: all 0.2s;
 }
+
 .submit-button:hover:not(:disabled) {
   background: #1e293b;
   transform: translateY(-1px);
 }
+
 .submit-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
 @media (max-width: 1024px) {
   .registration-grid {
     grid-template-columns: 1fr;
   }
+
   .branding-sidebar {
     display: none;
   }

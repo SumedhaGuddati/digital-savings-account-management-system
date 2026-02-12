@@ -14,8 +14,6 @@
         <div class="lg:col-span-2 space-y-6">
           <PersonalInfoCard :userProfile="userProfile" />
 
-          <AddressInfoCard :userProfile="userProfile" />
-
           <AccountInfoCard :userProfile="userProfile" @copy="copyToClipboard" />
 
           <SecuritySettingsCard />

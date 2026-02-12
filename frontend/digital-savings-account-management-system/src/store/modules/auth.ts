@@ -37,8 +37,8 @@ export interface AuthState {
 
 // Initial state
 const state: AuthState = {
-  user: JSON.parse(localStorage.getItem("user") || "null"),
-  token: localStorage.getItem("token"),
+  user: JSON.parse(sessionStorage.getItem("user") || "null"),
+  token: sessionStorage.getItem("token"),
   loading: false,
   error: null,
 };
@@ -109,9 +109,9 @@ const actions = {
         createdAt: new Date().toISOString(),
       };
 
-      // Save to localStorage
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+      // Save to sessionStorage
+      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("user", JSON.stringify(user));
 
       // Set default Authorization header
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -152,9 +152,9 @@ const actions = {
         createdAt: new Date().toISOString(),
       };
 
-      // Save to localStorage
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+      // Save to sessionStorage
+      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("user", JSON.stringify(user));
 
       // Set default Authorization header
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -172,8 +172,8 @@ const actions = {
 
   // Logout Action
   logout({ commit }: any): void {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
     delete axios.defaults.headers.common["Authorization"];
     commit("CLEAR_AUTH");
   },
@@ -189,7 +189,7 @@ const actions = {
       const response = await axios.get<User>("/auth/profile");
       const user = response.data;
 
-      localStorage.setItem("user", JSON.stringify(user));
+      sessionStorage.setItem("user", JSON.stringify(user));
       commit("SET_AUTH", { user, token: state.token });
       return user;
     } catch (error) {

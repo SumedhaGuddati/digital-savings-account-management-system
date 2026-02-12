@@ -14,8 +14,8 @@ const store = createStore<RootState>({
   },
 });
 
-// Initialize auth state from localStorage
-const token = localStorage.getItem("token");
+// Initialize auth state from sessionStorage
+const token = sessionStorage.getItem("token");
 if (token) {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }

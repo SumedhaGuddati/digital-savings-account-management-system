@@ -2,7 +2,7 @@
     <div class="min-h-screen bg-white">
         <AnnouncementBar />
 
-        <HeroSection @apply="applyNow" @login="goToLogin" />
+        <HeroSection @apply="$router.push('/apply')" @login="$router.push('/login')" />
 
         <TrustBadges :badges="trustBadges" />
 
@@ -50,13 +50,6 @@ export default defineComponent({
             supportLinks
         } = useLandingData()
 
-        const applyNow = () => {
-            console.log('Apply now clicked')
-        }
-
-        const goToLogin = () => {
-            console.log('Navigate to login')
-        }
 
         const applyForPlan = (plan: AccountPlan) => {
             console.log('Applying for plan:', plan.name)
@@ -78,8 +71,6 @@ export default defineComponent({
             productLinks,
             companyLinks,
             supportLinks,
-            applyNow,
-            goToLogin,
             applyForPlan,
             comparePlans,
             contactSupport
