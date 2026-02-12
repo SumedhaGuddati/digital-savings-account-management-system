@@ -5,7 +5,7 @@ export const getAuthToken = (): string | null => {
 }
 
 export const setAuthToken = (): void => {
-  sessionStorage.setItem(TOKEN_KEY, "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzcwODgwOTAyLCJleHAiOjE3NzA5NjczMDJ9.cdWEbuNDWzx6OYavx8ED9Blp4pdYUJCreVAdQtkG0Sk")
+  sessionStorage.setItem(TOKEN_KEY, "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzcwODk3MzE3LCJleHAiOjE3NzA5ODM3MTd9.Ca3nNUjGkp1kcfw6hFZjI1NeTCnrTmvq9gMsv93tJkg")
 }
 
 export const clearAuthToken = (): void => {

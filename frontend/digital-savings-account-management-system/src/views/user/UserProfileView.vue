@@ -1,15 +1,9 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-gray-50 via-gray-50 to-gray-100">
 
-    <!-- Loading -->
-    <div v-if="isLoading" class="bg-white rounded-2xl border border-gray-200 shadow-sm p-12">
-      <div class="flex flex-col items-center justify-center">
-        <div class="w-16 h-16 border-4 border-gray-200 border-t-indigo-600 rounded-full animate-spin"></div>
-        <p class="mt-4 text-gray-600">Fetching application details...</p>
-      </div>
-    </div>
+    <AppLoader v-show="isLoading" />
 
-    <div v-else-if="userProfile" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div v-if="userProfile" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12" :class="{ 'pointer-events-none opacity-50': isLoading }">
       <ProfileHeader />
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -20,7 +14,7 @@
         <div class="lg:col-span-2 space-y-6">
           <PersonalInfoCard :userProfile="userProfile" />
 
-          <AddressInfoCard :userProfile="userProfile"/>
+          <AddressInfoCard :userProfile="userProfile" />
 
           <AccountInfoCard :userProfile="userProfile" @copy="copyToClipboard" />
 
@@ -43,6 +37,7 @@ import { UserProfile } from '@/types/api/user'
 import { toast, Toaster } from '@steveyuowo/vue-hot-toast';
 import "@steveyuowo/vue-hot-toast/vue-hot-toast.css";
 import { getUserProfileDetails } from '@/api/endpoints/users/users.api'
+import AppLoader from '@/components/ui/loader/AppLoader.vue'
 
 export default defineComponent({
   name: 'UserProfileView',
@@ -51,7 +46,8 @@ export default defineComponent({
     ProfileSidebarCard,
     PersonalInfoCard,
     AccountInfoCard,
-    SecuritySettingsCard
+    SecuritySettingsCard,
+    AppLoader
   },
 
   data() {

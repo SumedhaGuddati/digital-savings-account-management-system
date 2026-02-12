@@ -3,11 +3,10 @@ import LoginView from "../views/LoginView.vue";
 import MainRegistraion from "../views/MainRegistration.vue";
 import TransactionsView from '@/views/TransactionsView.vue'
 import LandingPageView from "@/views/LandingPageView.vue";
-import UserHomeView from "@/views/UserHomeView.vue";
-import UserProfileView from "@/views/UserProfileView.vue";
-import DashboardView from "../views/DashboardView.vue";
-import ApprovalsView from "../views/ApprovalsView.vue";
-import AuditLogs from "../views/AuditLogs.vue";
+import UserHomeView from "@/views/user/UserHomeView.vue";
+import UserProfileView from "@/views/user/UserProfileView.vue";
+import ApprovalsView from "@/views/ApprovalsView.vue";
+import AuditLogs from "@/views/AuditLogs.vue";
 
 const routes: RouteRecordRaw[] = [
   {

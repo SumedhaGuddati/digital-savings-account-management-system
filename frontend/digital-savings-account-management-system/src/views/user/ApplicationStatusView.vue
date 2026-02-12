@@ -1,6 +1,11 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-6">
-        <div class="max-w-5xl mx-auto">
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-6 relative">
+
+        <!-- Loader Overlay -->
+        <AppLoader v-show="isLoading"
+            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10 z-50" />
+
+        <div class="max-w-5xl mx-auto" :class="{ 'pointer-events-none opacity-50': isLoading }">
 
             <!-- Header -->
             <div class="flex items-center gap-4 mb-6">
@@ -13,16 +18,8 @@
                 </div>
             </div>
 
-            <!-- Loading -->
-            <div v-if="isLoading" class="bg-white rounded-2xl border border-gray-200 shadow-sm p-12">
-                <div class="flex flex-col items-center justify-center">
-                    <div class="w-16 h-16 border-4 border-gray-200 border-t-indigo-600 rounded-full animate-spin"></div>
-                    <p class="mt-4 text-gray-600">Fetching application details...</p>
-                </div>
-            </div>
-
             <!-- No Application -->
-            <div v-else-if="!application" class="bg-white rounded-2xl border border-gray-200 shadow-sm p-12">
+            <div v-if="!application" class="bg-white rounded-2xl border border-gray-200 shadow-sm p-12">
                 <div class="text-center max-w-md mx-auto">
                     <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <FontAwesomeIcon :icon="faFileCirclePlus" class="text-3xl text-gray-400" />
@@ -51,7 +48,9 @@
                 <ApplicationTimeline :application="application" />
                 <HelpCard @contact-support="contactSupport" />
             </div>
+
         </div>
+
         <Toaster />
     </div>
 </template>
@@ -63,6 +62,7 @@ import { faArrowLeft, faFileCirclePlus } from '@fortawesome/free-solid-svg-icons
 
 import { toast, Toaster } from '@steveyuowo/vue-hot-toast';
 import "@steveyuowo/vue-hot-toast/vue-hot-toast.css";
+
 import StatusHeader from '@/components/application-status/StatusHeader.vue'
 import ApplicationProgress from '@/components/application-status/ApplicationProgress.vue'
 import ApplicationDetails from '@/components/application-status/ApplicationDetails.vue'
@@ -73,6 +73,7 @@ import HelpCard from '@/components/application-status/HelpCard.vue'
 import { Application } from '@/types/app/application'
 import { getUserApplicationStatus } from '@/api/endpoints/users/users.api';
 import { mapApiApplicationToUi } from '@/mapper/application/application.mapper';
+import AppLoader from '@/components/ui/loader/AppLoader.vue';
 
 export default defineComponent({
     name: 'ApplicationStatusView',
@@ -84,7 +85,9 @@ export default defineComponent({
         ApprovedCard,
         RejectedCard,
         ApplicationTimeline,
-        HelpCard
+        HelpCard,
+        AppLoader,
+        Toaster
     },
     data() {
         return {
@@ -102,6 +105,7 @@ export default defineComponent({
         },
         async fetchApplicationStatus() {
             this.isLoading = true
+
             try {
                 const response = await getUserApplicationStatus()
                 this.application = mapApiApplicationToUi(response.data)
@@ -112,6 +116,7 @@ export default defineComponent({
             } finally {
                 this.isLoading = false
             }
+
         }
     },
     mounted() {
@@ -119,3 +124,15 @@ export default defineComponent({
     }
 })
 </script>
+
+<!-- <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+</style> -->

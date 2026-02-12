@@ -110,7 +110,8 @@ import {
     faInfoCircle
 } from '@fortawesome/free-solid-svg-icons'
 import { TransactionType } from '@/types/api/banking';
-import { depositToAccount } from '@/api/endpoints/users/users.api';
+import { depositToAccount, withdrawFromAccount } from '@/api/endpoints/users/users.api';
+import { toast } from '@steveyuowo/vue-hot-toast';
 
 export default defineComponent({
     name: 'TransactionModal',
@@ -343,16 +344,20 @@ export default defineComponent({
             try {
                 this.isProcessing = true
 
-                await depositToAccount(this.amount!)
+                if (this.type === TransactionType.WITHDRAW) {
+                    await withdrawFromAccount(this.amount!)
+                } else {
+                    await depositToAccount(this.amount!)
+                }
 
                 this.$emit('confirm', this.amount)
                 this.$emit('close')
-            } catch (error) {
-                console.error('Error fetching account details:', error)
+            } catch (error: any) {
+                toast.error(error.message || 'Transaction failed. Please try again.')
+                console.error('Error processing transaction:', error)
             }
             finally {
                 this.isProcessing = false
-                this.$emit('close')
             }
         }
     }

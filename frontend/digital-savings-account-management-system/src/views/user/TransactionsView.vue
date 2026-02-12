@@ -1,6 +1,9 @@
 <template>
     <div class="min-h-screen bg-gradient-to-br from-gray-50 via-gray-50 to-indigo-50/30 py-8 px-4 sm:px-6">
-        <div class="max-w-7xl mx-auto">
+
+        <AppLoader v-show="isLoading" />
+        
+        <div v-if="filteredTransactions" class="max-w-7xl mx-auto" :class="{ 'pointer-events-none opacity-50': isLoading }">
             <TransactionsHeader :count="filteredTransactions.length" @export="exportTransactions" />
 
             <TransactionsFilters v-model:searchQuery="searchQuery" v-model:dateFilter="dateFilter"
@@ -28,6 +31,7 @@ import { Transaction } from '@/types/app/banking'
 import { mapApiTransactionsToUi } from '@/mapper/banking/transaction.mapper'
 import { TransactionType } from '@/types/api/banking'
 import { getUserTransactions } from '@/api/endpoints/users/users.api'
+import AppLoader from '@/components/ui/loader/AppLoader.vue'
 
 export default defineComponent({
     name: 'TransactionsView',
@@ -36,11 +40,13 @@ export default defineComponent({
         TransactionsFilters,
         TransactionsSummary,
         TransactionsList,
-        TransactionsQuickFilters
+        TransactionsQuickFilters,
+        AppLoader
     },
 
     data() {
         return {
+            isLoading: false,
             searchQuery: '',
             dateFilter: 'all',
             typeFilter: 'all',
@@ -196,10 +202,13 @@ export default defineComponent({
 
         async fetchTransactions() {
             try {
+                this.isLoading = true
                 const response = await getUserTransactions()
                 this.transactions = mapApiTransactionsToUi(response.data.transactions)
             } catch (error) {
                 console.error('Error fetching transactions:', error)
+            } finally {
+                this.isLoading = false
             }
         }
     },

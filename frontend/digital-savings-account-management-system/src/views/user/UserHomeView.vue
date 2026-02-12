@@ -1,20 +1,15 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        <!-- Navbar -->
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 relative">
         <!-- // TODO: get email from token or user store -->
         <AppNavbar :user-name="account?.accountHolderName || 'Guest'" :user-email="userEmail" @profile="goProfile"
             @statements="goStatements" @logout="handleLogout" />
 
         <!-- Main Content -->
         <div class="max-w-7xl mx-auto px-6 py-8">
-            <!-- Loading -->
-            <div v-if="isLoading" class="bg-white rounded-2xl border border-gray-200 shadow-sm p-12">
-                <div class="flex flex-col items-center justify-center">
-                    <div class="w-16 h-16 border-4 border-gray-200 border-t-indigo-600 rounded-full animate-spin"></div>
-                    <p class="mt-4 text-gray-600">Fetching application details...</p>
-                </div>
-            </div>
-            <div v-else-if="account" class="space-y-8">
+
+            <AppLoader v-show="isLoading" />
+
+            <div v-if="account" class="space-y-8" :class="{ 'pointer-events-none opacity-50': isLoading }">
                 <!-- Welcome Header -->
                 <div class="flex justify-between items-end">
                     <div>
@@ -71,7 +66,10 @@
         <!-- Modal -->
         <TransactionModal v-if="showTransactionModal" :type="transactionType as TransactionType"
             :balance="account?.balance || 0" :max-amount="account?.balance || 0" @close="showTransactionModal = false"
-            @confirm="handleTransaction" />
+            @confirm="handleTransactionConfirmation" />
+
+        <!-- <TransactionSuccessfulAnimation v-show="showTransactionSuccess"
+            @animationComplete="showTransactionSuccess = false" /> -->
 
         <Toaster />
     </div>
@@ -98,7 +96,10 @@ import TransactionModal from '@/components/userHome/TransactionModal.vue'
 import { Account, Transaction } from '@/types/app/banking'
 
 import { TransactionType } from '@/types/api/banking';
-import { getUserHomeDetails } from '@/api/endpoints/users/users.api';
+import { getUserHomeDetails, getUserTransactions } from '@/api/endpoints/users/users.api';
+import { mapApiTransactionsToUi } from '@/mapper/banking/transaction.mapper';
+import AppLoader from '@/components/ui/loader/AppLoader.vue';
+import TransactionSuccessfulAnimation from '@/components/ui/TransactionSuccessfulAnimation.vue';
 
 export default defineComponent({
     name: 'UserHomeView',
@@ -112,7 +113,9 @@ export default defineComponent({
         BalanceCard,
         TransactionsPreview,
         TransactionModal,
-        Toaster
+        Toaster,
+        AppLoader,
+        // TransactionSuccessfulAnimation
     },
     data() {
         return {
@@ -127,7 +130,8 @@ export default defineComponent({
                 '5.5% p.a. interest rate',
                 'Zero maintenance fee',
                 'Free international transactions'
-            ]
+            ],
+            showTransactionSuccess: false,
         }
     },
     computed: {
@@ -161,8 +165,15 @@ export default defineComponent({
             this.transactionType = TransactionType.WITHDRAW
             this.showTransactionModal = true
         },
-        handleTransaction(amount: number) {
+        async handleTransactionConfirmation(amount: number) {
             toast.success(`${this.transactionType} of ₹${amount} successful!`)
+
+            // this.showTransactionSuccess = true
+            await Promise.all([
+                this.fetchAccountDetails(),
+                this.fetchTransactions()
+            ]);
+
             console.log(`${this.transactionType} of ₹${amount} successful`)
         },
         goBenefits() {
@@ -184,11 +195,20 @@ export default defineComponent({
             finally {
                 this.isLoading = false
             }
+        },
+        async fetchTransactions() {
+            try {
+                const response = await getUserTransactions()
+                this.transactions = mapApiTransactionsToUi(response.data.transactions)
+            } catch (error) {
+                console.error('Error fetching transactions:', error)
+                toast.error('Failed to fetch transactions. Please try again later.')
+            }
         }
     },
     mounted() {
         this.fetchAccountDetails()
-        // console.log(process.env.VUE_APP_USER_AUTH_TOKEN);
+        this.fetchTransactions()
     }
 })
 </script>
