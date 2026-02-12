@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import MainRegistration from "../views/MainRegistration.vue";
+import LoginView from "../views/LoginView.vue";
+import MainRegistraion from "../views/MainRegistration.vue";
 import DashboardView from "../views/DashboardView.vue";
 import ApprovalsView from "../views/ApprovalsView.vue";
 import AuditLogs from "../views/AuditLogs.vue";
@@ -16,11 +17,8 @@ const routes: Array<RouteRecordRaw> = [
   },
   { path: "/approvals", component: ApprovalsView },
   { path: "/audit-logs", component: AuditLogs },
-  {
-    path: "/apply",
-    name: "Apply",
-    component: MainRegistration,
-  },
+  { path: "/login", component: LoginView },
+  { path: "/apply", component: MainRegistraion },
   {
     path: "/status",
     name: "ApplicationStatus",

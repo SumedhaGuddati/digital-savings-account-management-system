@@ -1,24 +1,23 @@
 <template>
-  <div class="min-h-screen bg-white font-sans flex flex-col">
+  <div class="min-h-screen bg-[#F9FAFB] bg-geometric font-sans flex flex-col">
     <!-- HEADER -->
-    <header class="w-full bg-[#5B21B6] shadow-sm p-4 flex items-center">
+    <header class="w-full bg-[#5B21B6] shadow-sm p-4 flex items-center z-10">
       <h1 class="text-xl font-bold text-white">ZetaRise</h1>
     </header>
 
     <!-- MAIN CONTENT -->
-    <div class="flex-1 flex items-center justify-center p-4">
+    <div class="flex-1 flex items-center justify-center p-4 relative">
       <div
-        class="w-full max-w-6xl flex flex-col md:flex-row rounded-3xl shadow-2xl overflow-hidden bg-white"
+        class="w-full max-w-6xl flex flex-col md:flex-row rounded-3xl shadow-2xl overflow-hidden bg-white border border-gray-100 relative z-20"
       >
         <!-- LEFT COLUMN: Login Card -->
         <div
           class="w-full md:w-1/2 p-8 sm:p-10 lg:p-12 flex flex-col justify-center"
         >
-          <!-- Header -->
           <h1
             class="text-3xl lg:text-4xl font-bold text-[#5B21B6] tracking-tight mb-2"
           >
-            Login
+            Welcome Back
           </h1>
           <p class="text-[#6B7280] text-sm lg:text-base mb-8 lg:mb-10">
             Login into your account
@@ -123,7 +122,7 @@
             <p class="text-center text-sm text-[#6B7280] pt-2">
               Don't have an account?
               <router-link
-                to="/signup"
+                to="/apply"
                 class="text-[#7C3AED] hover:text-[#5B21B6] font-medium transition ml-1"
               >
                 Signup now
@@ -145,6 +144,13 @@
         </div>
       </div>
     </div>
+
+    <!-- FOOTER - Added as requested -->
+    <footer
+      class="w-full text-center py-4 text-[#94a3b8] text-xs font-medium uppercase tracking-wider"
+    >
+      SECURE DIGITAL BANKING © 2026
+    </footer>
   </div>
 </template>
 
@@ -173,3 +179,11 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+/* Hexagon Geometric Pattern */
+.bg-geometric {
+  background-color: #f9fafb;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%235b21b6' fill-opacity='0.03' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9l10.99-6.34L25 17.9v12.7l-11.01 6.34L3 30.6V17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.31zM28 15l-12.98-7.5V0h2v6.35L28 12.69v2.3zm0 18.5L15.02 41v8h2v-6.85L28 35.81v-2.31zM12.99 20l.01-13h2v13h-2.01zm0 29V36h2v13h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+</style>
