@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,11 +24,25 @@ public class AccountApplication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne //@OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
+    
+    @Column(name = "occupation", nullable = false)
+    private String occupation;
 
+    @Column(name = "income_source", nullable = false)
+    private String incomeSource;
+
+    @Column(name = "annual_income", nullable = false)
+    private Double annualIncome;
+
+    @Column(name = "parent_name", nullable = false)
+    private String parentName;
+
+    @Column(name = "date_of_birth", nullable = false)
+    private LocalDate dob;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "account_type", nullable = false)

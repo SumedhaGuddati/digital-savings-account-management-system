@@ -17,6 +17,13 @@ public class AccountApplicationMapper {
                 .accountType(entity.getAccountType().name())
                 .applicationDate(entity.getApplicationDate())
                 .status(entity.getStatus().name())
+                .occupation(entity.getOccupation())
+                .incomeSource(entity.getIncomeSource())
+                .annualIncome(entity.getAnnualIncome())
+                .parentName(entity.getParentName())
+                .dob(entity.getDob())
+                .reviewedBy(entity.getReviewedBy())
+                .reviewDate(entity.getReviewDate())
                 .build();
     }
 }
