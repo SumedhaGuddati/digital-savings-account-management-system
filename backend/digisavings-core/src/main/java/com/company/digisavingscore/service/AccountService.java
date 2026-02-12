@@ -4,6 +4,8 @@ import com.company.digisavingscore.dto.request.TransactionRequest;
 import com.company.digisavingscore.dto.response.AccountDetailsResponse;
 import com.company.digisavingscore.dto.response.TransactionHistoryResponse;
 import com.company.digisavingscore.dto.response.TransactionResponse;
+import com.company.digisavingscore.dto.response.UserProfileDetailsResponse;
+import com.company.digisavingscore.entity.AccountApplication;
 import com.company.digisavingscore.entity.AccountTransaction;
 import com.company.digisavingscore.entity.SavingsAccount;
 import com.company.digisavingscore.entity.enums.TransactionType;
@@ -13,6 +15,7 @@ import com.company.digisavingscore.exception.BusinessRuleViolationException;
 import com.company.digisavingscore.exception.InsufficientBalanceException;
 import com.company.digisavingscore.exception.ResourceNotFoundException;
 import com.company.digisavingscore.mapper.TransactionMapper;
+import com.company.digisavingscore.repository.AccountApplicationRepository;
 import com.company.digisavingscore.repository.SavingsAccountRepository;
 import com.company.digisavingscore.repository.AccountTransactionRepository;
 import com.company.digisavingscore.util.SecurityUtils;
@@ -35,12 +38,14 @@ public class AccountService implements IAccountService {
 
     private final SavingsAccountRepository savingsAccountRepository;
     private final AccountTransactionRepository accountTransactionRepository;
-    private final TransactionMapper transactionMapper;
+    private final AccountApplicationRepository accountApplicationRepository;
+    private final TransactionMapper mapper;
 
     @Override
     @Transactional(readOnly = true)
     public AccountDetailsResponse getAccountDetails() {
         SavingsAccount account = getCurrentUserAccount();
+        AccountApplication application = getUserApplication(account.getUser().getId());
 
         log.info("Account details fetched | accountId={}", account.getId());
         return AccountDetailsResponse.builder()
@@ -49,8 +54,35 @@ public class AccountService implements IAccountService {
                 .accountHolderName(account.getUser().getName())
                 .balance(account.getBalance())
                 .status(account.getStatus())
+                .accountType(application.getAccountType())
                 .build();
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public AccountDetailsResponse getProfileDetails() {
+        SavingsAccount account = getCurrentUserAccount();
+        AccountApplication application = getUserApplication(account.getUser().getId());
+
+        log.info("Account details fetched | accountId={}", account.getId());
+        return UserProfileDetailsResponse.builder()
+                .accountId(account.getId())
+                .accountNumber(account.getAccountNumber())
+                .accountHolderName(account.getUser().getName())
+                .balance(account.getBalance())
+                .status(account.getStatus())
+                .accountType(application.getAccountType())
+                .dob(application.getDob())
+                .applicationDate(application.getApplicationDate())
+                .reviewDate(application.getReviewDate())
+                .occupation(application.getOccupation())
+                .incomeSource(application.getIncomeSource())
+                .annualIncome(application.getAnnualIncome())
+                .parentName(application.getParentName())
+                .transactionsCount(accountTransactionRepository.count())
+                .build();
+    }
+
 
     @Override
     public TransactionResponse deposit(TransactionRequest request) {
@@ -75,7 +107,7 @@ public class AccountService implements IAccountService {
 
         log.info("Deposit successful | accountId={} | transactionId={} | deposited amount={}", account.getId(), transaction.getId(), amount);
 
-        return transactionMapper.toResponse(transaction, "Deposit successful for accountId: " + account.getId() + ", deposited: " + amount);
+        return mapper.toResponse(transaction, "Deposit successful for accountId: " + account.getId() + ", deposited: " + amount);
     }
 
     @Override
@@ -99,14 +131,14 @@ public class AccountService implements IAccountService {
 
         AccountTransaction transaction = saveTransaction(
                 account,
-                TransactionType.WITHDRAWAL,
+                TransactionType.WITHDRAW,
                 amount,
                 request.getDescription()
         );
 
         log.info("Withdraw successful | accountId={} | transactionId={} | withdrawn amount={}", account.getId(), transaction.getId(), amount);
 
-        return transactionMapper.toResponse(transaction, "Withdrawal successful for accountId: " + account.getId() + ", withdrawn: " + amount);
+        return mapper.toResponse(transaction, "Withdrawal successful for accountId: " + account.getId() + ", withdrawn: " + amount);
     }
 
     @Override
@@ -118,9 +150,9 @@ public class AccountService implements IAccountService {
 
         log.info("Transaction history fetched | accountId={} | count={}", account.getId(), transactions.size());
 
-        return transactionMapper.toHistoryResponse(
+        return mapper.toHistoryResponse(
                 account.getId(),
-                transactionMapper.toHistoryItems(transactions)
+                mapper.toHistoryItems(transactions)
         );
     }
 
@@ -168,5 +200,13 @@ public class AccountService implements IAccountService {
                 .build();
 
         return accountTransactionRepository.save(tx);
+    }
+
+    private AccountApplication getUserApplication(Long id) {
+        return accountApplicationRepository.findByUserId(id)
+                .orElseThrow(() -> {
+                    log.warn("Application not found with id={}", id);
+                    return new ResourceNotFoundException("Application not found");
+                });
     }
 }

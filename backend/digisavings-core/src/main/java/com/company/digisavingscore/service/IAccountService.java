@@ -9,6 +9,8 @@ public interface IAccountService {
 
     AccountDetailsResponse getAccountDetails();
 
+    AccountDetailsResponse getProfileDetails();
+
     TransactionResponse deposit(TransactionRequest request);
 
     TransactionResponse withdraw(TransactionRequest request);

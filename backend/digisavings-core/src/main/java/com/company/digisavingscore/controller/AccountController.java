@@ -28,6 +28,15 @@ public class AccountController {
     }
 
     /**
+     * User: get my profile details
+     * URL: GET /api/accounts/me/profile
+     */
+    @GetMapping
+    public ResponseEntity<AccountDetailsResponse> getMyProfile() {
+        return ResponseEntity.ok(accountService.getProfileDetails());
+    }
+
+    /**
      * User: deposit transaction
      * URL: POST /api/accounts/me/deposit
      */

@@ -1,6 +1,7 @@
 package com.company.digisavingscore.dto.response;
 
 import com.company.digisavingscore.entity.enums.AccountStatus;
+import com.company.digisavingscore.entity.enums.AccountType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,4 +18,5 @@ public class AccountDetailsResponse {
     private String accountHolderName;
     private BigDecimal balance;
     private AccountStatus status;
+    private AccountType accountType;
 }
