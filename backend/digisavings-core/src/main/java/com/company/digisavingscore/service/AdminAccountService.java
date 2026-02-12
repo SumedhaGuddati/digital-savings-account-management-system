@@ -36,6 +36,19 @@ public class AdminAccountService implements IAdminAccountService {
 
     @Override
     @Transactional(readOnly = true)
+    public List<AdminApplicationViewResponse> getApprovedApplications() {
+        log.info("Fetching approved applications");
+
+        List<AccountApplication> applications =
+                applicationRepository.findAllByStatusWithUser(ApplicationStatus.APPROVED);
+
+        return applications.stream()
+                .map(adminAccountMapper::toAdminApplicationView)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<AdminApplicationViewResponse> getPendingApplications() {
         log.info("Fetching pending applications");
 
