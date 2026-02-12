@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-[#F9FAFB] bg-geometric font-sans flex flex-col">
     <!-- HEADER -->
     <header class="w-full bg-[#5B21B6] shadow-sm p-4 flex items-center z-10">
-      <h1 class="text-xl font-bold text-white">ZetaRise</h1>
+      <h1 class="text-xl font-bold text-white">ZetaFi</h1>
     </header>
 
     <!-- MAIN CONTENT -->
@@ -156,24 +156,58 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { useRouter } from "vue-router";
+import axios from "axios";
 
 export default defineComponent({
   name: "LoginView",
   setup() {
+    const router = useRouter();
     const loginEmail = ref("");
     const loginPassword = ref("");
     const showPassword = ref(false);
+    const isLoading = ref(false); // optional, for button state
 
-    const handleLogin = () => {
-      console.log("Login", loginEmail.value, loginPassword.value);
-      alert(`Login demo: ${loginEmail.value}`);
-      // TODO: Connect to backend API here
+    const handleLogin = async () => {
+      if (!loginEmail.value || !loginPassword.value) {
+        alert("Please enter both email and password.");
+        return;
+      }
+
+      isLoading.value = true;
+
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/auth/login",
+          {
+            email: loginEmail.value,
+            password: loginPassword.value,
+          }
+        );
+
+        const token = response.data.token;
+        if (token) {
+          localStorage.setItem("zeta_token", token);
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        }
+
+        // ✅ TEMPORARY REDIRECT – change this later
+        router.push("/dashboard"); // or "/status", "/apply", etc.
+
+      } catch (error: any) {
+        console.error("Login failed:", error);
+        const msg = error.response?.data?.message || "Login failed. Please check your credentials.";
+        alert(msg);
+      } finally {
+        isLoading.value = false;
+      }
     };
 
     return {
       loginEmail,
       loginPassword,
       showPassword,
+      isLoading,
       handleLogin,
     };
   },
@@ -181,7 +215,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* Hexagon Geometric Pattern */
 .bg-geometric {
   background-color: #f9fafb;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%235b21b6' fill-opacity='0.03' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9l10.99-6.34L25 17.9v12.7l-11.01 6.34L3 30.6V17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.31zM28 15l-12.98-7.5V0h2v6.35L28 12.69v2.3zm0 18.5L15.02 41v8h2v-6.85L28 35.81v-2.31zM12.99 20l.01-13h2v13h-2.01zm0 29V36h2v13h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
