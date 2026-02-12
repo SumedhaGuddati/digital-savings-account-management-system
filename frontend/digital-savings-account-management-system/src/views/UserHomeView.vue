@@ -97,9 +97,8 @@ import TransactionModal from '@/components/userHome/TransactionModal.vue'
 
 import { Account, Transaction } from '@/types/app/banking'
 
-
-import axios from 'axios'
 import { TransactionType } from '@/types/api/banking';
+import { getUserHomeDetails } from '@/api/endpoints/users/users.api';
 
 export default defineComponent({
     name: 'UserHomeView',
@@ -175,11 +174,7 @@ export default defineComponent({
         async fetchAccountDetails() {
             try {
                 this.isLoading = true
-                const response = await axios.get('/api/accounts/me', {
-                    headers: {
-                        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzcwODY4MTM0LCJleHAiOjE3NzA5NTQ1MzR9.k4a5bw62l7xCilJHVVZnKXfi1mbnjqYrd2YXhu74nQA`
-                    },
-                })
+                const response = await getUserHomeDetails()
                 this.account = response.data
             } catch (error) {
                 console.error('Error fetching account details:', error)

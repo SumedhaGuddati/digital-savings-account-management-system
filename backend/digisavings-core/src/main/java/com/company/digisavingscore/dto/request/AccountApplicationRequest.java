@@ -12,8 +12,7 @@ import lombok.Setter;
 @Setter
 @Data
 public class AccountApplicationRequest {
-
-    @NotNull(message = "Account type is required")
+    @NotNull(message = "Account type cannot be blank")
     private AccountType accountType;
 
     @NotBlank(message = "Parent/Guardian name is required")

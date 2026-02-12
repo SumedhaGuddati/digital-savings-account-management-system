@@ -27,5 +27,5 @@ public class UserProfileDetailsResponse {
     private String incomeSource;
     private Double annualIncome;
     private String parentName;
-    private Integer transactionsCount;
+    private Long transactionsCount;
 }

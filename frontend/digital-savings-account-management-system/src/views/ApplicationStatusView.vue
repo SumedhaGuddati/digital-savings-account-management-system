@@ -71,7 +71,8 @@ import RejectedCard from '@/components/application-status/RejectedCard.vue'
 import ApplicationTimeline from '@/components/application-status/ApplicationTimeline.vue'
 import HelpCard from '@/components/application-status/HelpCard.vue'
 import { Application } from '@/types/app/application'
-import axios from 'axios'
+import { getUserApplicationStatus } from '@/api/endpoints/users/users.api';
+import { mapApiApplicationToUi } from '@/mapper/application/application.mapper';
 
 export default defineComponent({
     name: 'ApplicationStatusView',
@@ -102,12 +103,8 @@ export default defineComponent({
         async fetchApplicationStatus() {
             this.isLoading = true
             try {
-                const response = await axios.get('/api/accounts/application/status', {
-                    headers: {
-                        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzcwODY4MTM0LCJleHAiOjE3NzA5NTQ1MzR9.k4a5bw62l7xCilJHVVZnKXfi1mbnjqYrd2YXhu74nQA`
-                    }
-                })
-                this.application = response.data
+                const response = await getUserApplicationStatus()
+                this.application = mapApiApplicationToUi(response.data)
             } catch (error) {
                 console.error('Error fetching application status:', error)
                 toast.error('Failed to fetch application status. Please try again later.')

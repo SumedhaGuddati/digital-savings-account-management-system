@@ -42,7 +42,7 @@ import SecuritySettingsCard from '@/components/profile/SecuritySettingsCard.vue'
 import { UserProfile } from '@/types/api/user'
 import { toast, Toaster } from '@steveyuowo/vue-hot-toast';
 import "@steveyuowo/vue-hot-toast/vue-hot-toast.css";
-import axios from 'axios'
+import { getUserProfileDetails } from '@/api/endpoints/users/users.api'
 
 export default defineComponent({
   name: 'UserProfileView',
@@ -72,11 +72,7 @@ export default defineComponent({
     async fetchUserProfile() {
       try {
         this.isLoading = true;
-        const response = await axios.get('/api/accounts/me/profile', {
-          headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzcwODY4MTM0LCJleHAiOjE3NzA5NTQ1MzR9.k4a5bw62l7xCilJHVVZnKXfi1mbnjqYrd2YXhu74nQA`
-          }
-        })
+        const response = await getUserProfileDetails()
         this.userProfile = response.data;
       } catch (error) {
         console.error('Error fetching user profile:', error)

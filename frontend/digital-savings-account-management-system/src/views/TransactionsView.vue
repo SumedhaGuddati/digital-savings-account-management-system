@@ -25,9 +25,9 @@ import TransactionsSummary from '@/components/transactions/TransactionsSummary.v
 import TransactionsList from '@/components/transactions/TransactionsList.vue'
 import TransactionsQuickFilters from '@/components/transactions/TransactionsQuickFilters.vue'
 import { Transaction } from '@/types/app/banking'
-import axios from 'axios'
 import { mapApiTransactionsToUi } from '@/mapper/banking/transaction.mapper'
 import { TransactionType } from '@/types/api/banking'
+import { getUserTransactions } from '@/api/endpoints/users/users.api'
 
 export default defineComponent({
     name: 'TransactionsView',
@@ -196,11 +196,7 @@ export default defineComponent({
 
         async fetchTransactions() {
             try {
-                const response = await axios.get('/api/accounts/me/transactions', {
-                    headers: {
-                        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzcwODY4MTM0LCJleHAiOjE3NzA5NTQ1MzR9.k4a5bw62l7xCilJHVVZnKXfi1mbnjqYrd2YXhu74nQA`
-                    }
-                })
+                const response = await getUserTransactions()
                 this.transactions = mapApiTransactionsToUi(response.data.transactions)
             } catch (error) {
                 console.error('Error fetching transactions:', error)

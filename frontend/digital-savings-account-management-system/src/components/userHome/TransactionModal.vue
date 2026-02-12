@@ -109,8 +109,8 @@ import {
     faCircleExclamation,
     faInfoCircle
 } from '@fortawesome/free-solid-svg-icons'
-import axios from 'axios'
 import { TransactionType } from '@/types/api/banking';
+import { depositToAccount } from '@/api/endpoints/users/users.api';
 
 export default defineComponent({
     name: 'TransactionModal',
@@ -342,15 +342,9 @@ export default defineComponent({
 
             try {
                 this.isProcessing = true
-                await axios.post(`/api/accounts/me/${this.type.toString().toLowerCase()}`,
-                    {
-                        amount: this.amount,
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzcwODY4MTM0LCJleHAiOjE3NzA5NTQ1MzR9.k4a5bw62l7xCilJHVVZnKXfi1mbnjqYrd2YXhu74nQA`
-                        }
-                    });
+
+                await depositToAccount(this.amount!)
+
                 this.$emit('confirm', this.amount)
                 this.$emit('close')
             } catch (error) {

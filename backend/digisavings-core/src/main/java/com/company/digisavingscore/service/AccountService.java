@@ -60,7 +60,7 @@ public class AccountService implements IAccountService {
 
     @Override
     @Transactional(readOnly = true)
-    public AccountDetailsResponse getProfileDetails() {
+    public UserProfileDetailsResponse getProfileDetails() {
         SavingsAccount account = getCurrentUserAccount();
         AccountApplication application = getUserApplication(account.getUser().getId());
 

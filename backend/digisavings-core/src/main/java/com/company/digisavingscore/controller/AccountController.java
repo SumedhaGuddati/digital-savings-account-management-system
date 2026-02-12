@@ -4,6 +4,7 @@ import com.company.digisavingscore.dto.request.TransactionRequest;
 import com.company.digisavingscore.dto.response.AccountDetailsResponse;
 import com.company.digisavingscore.dto.response.TransactionHistoryResponse;
 import com.company.digisavingscore.dto.response.TransactionResponse;
+import com.company.digisavingscore.dto.response.UserProfileDetailsResponse;
 import com.company.digisavingscore.service.IAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,8 +32,8 @@ public class AccountController {
      * User: get my profile details
      * URL: GET /api/accounts/me/profile
      */
-    @GetMapping
-    public ResponseEntity<AccountDetailsResponse> getMyProfile() {
+    @GetMapping("/profile")
+    public ResponseEntity<UserProfileDetailsResponse> getMyProfile() {
         return ResponseEntity.ok(accountService.getProfileDetails());
     }
 

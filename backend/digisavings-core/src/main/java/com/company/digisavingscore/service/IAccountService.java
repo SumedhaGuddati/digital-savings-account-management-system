@@ -4,12 +4,13 @@ import com.company.digisavingscore.dto.request.TransactionRequest;
 import com.company.digisavingscore.dto.response.AccountDetailsResponse;
 import com.company.digisavingscore.dto.response.TransactionHistoryResponse;
 import com.company.digisavingscore.dto.response.TransactionResponse;
+import com.company.digisavingscore.dto.response.UserProfileDetailsResponse;
 
 public interface IAccountService {
 
     AccountDetailsResponse getAccountDetails();
 
-    AccountDetailsResponse getProfileDetails();
+    UserProfileDetailsResponse getProfileDetails();
 
     TransactionResponse deposit(TransactionRequest request);
 
