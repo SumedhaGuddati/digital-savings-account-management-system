@@ -29,7 +29,7 @@ public class AccountApplicationController {
      * @return 201 Created with the application details.
      */
     @PostMapping("/apply")
-    public ResponseEntity<AccountApplicationResponse> apply(@RequestBody AccountApplicationRequest request) {
+    public ResponseEntity<AccountApplicationResponse> apply(@Valid @RequestBody AccountApplicationRequest request) {
         AccountApplicationResponse response = service.applyForAccount(request);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

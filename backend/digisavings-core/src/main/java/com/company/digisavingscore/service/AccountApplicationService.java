@@ -45,7 +45,11 @@ public class AccountApplicationService implements IAccountApplicationService {
         entity.setAccountType(request.getAccountType());
         entity.setApplicationDate(LocalDateTime.now());
         entity.setStatus(ApplicationStatus.PENDING);
-
+        entity.setParentName(request.getParentName());
+        entity.setOccupation(request.getOccupation());
+        entity.setIncomeSource(request.getIncomeSource());
+        entity.setAnnualIncome(request.getAnnualIncome());
+        entity.setDob(java.time.LocalDate.parse(request.getDob()));
         AccountApplication saved = repository.save(entity);
         log.info("Application saved with ID: {}", saved.getId());
 
