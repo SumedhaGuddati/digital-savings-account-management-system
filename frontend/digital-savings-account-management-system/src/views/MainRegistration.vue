@@ -54,11 +54,10 @@
 <script>
 import { toast } from "@steveyuowo/vue-hot-toast";
 import "@steveyuowo/vue-hot-toast/vue-hot-toast.css";
-import axios from "axios";
 import SignUp from "../components/SignUp.vue";
 import ApplyAccountModule from "../components/ApplyAccount.vue";
-import { TOKEN_KEY } from "@/utils/auth.token";
-import { signupRequest, applyForAccount } from "@/api/endpoints/auth/auth.api";
+import { applyForAccount } from "@/api/endpoints/auth/auth.api";
+import { useStore } from "vuex";
 
 export default {
   name: "MainRegistration",
@@ -143,17 +142,11 @@ export default {
       try {
         this.isSubmitting = true;
 
-        const signupRes = await signupRequest({
-          name: s.name,
-          email: s.email,
-          password: s.password,
-        });
-
-        const token = signupRes.data.token;
-        if (token) {
-          sessionStorage.setItem(TOKEN_KEY, token);
-          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        }
+    await store.dispatch("auth/signup", {
+      name: s.name,
+      email: s.email,
+      password: s.password,
+    });
 
         toast.loading("Creating application...", { id: toastId });
 

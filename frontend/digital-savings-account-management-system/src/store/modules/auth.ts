@@ -1,6 +1,6 @@
 import { Module } from "vuex";
 import { clearAuthToken, setAuthToken, TOKEN_KEY } from "@/utils/auth.token";
-import { getApplicationStatus, loginRequest } from "@/api/endpoints/auth/auth.api";
+import { getApplicationStatus, loginRequest, signupRequest } from "@/api/endpoints/auth/auth.api";
 
 /* =======================
    Interfaces
@@ -156,6 +156,36 @@ const actions = {
     } catch (error: any) {
       const msg =
         error.response?.data?.message || "Login failed";
+      commit("SET_ERROR", msg);
+      throw error;
+    } finally {
+      commit("SET_LOADING", false);
+    }
+  },
+
+  async signup({ commit }: any, payload: SignupRequest) { 
+    commit("SET_LOADING", true);
+    commit("SET_ERROR", null);
+
+    try {
+      const response = await signupRequest(payload);
+      
+      const token = response.data.token;
+      const role = response.data.role.toUpperCase();
+
+      const user: User = {
+        id: response.data.userId || 0,
+        name: payload.name,
+        email: payload.email,
+        role: role as Role,
+        createdAt: new Date().toISOString(),
+      }
+      commit("SET_AUTH", { user, token });
+      
+      return { role };
+    } catch (error: any) {
+      const msg =
+        error.response?.data?.message || "Signup failed";
       commit("SET_ERROR", msg);
       throw error;
     } finally {

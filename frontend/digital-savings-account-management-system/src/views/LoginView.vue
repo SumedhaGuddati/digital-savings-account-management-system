@@ -297,13 +297,11 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
 import { toast, Toaster } from "@steveyuowo/vue-hot-toast";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { UserRole } from "@/types/api/user";
 import AppLogo from "@/components/AppLogo.vue";
-import { clearAuthToken, TOKEN_KEY } from "@/utils/auth.token";
 import { useStore } from "vuex";
 
 export default defineComponent({

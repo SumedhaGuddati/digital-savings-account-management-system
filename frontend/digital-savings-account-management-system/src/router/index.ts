@@ -2,7 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import LoginView from "../views/LoginView.vue";
 import MainRegistration from "../views/MainRegistration.vue";
 import LandingPageView from "@/views/LandingPageView.vue";
-import { setupAccountStatusGuard } from "./accountStatusGuard";
+import { setupAuthGuard } from "./authGuard";
 
 const routes: RouteRecordRaw[] = [
   // Public
@@ -55,6 +55,7 @@ const routes: RouteRecordRaw[] = [
 
   {
     path: '/:pathMatch(.*)*',
+    name: 'NotFound',
     component: () => import('@/views/NotFoundView.vue'),
   },
 ];
@@ -64,6 +65,6 @@ const router = createRouter({
   routes,
 });
 
-setupAccountStatusGuard(router);
+setupAuthGuard(router);
 
 export default router;
