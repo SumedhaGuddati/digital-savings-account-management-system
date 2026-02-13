@@ -57,7 +57,6 @@ import "@steveyuowo/vue-hot-toast/vue-hot-toast.css";
 import SignUp from "../components/SignUp.vue";
 import ApplyAccountModule from "../components/ApplyAccount.vue";
 import { applyForAccount } from "@/api/endpoints/auth/auth.api";
-import { useStore } from "vuex";
 
 export default {
   name: "MainRegistration",
@@ -142,7 +141,7 @@ export default {
       try {
         this.isSubmitting = true;
 
-    await store.dispatch("auth/signup", {
+    await this.$store.dispatch("auth/signup", {
       name: s.name,
       email: s.email,
       password: s.password,

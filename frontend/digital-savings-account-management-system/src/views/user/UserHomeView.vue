@@ -37,7 +37,7 @@
 
                 <!-- Account Cards -->
                 <div class="flex flex-col lg:flex-row lg:items-start lg:space-x-6 space-y-6 lg:space-y-0">
-                    <AccountCard :accountNumber="account?.accountNumber || 'N/A'" :tier="'SMART'"
+                    <AccountCard :accountNumber="account?.accountNumber || 'N/A'" :tier="account?.accountType || 'N/A'"
                         @view-details="viewAccountDetails" />
 
                     <div class="w-full lg:w-80 shrink-0">

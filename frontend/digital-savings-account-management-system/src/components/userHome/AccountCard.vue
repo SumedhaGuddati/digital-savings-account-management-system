@@ -10,7 +10,7 @@
 
             <span
                 class="px-3 py-1 text-[11px] rounded-full font-semibold uppercase bg-white/15 backdrop-blur border border-white/20 text-white">
-                {{ theme.name }}
+                {{ theme }}
             </span>
         </div>
 
@@ -41,21 +41,20 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { accountThemes } from '@/theme/accountThemes'
 import cardBg from '@/assets/card-bg.png'
 
 export default defineComponent({
     name: 'AccountCard',
     props: {
         accountNumber: { type: String, required: true },
-        tier: { type: String as () => 'ELITE' | 'PRIME' | 'SMART', required: true }
+        tier: { type: String, required: true }
     },
     computed: {
         last4Digits(): string {
             return this.accountNumber.slice(-4)
         },
-        theme(): typeof accountThemes.ELITE {
-            return accountThemes[this.tier]
+        theme(): string {
+            return this.tier.replace("_", " ");
         },
         cardBg(): string {
             return cardBg
