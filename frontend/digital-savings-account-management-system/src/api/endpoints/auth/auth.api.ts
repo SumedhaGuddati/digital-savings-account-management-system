@@ -23,3 +23,9 @@ export const sendVerificationToken = (email: string) =>
 
 export const verifyOtpToken = (email: string, token: string) =>
     apiManager.post(AUTH_ENDPOINTS.VERIFY_TOKEN, { email, token });
+
+export const sendForgotPasswordOtp = (email: string) =>
+    apiManager.post(AUTH_ENDPOINTS.FORGOT_PASSWORD_SEND_OTP, { email });
+
+export const resetPassword = (data: { email: string; otp: string; newPassword: string }) =>
+    apiManager.post(AUTH_ENDPOINTS.FORGOT_PASSWORD_RESET, data);
