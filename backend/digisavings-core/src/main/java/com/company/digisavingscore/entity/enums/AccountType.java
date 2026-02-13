@@ -1,5 +1,7 @@
 package com.company.digisavingscore.entity.enums;
 
 public enum AccountType {
-    SAVINGS
+    ZETA_ULTRA,
+    ZETA_PRIME,
+    ZETA_BASIC
 }

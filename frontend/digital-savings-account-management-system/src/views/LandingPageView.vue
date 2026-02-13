@@ -26,7 +26,7 @@ import PlansSection from '@/components/landing/PlansSection.vue'
 import FAQSection from '@/components/landing/FAQSection.vue'
 import LandingFooter from '@/components/landing/LandingFooter.vue'
 import { useLandingData } from '@/composables/landing/useLandingData'
-import type { AccountPlan } from '@/types/app/landing'
+import type { AccountPlan } from '@/types/app/landing'  
 
 export default defineComponent({
     name: 'LandingPageView',

@@ -59,64 +59,67 @@ export function useLandingData() {
     ]
 
     const accountPlans: AccountPlan[] = [
-        {
-            name: 'Everyday Smart',
-            description: 'Perfect for daily banking needs',
-            minBalance: 10000,
-            interest: 4.5,
-            recommended: false,
-            icon: faWallet,
-            iconBgClass: 'bg-emerald-100',
-            iconClass: 'text-emerald-600',
-            headerClass: 'bg-white',
-            features: [
-                { name: '4.5% Interest Rate', included: true },
-                { name: 'Free ATM Withdrawals (5/month)', included: true },
-                { name: 'Mobile Banking', included: true },
-                { name: 'Airport Lounge Access', included: false },
-                { name: 'Personal Relationship Manager', included: false },
-                { name: 'Worldwide ATM Fee Waiver', included: false }
-            ]
-        },
-        {
-            name: 'Prime Advantage',
-            description: 'Most popular with extra benefits',
-            minBalance: 15000,
-            interest: 5.5,
-            recommended: true,
-            icon: faBoltSolid,
-            iconBgClass: 'bg-blue-100',
-            iconClass: 'text-blue-600',
-            headerClass: 'bg-gradient-to-b from-white to-blue-50/30',
-            features: [
-                { name: '5.5% Interest Rate', included: true },
-                { name: 'Free ATM Withdrawals (10/month)', included: true },
-                { name: 'Mobile Banking', included: true },
-                { name: 'Airport Lounge Access (4/year)', included: true },
-                { name: 'Personal Relationship Manager', included: false },
-                { name: 'Worldwide ATM Fee Waiver', included: false }
-            ]
-        },
-        {
-            name: 'Aurora Elite',
-            description: 'Premium banking with luxury benefits',
-            minBalance: 25000,
-            interest: 6.5,
-            recommended: false,
-            icon: faCrown,
-            iconBgClass: 'bg-amber-100',
-            iconClass: 'text-amber-600',
-            headerClass: 'bg-gradient-to-b from-white to-amber-50/30',
-            features: [
-                { name: '6.5% Interest Rate', included: true },
-                { name: 'Free ATM Withdrawals (Unlimited)', included: true },
-                { name: 'Mobile Banking', included: true },
-                { name: 'Airport Lounge Access (12/year)', included: true },
-                { name: 'Personal Relationship Manager', included: true },
-                { name: 'Worldwide ATM Fee Waiver', included: true }
-            ]
-        }
-    ]
+            {
+                name: 'ZETA_BASIC',
+                code : 'ZETA_BASIC',
+                description: 'Perfect for daily banking needs',
+                minBalance: 10000,
+                interest: 4.5,
+                recommended: false,
+                icon: faWallet,
+                iconBgClass: 'bg-emerald-100',
+                iconClass: 'text-emerald-600',
+                headerClass: 'bg-white',
+                features: [
+                    { name: '4.5% Interest Rate', included: true },
+                    { name: 'Free ATM Withdrawals (5/month)', included: true },
+                    { name: 'Mobile Banking', included: true },
+                    { name: 'Airport Lounge Access', included: false },
+                    { name: 'Personal Relationship Manager', included: false },
+                    { name: 'Worldwide ATM Fee Waiver', included: false }
+                ]
+            },
+            {
+                name: 'ZETA_PRIME',
+                code : 'ZETA_PRIME',
+                description: 'Most popular with extra benefits',
+                minBalance: 15000,
+                interest: 5.5,
+                recommended: true,
+                icon: faBoltSolid,
+                iconBgClass: 'bg-blue-100',
+                iconClass: 'text-blue-600',
+                headerClass: 'bg-gradient-to-b from-white to-blue-50/30',
+                features: [
+                    { name: '5.5% Interest Rate', included: true },
+                    { name: 'Free ATM Withdrawals (10/month)', included: true },
+                    { name: 'Mobile Banking', included: true },
+                    { name: 'Airport Lounge Access (4/year)', included: true },
+                    { name: 'Personal Relationship Manager', included: false },
+                    { name: 'Worldwide ATM Fee Waiver', included: false }
+                ]
+            },
+            {
+                name: 'ZETA_ULTRA',
+                code : 'ZETA_ULTRA',
+                description: 'Premium banking with luxury benefits',
+                minBalance: 25000,
+                interest: 6.5,
+                recommended: false,
+                icon: faCrown,
+                iconBgClass: 'bg-amber-100',
+                iconClass: 'text-amber-600',
+                headerClass: 'bg-gradient-to-b from-white to-amber-50/30',
+                features: [
+                    { name: '6.5% Interest Rate', included: true },
+                    { name: 'Free ATM Withdrawals (Unlimited)', included: true },
+                    { name: 'Mobile Banking', included: true },
+                    { name: 'Airport Lounge Access (12/year)', included: true },
+                    { name: 'Personal Relationship Manager', included: true },
+                    { name: 'Worldwide ATM Fee Waiver', included: true }
+                ]
+            }
+        ]
 
     const faqs: FAQ[] = [
         {

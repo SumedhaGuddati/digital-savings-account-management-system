@@ -37,11 +37,11 @@
               <span v-if="isAgreed">✓</span>
             </div>
             <p class="agreement-text">
-              I verify that all information is accurate.
+              I verify that all information is accurate and complete.
             </p>
           </div>
 
-          <button @click="handleSubmit" :disabled="!isFormValid || isSubmitting" class="submit-button">
+          <button @click="handleSubmit" :disabled="!isAgreed || isSubmitting" class="submit-button">
             <span v-if="!isSubmitting">Submit Application</span>
             <span v-else>Processing...</span>
           </button>
@@ -51,9 +51,7 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
+<script>
 import { toast } from "@steveyuowo/vue-hot-toast";
 import "@steveyuowo/vue-hot-toast/vue-hot-toast.css";
 import axios from "axios";
@@ -62,76 +60,130 @@ import ApplyAccountModule from "../components/ApplyAccount.vue";
 import { TOKEN_KEY } from "@/utils/auth.token";
 import { signupRequest, applyForAccount } from "@/api/endpoints/auth/auth.api";
 
-const router = useRouter();
-const signupRef = ref(null);
-const financialModuleRef = ref(null);
-const isAgreed = ref(false);
-const isSubmitting = ref(false);
+export default {
+  name: "MainRegistration",
+  components: {
+    SignUp,
+    ApplyAccountModule
+  },
+  data() {
+    return {
+      isAgreed: false,
+      isSubmitting: false,
+      initialPlanType: ""
+    };
+  },
+  mounted() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const accountType = urlParams.get('type');
 
-// THE MASTER VALIDATION LOGIC
-const isFormValid = computed(() => {
-  const signup = signupRef.value?.formData;
-  const financial = financialModuleRef.value?.formData;
-
-  if (!signup || !financial) return false;
-
-  const authValid = signup.name && signup.email && signup.password;
-  const passwordsMatch = signup.password === signup.confirmPassword;
-
-  const financialValid =
-    financial.accountType && financial.annualIncome && financial.occupation;
-
-  return authValid && passwordsMatch && financialValid && isAgreed.value;
-});
-
-const handleSubmit = async () => {
-  const s = signupRef.value?.formData;
-  const f = financialModuleRef.value?.formData;
-
-  if (!s || !f) return;
-
-  const toastId = toast.loading("Initializing secure session...");
-
-  try {
-    isSubmitting.value = true;
-
-    // STEP 1: Signup
-    const signupRes = await signupRequest({
-      name: s.name,
-      email: s.email,
-      password: s.password,
-    });
-
-    const token = signupRes.data.token;
-    if (token) {
-      sessionStorage.setItem(TOKEN_KEY, token);
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    if (accountType) {
+      this.initialPlanType = accountType;
     }
+  },
+  watch: {
+    '$route.query.accountType': {
+      immediate: true,
+      handler(newAccountType) {
+        if (newAccountType) {
+          this.initialPlanType = newAccountType;
+        }
 
-    toast.loading("Creating application...", { id: toastId });
-
-    // STEP 2: Application
-    await applyForAccount({
-      occupation: f.occupation,
-      incomeSource: f.incomeSource,
-      annualIncome: Number(f.annualIncome),
-      parentName: f.parentName,
-      dob: f.dob,
-      accountType: "SAVINGS",
-    });
-
-    toast.success("Application Submitted!", { id: toastId });
-    setTimeout(() => router.push("/me/application"), 1000);
-  } catch (error) {
-    const msg = error.response?.data?.message;
-    if (msg === "A savings account application already exists for this user.") {
-      toast.success("Redirecting to your application...", { id: toastId });
-      setTimeout(() => router.push("/me/application"), 1000);
-    } else {
-      toast.error(msg || "Request failed", { id: toastId });
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
     }
-  } finally {
-    isSubmitting.value = false;
+  },
+
+  methods: {
+    async handleSubmit() {
+      const s = this.$refs.signupRef?.formData;
+      const f = this.$refs.financialModuleRef?.formData;
+      const termsChecked = this.$refs.financialModuleRef?.termsChecked;
+
+      if (!s || !f) {
+        toast.error("Form data is missing. Please refresh.");
+        return;
+      }
+
+      if (!s.name || !s.email || !s.password) {
+        toast.error("Please fill in all Sign Up fields.");
+        return;
+      }
+
+      if (s.password !== s.confirmPassword) {
+        toast.error("Passwords do not match.");
+        return;
+      }
+
+      if (!f.accountType) {
+        toast.error("Please select an Account Type.");
+        return;
+      }
+
+      if (!f.annualIncome || !f.occupation) {
+        toast.error("Please complete your Financial Profile.");
+        return;
+      }
+
+      if (!termsChecked) {
+        toast.error("Please accept the Terms and Conditions.");
+        return;
+      }
+
+      if (!this.isAgreed) {
+        toast.error("Please verify your information.");
+        return;
+      }
+
+      const toastId = toast.loading("Initializing secure session...");
+
+      try {
+        this.isSubmitting = true;
+
+        const signupRes = await signupRequest({
+          name: s.name,
+          email: s.email,
+          password: s.password,
+        });
+
+        const token = signupRes.data.token;
+        if (token) {
+          sessionStorage.setItem(TOKEN_KEY, token);
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        }
+
+        toast.loading("Creating application...", { id: toastId });
+
+        await applyForAccount({
+          occupation: f.occupation,
+          incomeSource: f.incomeSource,
+          annualIncome: Number(f.annualIncome),
+          parentName: f.parentName,
+          dob: f.dob,
+          accountType: f.accountType,
+          termsAccepted: true,
+          termsAcceptedAt: new Date().toISOString()
+        });
+
+        toast.success("Application Submitted!", { id: toastId });
+
+        setTimeout(() => this.$router.push("/me/application"), 1000);
+
+      } catch (error) {
+        const msg = error.response?.data?.message;
+        if (msg === "A savings account application already exists for this user.") {
+          toast.success("Redirecting to your application...", { id: toastId });
+          setTimeout(() => this.$router.push("/me/application"), 1000);
+        } else {
+          toast.error(msg || "Request failed", { id: toastId });
+        }
+      } finally {
+        this.isSubmitting = false;
+      }
+    }
   }
 };
 </script>
@@ -213,7 +265,7 @@ const handleSubmit = async () => {
 }
 
 .spacer {
-  height: 40px;
+  height: 20px;
 }
 
 .page-title {
@@ -230,8 +282,8 @@ const handleSubmit = async () => {
 }
 
 .form-actions {
-  margin-top: 40px;
-  padding-top: 20px;
+  margin-top: 24px;
+  padding-top: 16px;
   border-top: 1px solid #f1f5f9;
 }
 
