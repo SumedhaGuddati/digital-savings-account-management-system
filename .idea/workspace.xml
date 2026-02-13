@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="643f257b-d6e5-49e5-b785-f54de194e422" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/backend/digisavings-core/src/main/java/com/company/digisavingscore/entity/enums/AccountType.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/digisavings-core/src/main/java/com/company/digisavingscore/entity/enums/AccountType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/digisavings-core/src/main/java/com/company/digisavingscore/repository/AccountApplicationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/digisavings-core/src/main/java/com/company/digisavingscore/repository/AccountApplicationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/digisavings-core/src/main/java/com/company/digisavingscore/service/AccountApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/digisavings-core/src/main/java/com/company/digisavingscore/service/AccountApplicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/digisavings-core/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/digisavings-core/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/components/ApplyAccount.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/components/ApplyAccount.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/components/landing/PlansSection.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/components/landing/PlansSection.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/composables/landing/useLandingData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/composables/landing/useLandingData.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/types/app/landing.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/types/app/landing.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/views/LandingPageView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/views/LandingPageView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/views/MainRegistration.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/views/MainRegistration.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;HimaVarshaKaranam&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ChandanKhamitkar/zeta-digital-savings-account-management-system&quot;,
+    &quot;accountId&quot;: &quot;39986256-2912-449e-adbd-4e9bd69dc24a&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="39bnH4xLJjCHPKpjj1t9NYzUT9E" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.DigiSavingsCoreApplication.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/himavarshak/capstonemain/zeta-digital-savings-account-management-system&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="643f257b-d6e5-49e5-b785-f54de194e422" name="Changes" comment="" />
+      <created>1770973546304</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1770973546304</updated>
+    </task>
+    <servers />
+  </component>
+</project>
