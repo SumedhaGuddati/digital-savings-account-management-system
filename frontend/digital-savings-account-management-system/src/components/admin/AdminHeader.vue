@@ -1,6 +1,10 @@
 <template>
-    <header class="h-20 flex items-center justify-between px-8 bg-white border-b border-slate-200 sticky top-0 z-10">
-        <h1 class="text-xl font-bold text-indigo-700">{{ pageTitle }}</h1>
+    <header class="h-16 sm:h-20 flex items-center justify-between px-3 sm:px-4 md:px-6 bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="flex items-center gap-1 sm:gap-2 md:gap-4 -ml-12 sm:-ml-16 md:-ml-25">
+            <AppLogo />
+            <span class="text-lg sm:text-xl md:text-2xl font-light text-slate-300">|</span>
+            <h1 class="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-indigo-700 truncate max-w-[120px] xs:max-w-[180px] sm:max-w-[250px] md:max-w-[300px] lg:max-w-full">{{ pageTitle }}</h1>
+        </div>
 
         <AdminUserMenu :user="user" @logout="handleLogout" />
     </header>
@@ -9,10 +13,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import AdminUserMenu from './AdminUserMenu.vue'
+import AppLogo from "@/components/AppLogo.vue";
 
 export default defineComponent({
     name: 'AdminHeader',
-    components: { AdminUserMenu },
+    components: { 
+        AdminUserMenu,
+        AppLogo 
+    },
 
     data() {
         return {
@@ -23,9 +31,9 @@ export default defineComponent({
     computed: {
         pageTitle(): string {
             const path = this.$route.path
-            if (path === '/') return 'Dashboard'
-            if (path === '/approvals') return 'Pending Applications'
-            if (path === '/audit-logs') return 'Audit Logs'
+            if (path === '/admin') return 'Dashboard'
+            if (path === '/admin/approvals') return 'Pending Applications'
+            if (path === '/admin/audit-logs') return 'Audit Logs'
             if (path.includes('/profile')) return 'Profile'
             if (path.includes('/settings')) return 'Settings'
             return 'Dashboard'
@@ -46,7 +54,7 @@ export default defineComponent({
             } else {
                 this.user = {
                     name: 'Admin User',
-                    email: 'admin@bank.com',
+                    email: 'superadmin@bank.com',
                     avatar: 'https://i.pravatar.cc/100?img=12'
                 }
             }
