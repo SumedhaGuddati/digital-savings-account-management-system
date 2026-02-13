@@ -29,43 +29,70 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCheckCircle, faXmarkCircle, faHourglassHalf } from '@fortawesome/free-solid-svg-icons'
-import { Application } from '@/types/app/application';
+import { defineComponent, PropType } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import {
+    faCheckCircle,
+    faXmarkCircle,
+    faHourglassHalf
+} from "@fortawesome/free-solid-svg-icons";
+
+import type { Application } from "@/types/app/application";
 
 export default defineComponent({
-    name: 'StatusHeader',
-    components: { FontAwesomeIcon },
-    props: {
-        application: { type: Object as () => Application, required: true }
+    name: "StatusHeader",
+
+    components: {
+        FontAwesomeIcon
     },
-    setup(props) {
-        const statusIcon = computed(() =>
-            props.application.status === 'APPROVED'
-                ? faCheckCircle
-                : props.application.status === 'REJECTED'
-                    ? faXmarkCircle
-                    : faHourglassHalf
-        )
 
-        const headerClass = computed(() =>
-            props.application.status === 'APPROVED'
-                ? 'bg-gradient-to-r from-emerald-500 to-teal-500'
-                : props.application.status === 'REJECTED'
-                    ? 'bg-gradient-to-r from-red-500 to-rose-500'
-                    : 'bg-gradient-to-r from-amber-500 to-orange-500'
-        )
+    props: {
+        application: {
+            type: Object as PropType<Application>,
+            required: true
+        }
+    },
 
-        const statusDescription = computed(() =>
-            props.application.status === 'APPROVED'
-                ? 'Your savings account application has been approved. Welcome!'
-                : props.application.status === 'REJECTED'
-                    ? 'Your application could not be approved at this time.'
-                    : 'Your application is being reviewed. This usually takes 2–3 business days.'
-        )
+    data() {
+        return {
+            faCheckCircle,
+            faXmarkCircle,
+            faHourglassHalf
+        };
+    },
 
-        return { statusIcon, headerClass, statusDescription }
+    computed: {
+        statusIcon() {
+            const status = this.application.status;
+
+            if (status === "APPROVED") return this.faCheckCircle;
+            if (status === "REJECTED") return this.faXmarkCircle;
+            return this.faHourglassHalf;
+        },
+
+        headerClass(): string {
+            const status = this.application.status;
+
+            if (status === "APPROVED")
+                return "bg-gradient-to-r from-emerald-500 to-teal-500";
+
+            if (status === "REJECTED")
+                return "bg-gradient-to-r from-red-500 to-rose-500";
+
+            return "bg-gradient-to-r from-amber-500 to-orange-500";
+        },
+
+        statusDescription(): string {
+            const status = this.application.status;
+
+            if (status === "APPROVED")
+                return "Your savings account application has been approved. Welcome!";
+
+            if (status === "REJECTED")
+                return "Your application could not be approved at this time.";
+
+            return "Your application is being reviewed. This usually takes 2–3 business days.";
+        }
     }
-})
+});
 </script>

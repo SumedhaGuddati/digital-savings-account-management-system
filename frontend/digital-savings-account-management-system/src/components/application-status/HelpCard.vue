@@ -10,8 +10,8 @@
                     <p class="text-sm text-gray-300 mt-0.5">Our support team is here to assist you</p>
                 </div>
             </div>
-            <button @click="$emit('contact-support')"
-                class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-sm font-medium rounded-lg transition-colors border border-white/20">
+            <button
+                class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-sm font-medium rounded-lg transition-colors border border-white/20 cursor-not-allowed">
                 Contact Support
             </button>
         </div>
@@ -19,16 +19,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faHeadset } from '@fortawesome/free-solid-svg-icons'
+import { defineComponent } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faHeadset } from "@fortawesome/free-solid-svg-icons";
 
 export default defineComponent({
-    name: 'HelpCard',
-    components: { FontAwesomeIcon },
-    emits: ['contact-support'],
-    setup() {
-        return { faHeadset }
+    name: "HelpCard",
+
+    components: {
+        FontAwesomeIcon
+    },
+
+    data() {
+        return {
+            faHeadset
+        };
     }
-})
+});
 </script>

@@ -15,20 +15,40 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faClock } from '@fortawesome/free-solid-svg-icons'
+import { defineComponent } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 export default defineComponent({
-    name: 'TransactionsEmptyState',
-    components: { FontAwesomeIcon },
-    props: {
-        hasActiveFilters: { type: Boolean, required: true },
-        message: { type: String, required: true }
+    name: "TransactionsEmptyState",
+
+    components: {
+        FontAwesomeIcon
     },
-    emits: ['clear'],
-    setup() {
-        return { faClock }
+
+    props: {
+        hasActiveFilters: {
+            type: Boolean,
+            required: true
+        },
+        message: {
+            type: String,
+            required: true
+        }
+    },
+
+    emits: ["clear"],
+
+    data() {
+        return {
+            faClock
+        };
+    },
+
+    methods: {
+        clear() {
+            this.$emit("clear");
+        }
     }
-})
+});
 </script>

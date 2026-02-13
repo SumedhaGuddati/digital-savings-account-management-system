@@ -44,9 +44,9 @@
                 </div>
 
                 <ApprovedCard v-if="application.status === 'APPROVED'" />
-                <RejectedCard v-if="application.status === 'REJECTED'" @contact-support="contactSupport" />
+                <RejectedCard v-if="application.status === 'REJECTED'" />
                 <ApplicationTimeline :application="application" />
-                <HelpCard @contact-support="contactSupport" />
+                <HelpCard />
             </div>
 
         </div>
@@ -100,9 +100,6 @@ export default defineComponent({
         faFileCirclePlus() { return faFileCirclePlus }
     },
     methods: {
-        contactSupport() {
-            console.log('Contact support clicked')
-        },
         async fetchApplicationStatus() {
             this.isLoading = true
 

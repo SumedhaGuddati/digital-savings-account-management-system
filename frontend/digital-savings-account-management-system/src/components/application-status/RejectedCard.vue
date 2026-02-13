@@ -13,8 +13,8 @@
                     Reason: Documentation verification failed.
                 </p>
                 <div class="flex gap-3">
-                    <button @click="$emit('contact-support')"
-                        class="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors">
+                    <button
+                        class="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors cursor-not-allowed">
                         Contact Support
                     </button>
                     <button @click="$router.push('/accounts/apply')"
@@ -28,16 +28,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { defineComponent } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 export default defineComponent({
-    name: 'RejectedCard',
-    components: { FontAwesomeIcon },
-    emits: ['contact-support'],
-    setup() {
-        return { faCircleExclamation }
+    name: "RejectedCard",
+
+    components: {
+        FontAwesomeIcon
+    },
+
+    data() {
+        return {
+            faCircleExclamation
+        };
     }
-})
+});
 </script>

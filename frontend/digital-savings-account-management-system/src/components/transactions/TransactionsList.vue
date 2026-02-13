@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import TransactionRow from '@/components/TransactionRow.vue'
+import TransactionRow from './TransactionRow.vue';
 import TransactionsEmptyState from './TransactionsEmptyState.vue'
 import { Transaction } from '@/types/app/banking'
 

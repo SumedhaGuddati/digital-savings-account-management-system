@@ -80,42 +80,86 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faMagnifyingGlass, faChevronDown, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { defineComponent } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import {
+    faMagnifyingGlass,
+    faChevronDown,
+    faXmark
+} from "@fortawesome/free-solid-svg-icons";
 
 export default defineComponent({
-    name: 'TransactionsFilters',
-    components: { FontAwesomeIcon },
-    props: {
-        searchQuery: { type: String, required: true },
-        dateFilter: { type: String, required: true },
-        typeFilter: { type: String, required: true }
+    name: "TransactionsFilters",
+
+    components: {
+        FontAwesomeIcon
     },
-    emits: ['update:searchQuery', 'update:dateFilter', 'update:typeFilter', 'clear'],
-    setup(props) {
-        const hasActiveFilters = computed(() => {
-            return props.searchQuery || props.dateFilter !== 'all' || props.typeFilter !== 'all'
-        })
 
-        const dateFilterLabel = computed(() => {
-            const labels: Record<string, string> = {
-                today: 'Today',
-                yesterday: 'Yesterday',
-                week: 'This week',
-                month: 'This month',
-                year: 'This year'
-            }
-            return labels[props.dateFilter] || props.dateFilter
-        })
+    props: {
+        searchQuery: {
+            type: String,
+            required: true
+        },
+        dateFilter: {
+            type: String,
+            required: true
+        },
+        typeFilter: {
+            type: String,
+            required: true
+        }
+    },
 
+    emits: [
+        "update:searchQuery",
+        "update:dateFilter",
+        "update:typeFilter",
+        "clear"
+    ],
+
+    data() {
         return {
-            hasActiveFilters,
-            dateFilterLabel,
             faMagnifyingGlass,
             faChevronDown,
             faXmark
+        };
+    },
+
+    computed: {
+        hasActiveFilters(): boolean {
+            return (
+                !!this.searchQuery ||
+                this.dateFilter !== "all" ||
+                this.typeFilter !== "all"
+            );
+        },
+
+        dateFilterLabel(): string {
+            const labels: Record<string, string> = {
+                today: "Today",
+                yesterday: "Yesterday",
+                week: "This week",
+                month: "This month",
+                year: "This year"
+            };
+
+            return labels[this.dateFilter] || this.dateFilter;
+        }
+    },
+
+    methods: {
+        updateSearchQuery(value: string) {
+            this.$emit("update:searchQuery", value);
+        },
+        updateDateFilter(value: string) {
+            this.$emit("update:dateFilter", value);
+        },
+        updateTypeFilter(value: string) {
+            this.$emit("update:typeFilter", value);
+        },
+        clear() {
+            this.$emit("clear");
         }
     }
-})
+});
 </script>

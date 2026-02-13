@@ -19,15 +19,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import { defineComponent } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
 export default defineComponent({
-    name: 'ApprovedCard',
-    components: { FontAwesomeIcon },
-    setup() {
-        return { faCircleCheck }
+    name: "ApprovedCard",
+
+    components: {
+        FontAwesomeIcon
+    },
+
+    data() {
+        return {
+            faCircleCheck
+        };
     }
-})
+});
 </script>

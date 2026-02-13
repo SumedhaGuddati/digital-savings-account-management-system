@@ -36,7 +36,6 @@
 import { defineComponent, h } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
-import { UserProfile } from '@/types/api/user'
 import { formatDateShort } from '@/utils/dateFormatter'
 
 const InfoField = defineComponent({

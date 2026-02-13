@@ -18,8 +18,8 @@
                 :icon-color="application.status !== 'PENDING' ? 'text-indigo-600' : 'text-gray-400'"
                 title="Under Review" :date="application.reviewDate ? formatDate(application.reviewDate) : 'In progress'"
                 :description="application.status === 'PENDING'
-                        ? 'Your application is being reviewed by our team.'
-                        : 'Application has been reviewed.'
+                    ? 'Your application is being reviewed by our team.'
+                    : 'Application has been reviewed.'
                     " :show-line="application.status === 'PENDING'" />
 
             <!-- Decision -->
@@ -29,53 +29,62 @@
                 :icon-color="application.status === 'APPROVED' ? 'text-emerald-600' : 'text-red-500'"
                 :title="application.status === 'APPROVED' ? 'Approved' : 'Rejected'"
                 :date="formatDate(application.reviewDate!)" :description="application.status === 'APPROVED'
-                        ? 'Your application has been approved. Your account is now active.'
-                        : 'Your application was not approved. Please check the reason above.'
+                    ? 'Your application has been approved. Your account is now active.'
+                    : 'Your application was not approved. Please check the reason above.'
                     " :show-line="false" />
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { defineComponent, PropType } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
     faTimeline,
     faFile,
     faBuilding,
     faCircleCheck,
     faCircleExclamation
-} from '@fortawesome/free-solid-svg-icons'
-import TimelineItem from './TimelineItem.vue'
-import { Application } from '@/types/app/application'
+} from "@fortawesome/free-solid-svg-icons";
+
+import TimelineItem from "./TimelineItem.vue";
+import type { Application } from "@/types/app/application";
 
 export default defineComponent({
-    name: 'ApplicationTimeline',
+    name: "ApplicationTimeline",
+
     components: {
         FontAwesomeIcon,
         TimelineItem
     },
-    props: {
-        application: { type: Object as () => Application, required: true }
-    },
-    setup() {
-        const formatDate = (d: string) =>
-            new Date(d).toLocaleDateString('en-IN', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            })
 
+    props: {
+        application: {
+            type: Object as PropType<Application>,
+            required: true
+        }
+    },
+
+    methods: {
+        formatDate(d: string): string {
+            return new Date(d).toLocaleDateString("en-IN", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+        }
+    },
+
+    data() {
         return {
             faTimeline,
             faFile,
             faBuilding,
             faCircleCheck,
-            faCircleExclamation,
-            formatDate
-        }
+            faCircleExclamation
+        };
     }
-})
+});
 </script>

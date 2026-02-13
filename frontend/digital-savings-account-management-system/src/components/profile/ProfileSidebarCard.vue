@@ -32,7 +32,7 @@
                     </p>
                 </div>
                 <span
-                    class="px-3 py-1.5 bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 text-xs font-medium rounded-full border border-indigo-200">
+                    class="px-3 py-1.5 bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 text-xs font-medium rounded-full border border-indigo-200 text-nowrap">
                     {{ userProfile.accountType }} Tier
                 </span>
             </div>
@@ -65,7 +65,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCamera, faEnvelope, faCalendar, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 import { formatDate } from '@/utils/dateFormatter';

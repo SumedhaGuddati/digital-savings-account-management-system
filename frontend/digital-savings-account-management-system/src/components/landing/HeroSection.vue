@@ -119,38 +119,54 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { defineComponent } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
     faArrowRight,
     faRightToBracket,
     faCrown,
     faBuildingColumns,
     faCheck
-} from '@fortawesome/free-solid-svg-icons'
-import AppLogo from '../AppLogo.vue';
+} from "@fortawesome/free-solid-svg-icons";
+
+import AppLogo from "../AppLogo.vue";
 
 export default defineComponent({
-    name: 'HeroSection',
+    name: "HeroSection",
+
     components: {
         FontAwesomeIcon,
         AppLogo
     },
-    emits: ['apply', 'login'],
-    setup() {
-        const features = ['6.5% interest rate', 'Airport lounge access', 'Zero ATM fees worldwide']
 
+    emits: ["apply", "login"],
+
+    data() {
         return {
-            features,
+            features: [
+                "6.5% interest rate",
+                "Airport lounge access",
+                "Zero ATM fees worldwide"
+            ],
             faArrowRight,
             faRightToBracket,
             faCrown,
             faBuildingColumns,
             faCheck
+        };
+    },
+
+    methods: {
+        apply() {
+            this.$emit("apply");
+        },
+        login() {
+            this.$emit("login");
         }
     }
-})
+});
 </script>
+
 
 <style scoped>
 @keyframes blob {

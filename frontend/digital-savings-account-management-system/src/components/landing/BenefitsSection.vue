@@ -33,22 +33,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import type { Benefit } from '@/types/app/landing'
+import { defineComponent, PropType } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import type { Benefit } from "@/types/app/landing";
 
 export default defineComponent({
-    name: 'BenefitsSection',
-    components: { FontAwesomeIcon },
+    name: "BenefitsSection",
+
+    components: {
+        FontAwesomeIcon
+    },
+
     props: {
         benefits: {
             type: Array as PropType<Benefit[]>,
             required: true
         }
     },
-    setup() {
-        return { faArrowRight }
+
+    data() {
+        return {
+            faArrowRight
+        };
     }
-})
+});
 </script>

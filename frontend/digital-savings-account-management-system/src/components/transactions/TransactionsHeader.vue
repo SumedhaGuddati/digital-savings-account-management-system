@@ -45,29 +45,44 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { defineComponent } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
     faArrowLeft,
     faArrowRightArrowLeft,
     faCircleInfo,
     faDownload
-} from '@fortawesome/free-solid-svg-icons'
+} from "@fortawesome/free-solid-svg-icons";
 
 export default defineComponent({
-    name: 'TransactionsHeader',
-    components: { FontAwesomeIcon },
-    props: {
-        count: { type: Number, required: true }
+    name: "TransactionsHeader",
+
+    components: {
+        FontAwesomeIcon
     },
-    emits: ['export'],
-    setup() {
+
+    props: {
+        count: {
+            type: Number,
+            required: true
+        }
+    },
+
+    emits: ["export"],
+
+    data() {
         return {
             faArrowLeft,
             faArrowRightArrowLeft,
             faCircleInfo,
             faDownload
+        };
+    },
+
+    methods: {
+        export() {
+            this.$emit("export");
         }
     }
-})
+});
 </script>

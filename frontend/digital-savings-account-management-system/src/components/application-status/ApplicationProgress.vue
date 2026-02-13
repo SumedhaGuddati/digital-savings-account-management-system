@@ -46,22 +46,40 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faFile, faBuilding, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
-import { Application } from '@/types/app/application';
+import type { Application } from '@/types/app/application'
 
-export default defineComponent({
+export default {
     name: 'ApplicationProgress',
-    components: { FontAwesomeIcon },
-    props: {
-        application: { type: Object as () => Application, required: true }
-    },
-    setup() {
-        const formatDate = (date: string) =>
-            new Date(date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
 
-        return { faFile, faBuilding, faCircleCheck, formatDate }
+    components: {
+        FontAwesomeIcon
+    },
+
+    props: {
+        application: {
+            type: Object as () => Application,
+            required: true
+        }
+    },
+
+    data() {
+        return {
+            faFile,
+            faBuilding,
+            faCircleCheck
+        }
+    },
+
+    methods: {
+        formatDate(date: string): string {
+            return new Date(date).toLocaleDateString('en-IN', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            })
+        }
     }
-})
+}
 </script>

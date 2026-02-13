@@ -39,33 +39,53 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faFileLines } from '@fortawesome/free-solid-svg-icons'
-import type { Application } from '@/types/app/application'
-import DetailRow from './DetailRow.vue'
+import { defineComponent, PropType } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faFileLines } from "@fortawesome/free-solid-svg-icons";
+import type { Application } from "@/types/app/application";
+import DetailRow from "./DetailRow.vue";
 
 export default defineComponent({
-    name: 'ApplicationDetails',
-    components: { FontAwesomeIcon, DetailRow },
-    props: {
-        application: { type: Object as () => Application, required: true }
+    name: "ApplicationDetails",
+
+    components: {
+        FontAwesomeIcon,
+        DetailRow
     },
-    setup(props) {
-        const formatDate = (d: string) =>
-            new Date(d).toLocaleDateString('en-IN', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-            })
 
-        const processingTime = computed(() => {
-            const start = new Date(props.application.applicationDate)
-            const diff = Math.ceil((Date.now() - start.getTime()) / (1000 * 60 * 60 * 24))
-            return `${diff} day${diff > 1 ? 's' : ''}`
-        })
+    props: {
+        application: {
+            type: Object as PropType<Application>,
+            required: true
+        }
+    },
 
-        return { faFileLines, formatDate, processingTime }
+    data() {
+        return {
+            faFileLines
+        };
+    },
+
+    computed: {
+        processingTime(): string {
+            const start = new Date(this.application.applicationDate);
+
+            const diff = Math.ceil(
+                (Date.now() - start.getTime()) / (1000 * 60 * 60 * 24)
+            );
+
+            return `${diff} day${diff > 1 ? "s" : ""}`;
+        }
+    },
+
+    methods: {
+        formatDate(d: string): string {
+            return new Date(d).toLocaleDateString("en-IN", {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            });
+        }
     }
-})
+});
 </script>

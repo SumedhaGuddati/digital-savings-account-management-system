@@ -34,15 +34,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faShield, faLock } from '@fortawesome/free-solid-svg-icons'
+import { defineComponent } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faShield, faLock } from "@fortawesome/free-solid-svg-icons";
 
 export default defineComponent({
-    name: 'SecuritySettingsCard',
-    components: { FontAwesomeIcon },
-    setup() {
-        return { faShield, faLock }
+    name: "SecuritySettingsCard",
+
+    components: {
+        FontAwesomeIcon
+    },
+
+    data() {
+        return {
+            faShield,
+            faLock
+        };
     }
-})
+});
 </script>
