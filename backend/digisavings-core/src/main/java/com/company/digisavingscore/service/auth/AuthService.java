@@ -41,9 +41,9 @@ public class AuthService implements IAuthService {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new EmailAlreadyExistsException("Email already registered");
         }
-        if (!otpService.validateOtp(request.getEmail(), request.getOtp())) {
-            throw new InvalidCredentialsException("Invalid or expired OTP");
-        }
+//        if (!otpService.validateOtp(request.getEmail(), request.getOtp())) {
+//            throw new InvalidCredentialsException("Invalid or expired OTP");
+//        }
 
         User user = userMapper.toEntity(request, passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);

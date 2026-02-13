@@ -1,5 +1,6 @@
 import apiManager from "@/api/apiManager";
 import { AUTH_ENDPOINTS } from "./auth.endpoints";
+import { p } from "vue-router/dist/router-CWoNjPRp.mjs";
 
 export const loginRequest = (data: {
     email: string;
@@ -21,11 +22,14 @@ export const getApplicationStatus = () =>
 export const sendVerificationToken = (email: string) =>
     apiManager.post(AUTH_ENDPOINTS.SEND_VERIFICATION, { email });
 
-export const verifyOtpToken = (email: string, token: string) =>
-    apiManager.post(AUTH_ENDPOINTS.VERIFY_TOKEN, { email, token });
+export const verifyOtpToken = (email: string, otp: string) =>
+    apiManager.post(AUTH_ENDPOINTS.VERIFY_OTP, { email, otp });
 
 export const sendForgotPasswordOtp = (email: string) =>
-    apiManager.post(AUTH_ENDPOINTS.FORGOT_PASSWORD_SEND_OTP, { email });
+    apiManager.post(AUTH_ENDPOINTS.FORGOT_PASSWORD_SEND_OTP, null, { params: { email } });
 
 export const resetPassword = (data: { email: string; otp: string; newPassword: string }) =>
     apiManager.post(AUTH_ENDPOINTS.FORGOT_PASSWORD_RESET, data);
+
+export const sendOtpToEmail = (email: string) =>
+    apiManager.post(AUTH_ENDPOINTS.SEND_OTP, null, { params: { email } });

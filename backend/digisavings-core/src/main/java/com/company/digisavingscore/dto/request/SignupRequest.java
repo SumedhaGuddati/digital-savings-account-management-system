@@ -18,6 +18,6 @@ public class SignupRequest {
     @NotBlank
     private String password;
 
-    @NotBlank
-    private String otp;
+//    @NotBlank
+//    private String otp;
 }

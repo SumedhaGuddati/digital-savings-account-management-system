@@ -77,7 +77,7 @@
                 :style="{ width: strengthConfig.width }"
               ></div>
             </div>
-            <span class="text-[0.65rem] font-semibold" :class="strengthConfig.color">
+            <span class="text-[0.65rem] font-semibold rounded-full px-2 py-px text-white" :class="strengthConfig.color">
               {{ passwordStrength }}
             </span>
           </div>
@@ -94,13 +94,14 @@
         />
       </div>
     </div>
+    <Toaster/>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { sendForgotPasswordOtp, verifyOtpToken } from "@/api/endpoints/auth/auth.api";
-
+import { sendOtpToEmail, verifyOtpToken } from "@/api/endpoints/auth/auth.api";
+import { Toaster, toast } from "@steveyuowo/vue-hot-toast";
 export default defineComponent({
   name: "SignUpModule",
   data() {
@@ -161,9 +162,9 @@ export default defineComponent({
 
       this.sendingOtp = true;
       try {
-        await sendForgotPasswordOtp(this.formData.email);
+        await sendOtpToEmail(this.formData.email);
         this.otpSent = true;
-        alert("OTP sent! It will expire in 5 minutes.");
+        toast.success("OTP sent! It will expire in 5 minutes.");
       } catch (err: any) {
         console.error(err);
         if (err.response?.data?.message) {

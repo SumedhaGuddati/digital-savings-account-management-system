@@ -160,7 +160,7 @@ const actions = {
       const role = response.data.role.toUpperCase();
 
       const user: User = {
-        id: response.data.userId || 0,
+        id: response.data.id || 0,
         name: payload.name,
         email: payload.email,
         role: role as Role,

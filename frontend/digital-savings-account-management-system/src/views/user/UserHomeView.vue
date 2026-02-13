@@ -68,9 +68,6 @@
             :balance="account?.balance || 0" :max-amount="account?.balance || 0" @close="showTransactionModal = false"
             @confirm="handleTransactionConfirmation" />
 
-        <!-- <TransactionSuccessfulAnimation v-show="showTransactionSuccess"
-            @animationComplete="showTransactionSuccess = false" /> -->
-
         <Toaster />
     </div>
 </template>
@@ -99,7 +96,6 @@ import { TransactionType } from '@/types/api/banking';
 import { getUserHomeDetails, getUserTransactions } from '@/api/endpoints/users/users.api';
 import { mapApiTransactionsToUi } from '@/mapper/banking/transaction.mapper';
 import AppLoader from '@/components/ui/loader/AppLoader.vue';
-// import TransactionSuccessfulAnimation from '@/components/ui/TransactionSuccessfulAnimation.vue';
 
 export default defineComponent({
     name: 'UserHomeView',
@@ -168,13 +164,11 @@ export default defineComponent({
         async handleTransactionConfirmation(amount: number) {
             toast.success(`${this.transactionType} of ₹${amount} successful!`)
 
-            // this.showTransactionSuccess = true
             await Promise.all([
                 this.fetchAccountDetails(),
                 this.fetchTransactions()
             ]);
 
-            console.log(`${this.transactionType} of ₹${amount} successful`)
         },
         async fetchAccountDetails() {
             try {

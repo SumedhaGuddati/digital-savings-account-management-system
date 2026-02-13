@@ -97,16 +97,6 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      const signupData = this.$refs.signupRef?.formData;
-      const financialData = this.$refs.financialModuleRef?.formData;
-
-      if (!signupData || !financialData) return;
-
-      if (!this.$refs.signupRef?.isValidPassword) {
-        toast.error("Please choose a strong password before submitting.");
-      }
-    },
-    async handleSubmit() {
       const s = this.$refs.signupRef?.formData;
       const f = this.$refs.financialModuleRef?.formData;
       const termsChecked = this.$refs.financialModuleRef?.termsChecked;
@@ -159,22 +149,6 @@ export default {
 
         toast.loading("Creating application...", { id: toastId });
 
-        const annualIncomeValue =
-          financialData.annualIncome === null || financialData.annualIncome === ""
-            ? null
-            : Number(financialData.annualIncome);
-
-        await applyForAccount({
-          occupation: financialData.occupation,
-          incomeSource: financialData.incomeSource,
-          annualIncome: annualIncomeValue,
-          parentName: financialData.parentName,
-          dob: financialData.dob,
-          accountType: financialData.accountType || "ZETA_BASIC",
-        });
-
-        toast.success("Application Submitted!", { id: toastId });
-        setTimeout(() => this.$router.push("/me/application"), 1000);
         await applyForAccount({
           occupation: f.occupation,
           incomeSource: f.incomeSource,
@@ -190,7 +164,10 @@ export default {
 
         setTimeout(() => this.$router.push("/me/application"), 1000);
       } catch (error) {
+
         const msg = error.response?.data?.message;
+
+        console.log("ERROR: ", error);
         if (msg === "A savings account application already exists for this user.") {
           toast.success("Redirecting to your application...", { id: toastId });
           setTimeout(() => this.$router.push("/me/application"), 1000);
