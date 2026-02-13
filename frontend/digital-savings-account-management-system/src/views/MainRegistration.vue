@@ -7,7 +7,9 @@
         <div class="brand-top">
           <div class="brand-logo">Zeta<span>rise</span></div>
           <h1 class="sidebar-hero">
-            Elevate your <br /><span class="text-indigo-400">Financial Future.</span>
+            Elevate your <br /><span class="text-indigo-400"
+              >Financial Future.</span
+            >
           </h1>
         </div>
         <div class="brand-bottom">
@@ -70,6 +72,41 @@ export default {
     return {
       isAgreed: false,
       isSubmitting: false,
+    };
+  },
+  computed: {
+    isFormValid() {
+      const signup = this.$refs.signupRef?.formData;
+      const financial = this.$refs.financialModuleRef?.formData;
+
+      if (!signup || !financial) return false;
+
+      const authValid = signup.name && signup.email && signup.password;
+      const passwordsMatch = signup.password === signup.confirmPassword;
+      const passwordStrong = this.$refs.signupRef?.isValidPassword === true;
+
+      const financialValid =
+        financial.accountType &&
+        financial.parentName &&
+        financial.dob &&
+        financial.occupation &&
+        financial.incomeSource &&
+        financial.annualIncome !== null &&
+        financial.annualIncome !== undefined &&
+        financial.annualIncome !== "";
+
+      return authValid && passwordsMatch && passwordStrong && financialValid && this.isAgreed;
+    },
+  },
+  methods: {
+    async handleSubmit() {
+      const signupData = this.$refs.signupRef?.formData;
+      const financialData = this.$refs.financialModuleRef?.formData;
+
+      if (!signupData || !financialData) return;
+
+      if (!this.$refs.signupRef?.isValidPassword) {
+        toast.error("Please choose a strong password before submitting.");
       initialPlanType: ""
     };
   },
@@ -139,14 +176,13 @@ export default {
       }
 
       const toastId = toast.loading("Initializing secure session...");
+      this.isSubmitting = true;
 
       try {
-        this.isSubmitting = true;
-
-        const signupRes = await signupRequest({
-          name: s.name,
-          email: s.email,
-          password: s.password,
+        const signupRes = await this.$store.dispatch("auth/singup", {
+          name: signupData.name,
+          email: signupData.email,
+          password: signupData.password,
         });
 
         const token = signupRes.data.token;
@@ -157,6 +193,22 @@ export default {
 
         toast.loading("Creating application...", { id: toastId });
 
+        const annualIncomeValue =
+          financialData.annualIncome === null || financialData.annualIncome === ""
+            ? null
+            : Number(financialData.annualIncome);
+
+        await applyForAccount({
+          occupation: financialData.occupation,
+          incomeSource: financialData.incomeSource,
+          annualIncome: annualIncomeValue,
+          parentName: financialData.parentName,
+          dob: financialData.dob,
+          accountType: financialData.accountType || "ZETA_BASIC",
+        });
+
+        toast.success("Application Submitted!", { id: toastId });
+        setTimeout(() => this.$router.push("/me/application"), 1000);
         await applyForAccount({
           occupation: f.occupation,
           incomeSource: f.incomeSource,
@@ -194,7 +246,6 @@ export default {
   grid-template-columns: 280px 1fr;
   min-height: 100vh;
 }
-
 .branding-sidebar {
   position: sticky;
   top: 0;
@@ -204,7 +255,6 @@ export default {
   flex-direction: column;
   overflow: hidden;
 }
-
 .sidebar-image-bg {
   position: absolute;
   inset: 0;
@@ -213,16 +263,16 @@ export default {
   background-position: center;
   z-index: 0;
 }
-
 .sidebar-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom,
-      rgba(15, 23, 42, 0.85) 0%,
-      rgba(79, 70, 229, 0.4) 100%);
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 23, 42, 0.85) 0%,
+    rgba(79, 70, 229, 0.4) 100%
+  );
   z-index: 1;
 }
-
 .content-layer {
   position: relative;
   z-index: 2;
@@ -233,17 +283,14 @@ export default {
   justify-content: space-between;
   color: white;
 }
-
 .brand-logo {
   font-size: 1.5rem;
   font-weight: 900;
   letter-spacing: -1px;
 }
-
 .brand-logo span {
   color: #818cf8;
 }
-
 .sidebar-hero {
   font-size: 2rem;
   font-weight: 700;
@@ -251,42 +298,35 @@ export default {
   line-height: 1.1;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
-
 .form-viewport {
   padding: 40px 60px;
   display: flex;
   justify-content: center;
   background: #fff;
 }
-
 .form-centering-wrapper {
   width: 100%;
   max-width: 700px;
 }
-
 .spacer {
   height: 20px;
 }
-
 .page-title {
   font-size: 2.2rem;
   font-weight: 900;
   color: #0f172a;
   letter-spacing: -1px;
 }
-
 .page-subtitle {
   font-size: 0.95rem;
   color: #64748b;
   margin-top: 5px;
 }
-
 .form-actions {
   margin-top: 24px;
   padding-top: 16px;
   border-top: 1px solid #f1f5f9;
 }
-
 .agreement-row {
   display: flex;
   align-items: center;
@@ -294,7 +334,6 @@ export default {
   margin-bottom: 20px;
   cursor: pointer;
 }
-
 .custom-checkbox {
   width: 18px;
   height: 18px;
@@ -305,19 +344,16 @@ export default {
   justify-content: center;
   font-size: 0.7rem;
 }
-
 .custom-checkbox.is-checked {
   background: #6366f1;
   color: white;
   border-color: #6366f1;
 }
-
 .agreement-text {
   font-size: 0.85rem;
   color: #64748b;
   font-weight: 500;
 }
-
 .submit-button {
   width: 100%;
   padding: 16px;
@@ -330,22 +366,18 @@ export default {
   cursor: pointer;
   transition: all 0.2s;
 }
-
 .submit-button:hover:not(:disabled) {
   background: #1e293b;
   transform: translateY(-1px);
 }
-
 .submit-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
 @media (max-width: 1024px) {
   .registration-grid {
     grid-template-columns: 1fr;
   }
-
   .branding-sidebar {
     display: none;
   }
