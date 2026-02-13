@@ -39,15 +39,11 @@
               <span v-if="isAgreed">✓</span>
             </div>
             <p class="agreement-text">
-              I verify that all information is accurate.
+              I verify that all information is accurate and complete.
             </p>
           </div>
 
-          <button
-            @click="handleSubmit"
-            :disabled="!isFormValid || isSubmitting"
-            class="submit-button"
-          >
+          <button @click="handleSubmit" :disabled="!isAgreed || isSubmitting" class="submit-button">
             <span v-if="!isSubmitting">Submit Application</span>
             <span v-else>Processing...</span>
           </button>
@@ -58,21 +54,19 @@
 </template>
 
 <script>
-import { computed } from "vue";
-import { useRouter } from "vue-router";
 import { toast } from "@steveyuowo/vue-hot-toast";
 import "@steveyuowo/vue-hot-toast/vue-hot-toast.css";
 import axios from "axios";
 import SignUp from "../components/SignUp.vue";
 import ApplyAccountModule from "../components/ApplyAccount.vue";
 import { TOKEN_KEY } from "@/utils/auth.token";
-import { applyForAccount } from "@/api/endpoints/auth/auth.api";
+import { signupRequest, applyForAccount } from "@/api/endpoints/auth/auth.api";
 
 export default {
   name: "MainRegistration",
   components: {
     SignUp,
-    ApplyAccountModule,
+    ApplyAccountModule
   },
   data() {
     return {
@@ -113,6 +107,71 @@ export default {
 
       if (!this.$refs.signupRef?.isValidPassword) {
         toast.error("Please choose a strong password before submitting.");
+      initialPlanType: ""
+    };
+  },
+  mounted() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const accountType = urlParams.get('type');
+
+    if (accountType) {
+      this.initialPlanType = accountType;
+    }
+  },
+  watch: {
+    '$route.query.accountType': {
+      immediate: true,
+      handler(newAccountType) {
+        if (newAccountType) {
+          this.initialPlanType = newAccountType;
+        }
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+    }
+  },
+
+  methods: {
+    async handleSubmit() {
+      const s = this.$refs.signupRef?.formData;
+      const f = this.$refs.financialModuleRef?.formData;
+      const termsChecked = this.$refs.financialModuleRef?.termsChecked;
+
+      if (!s || !f) {
+        toast.error("Form data is missing. Please refresh.");
+        return;
+      }
+
+      if (!s.name || !s.email || !s.password) {
+        toast.error("Please fill in all Sign Up fields.");
+        return;
+      }
+
+      if (s.password !== s.confirmPassword) {
+        toast.error("Passwords do not match.");
+        return;
+      }
+
+      if (!f.accountType) {
+        toast.error("Please select an Account Type.");
+        return;
+      }
+
+      if (!f.annualIncome || !f.occupation) {
+        toast.error("Please complete your Financial Profile.");
+        return;
+      }
+
+      if (!termsChecked) {
+        toast.error("Please accept the Terms and Conditions.");
+        return;
+      }
+
+      if (!this.isAgreed) {
+        toast.error("Please verify your information.");
         return;
       }
 
@@ -150,6 +209,21 @@ export default {
 
         toast.success("Application Submitted!", { id: toastId });
         setTimeout(() => this.$router.push("/me/application"), 1000);
+        await applyForAccount({
+          occupation: f.occupation,
+          incomeSource: f.incomeSource,
+          annualIncome: Number(f.annualIncome),
+          parentName: f.parentName,
+          dob: f.dob,
+          accountType: f.accountType,
+          termsAccepted: true,
+          termsAcceptedAt: new Date().toISOString()
+        });
+
+        toast.success("Application Submitted!", { id: toastId });
+
+        setTimeout(() => this.$router.push("/me/application"), 1000);
+
       } catch (error) {
         const msg = error.response?.data?.message;
         if (msg === "A savings account application already exists for this user.") {
@@ -161,12 +235,8 @@ export default {
       } finally {
         this.isSubmitting = false;
       }
-    },
-  },
-  setup() {
-    const router = useRouter();
-    return { router };
-  },
+    }
+  }
 };
 </script>
 
@@ -239,7 +309,7 @@ export default {
   max-width: 700px;
 }
 .spacer {
-  height: 40px;
+  height: 20px;
 }
 .page-title {
   font-size: 2.2rem;
@@ -253,8 +323,8 @@ export default {
   margin-top: 5px;
 }
 .form-actions {
-  margin-top: 40px;
-  padding-top: 20px;
+  margin-top: 24px;
+  padding-top: 16px;
   border-top: 1px solid #f1f5f9;
 }
 .agreement-row {

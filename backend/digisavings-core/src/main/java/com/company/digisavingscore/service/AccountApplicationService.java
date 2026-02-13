@@ -50,7 +50,7 @@ public class AccountApplicationService implements IAccountApplicationService {
         entity.setOccupation(request.getOccupation());
         entity.setIncomeSource(request.getIncomeSource());
         entity.setAnnualIncome(request.getAnnualIncome());
-        entity.setDob(java.time.LocalDate.parse(request.getDob())); // Convert String to LocalDate
+        entity.setDob(java.time.LocalDate.parse(request.getDob()));
 
         AccountApplication saved = repository.save(entity);
         return mapper.toResponse(saved);

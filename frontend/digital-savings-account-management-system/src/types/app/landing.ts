@@ -19,16 +19,17 @@ export interface PlanFeature {
 }
 
 export interface AccountPlan {
-    name: string
-    description: string
-    minBalance: number
-    interest: number
-    recommended: boolean
-    icon: IconDefinition
-    iconBgClass: string
-    iconClass: string
-    headerClass: string
-    features: PlanFeature[]
+    name: string;
+    code: string; 
+    description: string;
+    minBalance: number;
+    interest: number;
+    recommended: boolean;
+    icon: IconDefinition;
+    iconBgClass: string;
+    iconClass: string;
+    headerClass: string;
+    features: PlanFeature[];
 }
 
 export interface FAQ {

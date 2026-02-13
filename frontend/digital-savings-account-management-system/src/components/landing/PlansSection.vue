@@ -12,10 +12,10 @@
             </div>
 
             <div class="grid lg:grid-cols-3 gap-8">
-                <div v-for="plan in plans" :key="plan.name"
+                <div v-for="plan in plans" :key="plan.code"
                     class="bg-white rounded-2xl border overflow-hidden transition-all duration-300 hover:shadow-2xl relative"
                     :class="plan.recommended
-                        ? 'border-indigo-300 shadow-xl scale-lg:scale-105 ring-2 ring-indigo-500 ring-opacity-20'
+                        ? 'border-indigo-300 shadow-xl lg:scale-105 ring-2 ring-indigo-500 ring-opacity-20'
                         : 'border-gray-200'">
 
                     <div class="p-6 text-center border-b" :class="plan.headerClass">
@@ -23,7 +23,7 @@
                             :class="plan.iconBgClass">
                             <FontAwesomeIcon :icon="plan.icon" :class="plan.iconClass" class="text-2xl" />
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-900">{{ plan.name }}</h3>
+                        <h3 class="text-2xl font-bold text-gray-900">{{ formatPlanName(plan.name) }}</h3>
                         <p class="text-sm text-gray-600 mt-2">{{ plan.description }}</p>
                         <p class="mt-4">
                             <span class="text-3xl font-bold text-gray-900">
@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="p-6 pt-0">
-                        <button @click="$router.push('/apply')"
+                        <button @click="$router.push({ path: '/apply', query: { type: plan.code } })"
                             class="w-full py-3 rounded-xl font-semibold transition-all" :class="plan.recommended
                                 ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-lg shadow-indigo-200'
                                 : 'border-2 border-indigo-200 text-indigo-700 hover:border-indigo-400 hover:bg-indigo-50'">
@@ -92,12 +92,25 @@ export default defineComponent({
             required: true
         }
     },
-    setup() {
+    data() {
         return {
-            faCrown,
             faCheckCircle,
             faXmarkCircle,
-            faArrowRight
+            faArrowRight,
+            faCrown
+        }
+    },
+    methods: {
+        formatPlanName(name: string): string {
+            if (!name) return '';
+            return name.replace(/_/g, ' ');
+        },
+        
+        handlePlanSelection(planCode: string) {
+            this.$router.push({ 
+                path: '/apply', 
+                query: { type: planCode } 
+            });
         }
     }
 })
