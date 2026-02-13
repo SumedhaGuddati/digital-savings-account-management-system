@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 font-sans flex flex-col">
-    <!-- HEADER - Consistent with ZetaRise branding -->
     <header class="w-full bg-white/80 backdrop-blur-md border-b border-gray-200/60 sticky top-0 z-50 py-3 px-6">
       <div class="max-w-7xl mx-auto flex justify-between items-center">
         <AppLogo />
@@ -11,9 +10,7 @@
       </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <div class="flex-1 flex items-center justify-center p-4 md:p-6 relative">
-      <!-- Decorative Background Elements -->
       <div class="absolute inset-0 overflow-hidden">
         <div
           class="absolute -top-40 -right-40 w-80 h-80 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob">
@@ -26,14 +23,11 @@
         </div>
       </div>
 
-      <!-- Main Card -->
       <div class="w-full max-w-6xl relative z-20">
         <div
           class="grid md:grid-cols-2 bg-white rounded-3xl shadow-2xl shadow-indigo-100/50 border border-gray-200/80 overflow-hidden backdrop-blur-sm">
 
-          <!-- LEFT COLUMN: Login Form -->
           <div class="p-8 lg:p-12 flex flex-col justify-center order-2 md:order-1">
-            <!-- Welcome Header -->
             <div class="mb-8">
               <div class="flex items-center gap-2 mb-2">
                 <div class="w-1.5 h-1.5 bg-indigo-600 rounded-full animate-pulse"></div>
@@ -47,9 +41,7 @@
               </p>
             </div>
 
-            <!-- LOGIN FORM -->
             <form @submit.prevent="handleLogin" class="space-y-6">
-              <!-- Email -->
               <div class="space-y-2">
                 <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   Email Address
@@ -73,15 +65,19 @@
                 </div>
               </div>
 
-              <!-- Password -->
               <div class="space-y-2">
                 <div class="flex justify-between items-center">
                   <label class="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
                     Password
                   </label>
-                  <a href="#" class="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors">
+                  <button type="button" @click="forgotModalOpen = true"
+                    class="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors underline underline-offset-2">
                     Forgot?
-                  </a>
+                  </button>
+
+                <ForgotPassword v-if="forgotModalOpen"
+                  :emailProp="loginEmail"
+                  @close="forgotModalOpen = false" />
                 </div>
                 <div class="relative group">
                   <div
@@ -116,17 +112,7 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Remember Me -->
-              <!-- <div class="flex items-center justify-between">
-                <label class="flex items-center gap-2 cursor-pointer group">
-                  <input type="checkbox"
-                    class="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600/20 focus:ring-2 transition-all cursor-pointer" />
-                  <span class="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">Remember me</span>
-                </label>
-              </div> -->
-
-              <!-- Login Button -->
+  
               <button type="submit" :disabled="isLoading" class="relative w-full group mt-4">
                 <div
                   class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl blur-lg opacity-60 group-hover:opacity-80 transition-opacity">
@@ -149,7 +135,6 @@
                 </div>
               </button>
 
-              <!-- Signup Link -->
               <div class="relative pt-4">
                 <div class="absolute inset-0 flex items-center">
                   <div class="w-full border-t border-gray-200"></div>
@@ -171,7 +156,6 @@
               </router-link>
             </form>
 
-            <!-- Trust Badges -->
             <div class="mt-8 flex items-center justify-center gap-6 text-xs text-gray-400">
               <span class="flex items-center gap-1">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -190,10 +174,8 @@
             </div>
           </div>
 
-          <!-- RIGHT COLUMN: Brand Showcase -->
           <div
             class="relative order-1 md:order-2 bg-gradient-to-br from-indigo-600 to-purple-700 p-8 lg:p-12 flex flex-col justify-between overflow-hidden">
-            <!-- Decorative Pattern -->
             <div class="absolute inset-0 opacity-10">
               <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -206,11 +188,9 @@
               </svg>
             </div>
 
-            <!-- Animated Circles -->
             <div class="absolute -top-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
             <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
 
-            <!-- Content -->
             <div class="relative">
               <div class="text-2xl font-bold text-white mb-6">
                 ZetaRise
@@ -237,7 +217,6 @@
                   benefits. Join the digital banking revolution.
                 </p>
 
-                <!-- Feature Pills -->
                 <div class="flex flex-wrap gap-3 pt-4">
                   <div v-for="feature in features" :key="feature"
                     class="px-3 py-1.5 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 text-xs text-white/90 flex items-center gap-1.5">
@@ -250,7 +229,6 @@
               </div>
             </div>
 
-            <!-- Testimonial Card -->
             <div class="relative mt-12 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
               <div class="flex items-center gap-3 mb-3">
                 <div
@@ -277,7 +255,6 @@
       </div>
     </div>
 
-    <!-- FOOTER - Consistent with brand -->
     <footer class="w-full bg-white/80 backdrop-blur-md border-t border-gray-200/60 py-5 px-6">
       <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <div class="text-xs text-gray-500">
@@ -295,97 +272,85 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { useRouter } from "vue-router";
+import { defineComponent } from "vue";
+import { mapActions } from "vuex";
 import { toast, Toaster } from "@steveyuowo/vue-hot-toast";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { UserRole } from "@/types/api/user";
 import AppLogo from "@/components/AppLogo.vue";
-import { useStore } from "vuex";
+import ForgotPassword from "@/components/ForgotPassword.vue";
 
 export default defineComponent({
   name: "LoginView",
   components: {
     Toaster,
     FontAwesomeIcon,
-    AppLogo
+    AppLogo,
+    ForgotPassword
   },
-  setup() {
-    const store = useStore();
-    const router = useRouter();
-    const loginEmail = ref("");
-    const loginPassword = ref("");
-    const showPassword = ref(false);
-    const isLoading = ref(false);
-
-    const features = [
-      "6.5% Interest",
-      "Zero Balance",
-      "Lounge Access",
-      "24/7 Support"
-    ];
-
-    const handleLogin = async () => {
-      if (!loginEmail.value || !loginPassword.value) {
+  data() {
+    return {
+      loginEmail: "",
+      loginPassword: "",
+      showPassword: false,
+      isLoading: false,
+      forgotModalOpen: false,
+      features: [
+        "6.5% Interest",
+        "Zero Balance",
+        "Lounge Access",
+        "24/7 Support"
+      ],
+      faArrowRight
+    };
+  },
+  methods: {
+    ...mapActions("auth", ["login"]),
+    async handleLogin() {
+      if (!this.loginEmail || !this.loginPassword) {
         toast.error("Please enter both email and password.");
         return;
       }
 
-      isLoading.value = true;
+      this.isLoading = true;
 
       try {
-        const response = await store.dispatch("auth/login", {
-          email: loginEmail.value,
-          password: loginPassword.value
-        });
+        const response = await this.$store.dispatch("auth/login", {
+          email: this.loginEmail,
+          password: this.loginPassword
+        })
 
         const currentUserRole = response.role;
 
-        if (
-          currentUserRole === UserRole.ADMIN ||
-          currentUserRole === UserRole.SUPER_ADMIN
-        ) {
-          router.push("/admin");
+        if (currentUserRole === UserRole.ADMIN || currentUserRole === UserRole.SUPER_ADMIN) {
+          this.$router.push("/admin");
         } else if (currentUserRole === UserRole.USER) {
-          router.push("/me");
+          this.$router.push("/me");
         } else {
           toast.error("Unknown user role. Please contact support.");
-          router.push("/");
+          this.$router.push("/");
         }
-
       } catch (error: any) {
         console.error("Login failed:", error);
         const msg =
           error.response?.data?.message ||
           "Login failed. Please check your credentials.";
         toast.error(msg);
+      } finally {
+        this.isLoading = false;
       }
-      finally {
-        isLoading.value = false;
-      }
-    };
-
-    return {
-      loginEmail,
-      loginPassword,
-      showPassword,
-      isLoading,
-      handleLogin,
-      features,
-      faArrowRight
-    };
-  },
+    }
+  }
 });
 </script>
 
+
 <style scoped>
-/* Dark theme variant for brand logo on purple background */
 .bg-gradient-to-br .brand-logo span {
   color: #c7d2fe;
 }
 
-/* Animation */
 @keyframes blob {
   0% {
     transform: translate(0px, 0px) scale(1);
@@ -416,12 +381,10 @@ export default defineComponent({
   animation-delay: 4s;
 }
 
-/* Custom focus styles */
 .focus\:ring-indigo-600\/20:focus {
   --tw-ring-color: rgba(79, 70, 229, 0.2);
 }
 
-/* Smooth transitions */
 .transition-all {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);

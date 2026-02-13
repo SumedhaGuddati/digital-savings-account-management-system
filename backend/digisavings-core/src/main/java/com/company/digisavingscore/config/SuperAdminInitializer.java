@@ -16,7 +16,6 @@ public class SuperAdminInitializer {
     @Bean
     CommandLineRunner createSuperAdmin(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            // Check if SUPER_ADMIN already exists
             if (userRepository.findByEmail("superadmin@bank.com").isEmpty()) {
 
                 User superAdmin = User.builder()

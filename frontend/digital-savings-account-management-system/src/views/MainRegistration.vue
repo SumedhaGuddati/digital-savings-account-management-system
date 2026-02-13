@@ -71,31 +71,41 @@ export default {
       initialPlanType: ""
     };
   },
-  mounted() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const accountType = urlParams.get('type');
+  computed: {
+    isFormValid() {
+      const signup = this.$refs.signupRef?.formData;
+      const financial = this.$refs.financialModuleRef?.formData;
 
-    if (accountType) {
-      this.initialPlanType = accountType;
-    }
+      if (!signup || !financial) return false;
+
+      const authValid = signup.name && signup.email && signup.password;
+      const passwordsMatch = signup.password === signup.confirmPassword;
+      const passwordStrong = this.$refs.signupRef?.isValidPassword === true;
+
+      const financialValid =
+        financial.accountType &&
+        financial.parentName &&
+        financial.dob &&
+        financial.occupation &&
+        financial.incomeSource &&
+        financial.annualIncome !== null &&
+        financial.annualIncome !== undefined &&
+        financial.annualIncome !== "";
+
+      return authValid && passwordsMatch && passwordStrong && financialValid && this.isAgreed;
+    },
   },
-  watch: {
-    '$route.query.accountType': {
-      immediate: true,
-      handler(newAccountType) {
-        if (newAccountType) {
-          this.initialPlanType = newAccountType;
-        }
-
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth"
-        });
-      }
-    }
-  },
-
   methods: {
+    async handleSubmit() {
+      const signupData = this.$refs.signupRef?.formData;
+      const financialData = this.$refs.financialModuleRef?.formData;
+
+      if (!signupData || !financialData) return;
+
+      if (!this.$refs.signupRef?.isValidPassword) {
+        toast.error("Please choose a strong password before submitting.");
+      }
+    },
     async handleSubmit() {
       const s = this.$refs.signupRef?.formData;
       const f = this.$refs.financialModuleRef?.formData;
@@ -140,15 +150,31 @@ export default {
 
       try {
         this.isSubmitting = true;
-
-    await this.$store.dispatch("auth/signup", {
-      name: s.name,
-      email: s.email,
-      password: s.password,
-    });
+        
+        await this.$store.dispatch("auth/signup", {
+          name: s.name,
+          email: s.email,
+          password: s.password,
+        });
 
         toast.loading("Creating application...", { id: toastId });
 
+        const annualIncomeValue =
+          financialData.annualIncome === null || financialData.annualIncome === ""
+            ? null
+            : Number(financialData.annualIncome);
+
+        await applyForAccount({
+          occupation: financialData.occupation,
+          incomeSource: financialData.incomeSource,
+          annualIncome: annualIncomeValue,
+          parentName: financialData.parentName,
+          dob: financialData.dob,
+          accountType: financialData.accountType || "ZETA_BASIC",
+        });
+
+        toast.success("Application Submitted!", { id: toastId });
+        setTimeout(() => this.$router.push("/me/application"), 1000);
         await applyForAccount({
           occupation: f.occupation,
           incomeSource: f.incomeSource,
@@ -163,7 +189,6 @@ export default {
         toast.success("Application Submitted!", { id: toastId });
 
         setTimeout(() => this.$router.push("/me/application"), 1000);
-
       } catch (error) {
         const msg = error.response?.data?.message;
         if (msg === "A savings account application already exists for this user.") {
@@ -176,8 +201,31 @@ export default {
         this.isSubmitting = false;
       }
     }
+  },
+  mounted() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const accountType = urlParams.get('type');
+
+    if (accountType) {
+      this.initialPlanType = accountType;
+    }
+  },
+  watch: {
+    '$route.query.accountType': {
+      immediate: true,
+      handler(newAccountType) {
+        if (newAccountType) {
+          this.initialPlanType = newAccountType;
+        }
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      }
+    }
   }
-};
+}
 </script>
 
 <style scoped>
