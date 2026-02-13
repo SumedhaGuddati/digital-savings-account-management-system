@@ -1,61 +1,55 @@
 <template>
     <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 relative">
-        <!-- // TODO: get email from token or user store -->
+
         <AppNavbar :user-name="account?.accountHolderName || 'Guest'" :user-email="userEmail" @profile="goProfile"
             @statements="goStatements" @logout="handleLogout" />
 
-        <!-- Main Content -->
-        <div class="max-w-7xl mx-auto px-6 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
 
             <AppLoader v-show="isLoading" />
 
-            <div v-if="account" class="space-y-8" :class="{ 'pointer-events-none opacity-50': isLoading }">
-                <!-- Welcome Header -->
-                <div class="flex justify-between items-end">
+            <div v-if="account" class="space-y-6 sm:space-y-8" :class="{ 'pointer-events-none opacity-50': isLoading }">
+                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
                     <div>
-                        <div class="flex items-center gap-3">
-                            <h1 class="text-3xl font-semibold text-gray-900">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3">
+                            <h1 class="text-2xl sm:text-3xl font-semibold text-gray-900">
                                 Welcome back,
                             </h1>
                             <span
-                                class="text-3xl font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                                class="text-2xl sm:text-3xl font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent break-words">
                                 {{ account?.accountHolderName }}
                             </span>
                         </div>
-                        <p class="text-sm text-gray-500 mt-2 flex items-center gap-2">
+
+                        <p class="text-xs sm:text-sm text-gray-500 mt-2 flex items-center gap-2">
                             <FontAwesomeIcon :icon="faCircle" class="text-[8px] text-emerald-500" />
                             Account active · Last login today at 9:42 AM
                         </p>
                     </div>
-
-                    <button
-                        class="px-4 py-2 text-sm text-gray-600 hover:text-gray-900 bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all flex items-center gap-2 shadow-sm cursor-not-allowed">
-                        <FontAwesomeIcon :icon="faArrowDown" class="text-emerald-500" />
-                        Download Statement
-                    </button>
                 </div>
 
-                <!-- Account Cards -->
-                <div class="flex flex-col lg:flex-row lg:items-start lg:space-x-6 space-y-6 lg:space-y-0">
-                    <AccountCard :accountNumber="account?.accountNumber || 'N/A'" :tier="account?.accountType || 'N/A'"
-                        @view-details="viewAccountDetails" />
+                <div class="flex flex-col lg:flex-row lg:items-stretch gap-6">
 
-                    <div class="w-full lg:w-80 shrink-0">
+                    <div class="flex-1 sm:flex-none">
+                        <AccountCard :accountNumber="account?.accountNumber || 'N/A'"
+                            :tier="account?.accountType || 'N/A'" @view-details="viewAccountDetails" />
+                    </div>
+
+                    <div class="w-full lg:w-96 shrink-0">
                         <BalanceCard :balance="account?.balance || 0" @deposit="openDepositModal"
                             @withdraw="openWithdrawModal" />
                     </div>
+
                 </div>
 
-                <!-- Quick Actions -->
                 <QuickActions @deposit="openDepositModal" @withdraw="openWithdrawModal" @statements="goStatements" />
 
-                <!-- Transactions & Sidebar -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="lg:col-span-2">
                         <TransactionsPreview :transactions="transactions" @view-all="viewAllTransactions" />
                     </div>
 
-                    <div class="lg:col-span-1 space-y-6">
+                    <div class="space-y-6">
                         <AccountBenefitsCard :benefits="benefits" />
                         <HelpCard />
                     </div>
@@ -63,7 +57,6 @@
             </div>
         </div>
 
-        <!-- Modal -->
         <TransactionModal v-if="showTransactionModal" :type="transactionType as TransactionType"
             :balance="account?.balance || 0" :max-amount="account?.balance || 0" @close="showTransactionModal = false"
             @confirm="handleTransactionConfirmation" />
@@ -71,6 +64,7 @@
         <Toaster />
     </div>
 </template>
+
 
 <script lang="ts">
 import { defineComponent } from 'vue'
@@ -110,8 +104,7 @@ export default defineComponent({
         TransactionsPreview,
         TransactionModal,
         Toaster,
-        AppLoader,
-        // TransactionSuccessfulAnimation
+        AppLoader
     },
     data() {
         return {

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="min-h-full min-w-md bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex flex-col justify-between">
+        class=" bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex flex-col justify-between">
         <!-- Header -->
         <p class="text-xs uppercase tracking-wide text-gray-500">
             Total Balance

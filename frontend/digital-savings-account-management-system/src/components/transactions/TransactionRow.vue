@@ -1,40 +1,52 @@
 <template>
-    <div class="grid grid-cols-12 gap-4 px-6 py-4 hover:bg-gray-50/80 transition-colors">
-        <!-- Description & Category -->
-        <div class="col-span-5 sm:col-span-6 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" :class="transaction.type === TransactionType.DEPOSIT
+    <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50/80 transition-colors">
+    
+        <div class="sm:col-span-6 flex items-center gap-3">
+    
+            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center flex-shrink-0" :class="transaction.type === TransactionType.DEPOSIT
                 ? 'bg-emerald-100'
                 : 'bg-red-100'">
-                <FontAwesomeIcon :icon="faArrowRight" class="text-sm transition-transform" :class="transaction.type === TransactionType.DEPOSIT
+                <FontAwesomeIcon :icon="faArrowRight" class="text-xs sm:text-sm transition-transform" :class="transaction.type === TransactionType.DEPOSIT
                     ? 'text-emerald-600 rotate-45'
                     : 'text-red-600 rotate-225'" />
             </div>
 
-            <div>
-                <p class="font-medium text-gray-900">{{ transaction.description }}</p>
-                <p class="text-xs text-gray-500 mt-0.5 flex items-center gap-1">
-                    <span>{{ transaction.category || (transaction.type === TransactionType.DEPOSIT ? 'Deposit' :
-                        'Withdraw') }}</span>
-                    <span class="w-1 h-1 bg-gray-300 rounded-full"></span>
-                    <span>ID: {{ transaction.id }}</span>
+            <div class="min-w-0 flex-1">
+                <p class="text-sm sm:text-base font-medium text-gray-900 truncate">
+                    {{ transaction.description }}
+                </p>
+
+                <p class="text-xs text-gray-500 mt-0.5 truncate">
+                    {{ transaction.category ||
+                        (transaction.type === TransactionType.DEPOSIT
+                            ? 'Deposit'
+                    : 'Withdraw') }}
+                    • ID: #{{ transaction.id }}
                 </p>
             </div>
         </div>
 
-        <!-- Date & Time -->
-        <div class="col-span-3 sm:col-span-2 flex flex-col justify-center">
-            <p class="text-sm text-gray-900">{{ formatDate(transaction.date, 'DD MMM YYYY') }}</p>
-            <p class="text-xs text-gray-400">{{ formatDate(transaction.date, 'hh:mm A') }}</p>
+        <div class="sm:col-span-3 flex flex-row sm:flex-col justify-between sm:justify-center text-left sm:text-left">
+            <p class="text-sm sm:text-base text-gray-900">
+                {{ formatDate(transaction.date, 'DD MMM YYYY') }}
+            </p>
+            <p class="text-xs text-gray-400">
+                {{ formatDate(transaction.date, 'hh:mm A') }}
+            </p>
         </div>
 
-        <!-- Amount -->
-        <div class="col-span-2 sm:col-span-2 flex flex-col items-end justify-center">
-            <p class="text-base font-semibold"
-                :class="transaction.type === TransactionType.DEPOSIT ? 'text-emerald-600' : 'text-red-500'">
+        <div class="sm:col-span-3 flex flex-row sm:flex-col justify-between sm:items-end items-start">
+            <p class="text-sm sm:text-base font-semibold" :class="transaction.type === TransactionType.DEPOSIT
+                ? 'text-emerald-600'
+                : 'text-red-500'">
                 {{ transaction.type === TransactionType.DEPOSIT ? '+' : '-' }}₹{{
-                    Math.abs(transaction.amount).toLocaleString('en-IN') }}
+                    Math.abs(transaction.amount).toLocaleString('en-IN')
+                }}
             </p>
-            <p class="text-xs text-gray-400 mt-0.5">{{ transaction.type }}</p>
+
+            <p class="text-xs text-gray-400">
+                {{ transaction.type }}
+            </p>
         </div>
     </div>
 </template>

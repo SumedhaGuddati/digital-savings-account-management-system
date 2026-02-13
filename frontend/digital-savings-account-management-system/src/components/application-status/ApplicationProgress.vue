@@ -2,8 +2,7 @@
     <div class="px-8 py-6 border-b border-gray-100 bg-gray-50/50">
         <p class="text-sm font-medium text-gray-700 mb-4">Application Progress</p>
 
-        <div class="flex items-center">
-            <!-- Submitted -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-0">
             <div class="flex items-center">
                 <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center">
                     <FontAwesomeIcon :icon="faFile" class="text-white text-sm" />
@@ -18,7 +17,6 @@
                 <div class="absolute inset-0 w-2/3 bg-indigo-600 h-0.5"></div>
             </div>
 
-            <!-- Under Review -->
             <div class="flex items-center">
                 <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
                     <FontAwesomeIcon :icon="faBuilding" class="text-gray-400 text-sm" />
@@ -31,7 +29,6 @@
 
             <div class="flex-1 mx-4 h-0.5 bg-gray-200"></div>
 
-            <!-- Decision -->
             <div class="flex items-center">
                 <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
                     <FontAwesomeIcon :icon="faCircleCheck" class="text-gray-400 text-sm" />

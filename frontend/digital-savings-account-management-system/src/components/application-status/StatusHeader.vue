@@ -1,7 +1,7 @@
 <template>
     <div class="px-8 py-6 border-b border-gray-100" :class="headerClass">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center gap-4">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between">
+            <div class="flex items-start sm:items-center gap-4">
                 <div class="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
                     <FontAwesomeIcon :icon="statusIcon" class="text-2xl text-white" />
                 </div>
@@ -20,9 +20,9 @@
                     </p>
                 </div>
             </div>
-            <div class="text-right text-white">
+            <div class="flex flex-row sm:flex-col items-center sm:items-end text-right gap-2 sm:gap-0 text-white mt-4 sm:mt-0">
                 <p class="text-sm">Application ID</p>
-                <p class="text-lg font-mono font-medium mt-1">#{{ application.id }}</p>
+                <p class="text-lg font-mono font-medium sm:mt-1">#{{ application.id }}</p>
             </div>
         </div>
     </div>

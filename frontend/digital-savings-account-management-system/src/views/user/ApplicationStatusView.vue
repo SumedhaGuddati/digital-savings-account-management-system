@@ -1,43 +1,51 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-6 relative">
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-6 sm:py-8 px-4 sm:px-6 lg:px-8 relative">
 
-        <!-- Loader Overlay -->
         <AppLoader v-show="isLoading"
-            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-10 z-50" />
+            class="fixed inset-0 flex items-center justify-center bg-black/20 backdrop-blur-sm z-50" />
 
         <div class="max-w-5xl mx-auto" :class="{ 'pointer-events-none opacity-50': isLoading }">
 
-            <!-- Header -->
-            <div class="flex items-center gap-4 mb-6">
-                <button @click="$router.back()" class="p-2 hover:bg-white rounded-lg transition-colors">
-                    <FontAwesomeIcon :icon="faArrowLeft" class="text-gray-600" />
+            <div class="flex items-start sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+                <button @click="$router.back()" class="p-2 hover:bg-white rounded-lg transition-colors shrink-0">
+                    <FontAwesomeIcon :icon="faArrowLeft" class="text-gray-600 text-sm sm:text-base" />
                 </button>
-                <div>
-                    <h1 class="text-2xl font-semibold text-gray-900">Application Status</h1>
-                    <p class="text-sm text-gray-500 mt-1">Track your savings account application</p>
+
+                <div class="min-w-0">
+                    <h1 class="text-xl sm:text-2xl font-semibold text-gray-900 truncate">
+                        Application Status
+                    </h1>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-1">
+                        Track your savings account application
+                    </p>
                 </div>
             </div>
 
-            <!-- No Application -->
-            <div v-if="!application" class="bg-white rounded-2xl border border-gray-200 shadow-sm p-12">
+            <div v-if="!application"
+                class="bg-white rounded-xl sm:rounded-2xl border border-gray-200 shadow-sm p-6 sm:p-10 lg:p-12">
                 <div class="text-center max-w-md mx-auto">
-                    <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <FontAwesomeIcon :icon="faFileCirclePlus" class="text-3xl text-gray-400" />
+                    <div
+                        class="w-16 h-16 sm:w-20 sm:h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <FontAwesomeIcon :icon="faFileCirclePlus" class="text-2xl sm:text-3xl text-gray-400" />
                     </div>
-                    <h2 class="text-xl font-semibold text-gray-900 mb-2">No Application Found</h2>
-                    <p class="text-gray-600 mb-6">
+
+                    <h2 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2">
+                        No Application Found
+                    </h2>
+
+                    <p class="text-sm sm:text-base text-gray-600 mb-6">
                         You haven't applied for a savings account yet. Start your application now!
                     </p>
+
                     <button @click="$router.push('/')"
-                        class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all shadow-sm">
+                        class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all shadow-sm">
                         Apply for Savings Account
                     </button>
                 </div>
             </div>
 
-            <!-- Application -->
-            <div v-else class="space-y-6">
-                <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div v-else class="space-y-4 sm:space-y-6">
+                <div class="bg-white rounded-xl sm:rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                     <StatusHeader :application="application" />
                     <ApplicationProgress v-if="application.status === 'PENDING'" :application="application" />
                     <ApplicationDetails :application="application" />
@@ -54,6 +62,7 @@
         <Toaster />
     </div>
 </template>
+
 
 <script lang="ts">
 import { defineComponent } from 'vue'
@@ -121,15 +130,3 @@ export default defineComponent({
     }
 })
 </script>
-
-<!-- <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.3s;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-}
-</style> -->

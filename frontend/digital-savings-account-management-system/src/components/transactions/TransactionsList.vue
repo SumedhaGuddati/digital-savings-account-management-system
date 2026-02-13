@@ -5,7 +5,7 @@
             class="grid grid-cols-12 gap-4 px-6 py-4 bg-gray-50/80 border-b border-gray-200 text-xs font-medium text-gray-500 uppercase tracking-wider">
             <div class="col-span-5 sm:col-span-6">Description</div>
             <div class="col-span-3 sm:col-span-3">Date</div>
-            <div class="col-span-2 sm:col-span-3 ">Amount</div>
+            <div class="col-span-2 sm:col-span-3 text-right">Amount</div>
         </div>
 
         <div v-if="transactions.length > 0">

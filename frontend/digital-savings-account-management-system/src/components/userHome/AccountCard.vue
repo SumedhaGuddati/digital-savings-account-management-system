@@ -1,5 +1,5 @@
 <template>
-    <div class="relative w-full max-w-md aspect-[1.586/1] rounded-2xl p-6 text-white shadow-md overflow-hidden border border-white/10 bg-cover bg-center flex flex-col justify-between"
+    <div class="relative w-full sm:min-w-md aspect-[1.586/1] rounded-2xl p-6 text-white shadow-md overflow-hidden border border-white/10 bg-cover bg-center flex flex-col justify-between"
         :style="{ backgroundImage: `url(${cardBg})` }">
         <div class="absolute inset-0 bg-black/35"></div>
 

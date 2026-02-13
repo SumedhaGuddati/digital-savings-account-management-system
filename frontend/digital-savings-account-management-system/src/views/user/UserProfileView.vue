@@ -3,26 +3,31 @@
 
     <AppLoader v-show="isLoading" />
 
-    <div v-if="userProfile" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12" :class="{ 'pointer-events-none opacity-50': isLoading }">
-      <ProfileHeader />
+    <div v-if="userProfile" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-12"
+      :class="{ 'pointer-events-none opacity-50': isLoading }">
+      <ProfileHeader class="mb-6 sm:mb-8" />
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-        <!-- Left -->
-        <ProfileSidebarCard :userProfile="userProfile" />
 
-        <!-- Right -->
-        <div class="lg:col-span-2 space-y-6">
+        <div class="lg:sticky lg:top-8 h-fit">
+          <ProfileSidebarCard :userProfile="userProfile" />
+        </div>
+
+        <div class="lg:col-span-2 space-y-6 sm:space-y-8">
           <PersonalInfoCard :userProfile="userProfile" />
 
           <AccountInfoCard :userProfile="userProfile" @copy="copyToClipboard" />
 
           <SecuritySettingsCard />
         </div>
+
       </div>
     </div>
+
     <Toaster />
   </div>
 </template>
+
 
 <script lang="ts">
 import { defineComponent } from 'vue'

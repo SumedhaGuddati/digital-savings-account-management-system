@@ -2,8 +2,9 @@
     <div class="min-h-screen bg-gradient-to-br from-gray-50 via-gray-50 to-indigo-50/30 py-8 px-4 sm:px-6">
 
         <AppLoader v-show="isLoading" />
-        
-        <div v-if="filteredTransactions" class="max-w-7xl mx-auto" :class="{ 'pointer-events-none opacity-50': isLoading }">
+
+        <div v-if="filteredTransactions" class="max-w-7xl mx-auto"
+            :class="{ 'pointer-events-none opacity-50': isLoading }">
             <TransactionsHeader :count="filteredTransactions.length" @export="exportTransactions" />
 
             <TransactionsFilters v-model:searchQuery="searchQuery" v-model:dateFilter="dateFilter"
@@ -72,12 +73,20 @@ export default defineComponent({
 
             if (this.searchQuery) {
                 const q = this.searchQuery.toLowerCase()
-                filtered = filtered.filter(txn =>
-                    txn.description.toLowerCase().includes(q) ||
-                    txn.amount.toString().includes(q) ||
-                    txn.id.includes(q)
-                )
+
+                filtered = filtered.filter(txn => {
+                    const description = (txn.description ?? '').toLowerCase()
+                    const amount = txn.amount != null ? txn.amount.toString() : ''
+                    const id = txn.id != null ? String(txn.id).toLowerCase() : ''
+
+                    return (
+                        description.includes(q) ||
+                        amount.includes(q) ||
+                        id.includes(q)
+                    )
+                })
             }
+
 
             if (this.dateFilter !== 'all') {
                 const today = new Date()

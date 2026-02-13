@@ -24,7 +24,8 @@
                         </div>
                     </div>
                     <button
-                        class="px-4 py-2 text-sm font-medium text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors">
+                        @click="$store.dispatch('auth/logout'); $router.push('/login')"
+                        class="px-4 py-2 text-sm font-medium text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors cursor-pointer">
                         Change
                     </button>
                 </div>

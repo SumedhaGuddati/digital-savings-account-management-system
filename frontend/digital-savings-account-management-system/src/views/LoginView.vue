@@ -27,7 +27,7 @@
         <div
           class="grid md:grid-cols-2 bg-white rounded-3xl shadow-2xl shadow-indigo-100/50 border border-gray-200/80 overflow-hidden backdrop-blur-sm">
 
-          <div class="p-8 lg:p-12 flex flex-col justify-center order-2 md:order-1">
+          <div class="p-8 lg:p-12 flex flex-col justify-center order-1">
             <div class="mb-8">
               <div class="flex items-center gap-2 mb-2">
                 <div class="w-1.5 h-1.5 bg-indigo-600 rounded-full animate-pulse"></div>
@@ -175,7 +175,7 @@
           </div>
 
           <div
-            class="relative order-1 md:order-2 bg-gradient-to-br from-indigo-600 to-purple-700 p-8 lg:p-12 flex flex-col justify-between overflow-hidden">
+            class="relative order-2 bg-gradient-to-br from-indigo-600 to-purple-700 p-8 lg:p-12 flex flex-col justify-between overflow-hidden">
             <div class="absolute inset-0 opacity-10">
               <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
                 <defs>
