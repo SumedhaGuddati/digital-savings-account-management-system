@@ -8,9 +8,9 @@
 
         <BenefitsSection :benefits="benefits" />
 
-        <PlansSection :plans="accountPlans" @apply="applyForPlan" @compare="comparePlans" />
+        <PlansSection :plans="accountPlans" />
 
-        <FAQSection :faqs="faqs" @contact="contactSupport" />
+        <FAQSection :faqs="faqs" />
 
         <LandingFooter :productLinks="productLinks" :companyLinks="companyLinks" :supportLinks="supportLinks" />
     </div>
@@ -50,19 +50,6 @@ export default defineComponent({
             supportLinks
         } = useLandingData()
 
-
-        const applyForPlan = (plan: AccountPlan) => {
-            console.log('Applying for plan:', plan.name)
-        }
-
-        const comparePlans = () => {
-            console.log('Compare plans')
-        }
-
-        const contactSupport = () => {
-            console.log('Contact support')
-        }
-
         return {
             trustBadges,
             benefits,
@@ -71,9 +58,6 @@ export default defineComponent({
             productLinks,
             companyLinks,
             supportLinks,
-            applyForPlan,
-            comparePlans,
-            contactSupport
         }
     }
 })

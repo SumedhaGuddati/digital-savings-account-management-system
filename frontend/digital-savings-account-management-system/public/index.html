@@ -1,63 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Control Center - Light Edition</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary-indigo": "#312E81",
-              "slate-muted": "#64748B",
-              "off-white": "#F9FAFB",
-              "success-green": "#10B981",
-              "coral-red": "#F43F5E",
-              "mint-accent": "#2DD4BF",
-              "amber-glow": "#F59E0B",
-              "border-soft": "#E5E7EB",
-            },
-            fontFamily: {
-              "display": ["Inter", "sans-serif"]
-            },
-          },
-        },
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZetaRise</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    @layer base {
+      body {
+        @apply bg-off-white text-primary-indigo font-display;
+        background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+        background-blend-mode: soft-light;
       }
-    </script>
-    <style>
-      @layer base {
-        body {
-          @apply bg-off-white text-primary-indigo font-display;
-          background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
-          background-blend-mode: soft-light;
-        }
-      }
-      .glass-card {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 249, 255, 0.9) 100%);
-        backdrop-filter: blur(16px);
-        border: 1px solid #F3F4F6;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-      }
-      .sidebar-shadow {
-        box-shadow: 1px 0 10px rgba(0, 0, 0, 0.03);
-      }
-      .amber-premium-glow {
-        box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
-      }
-      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-      .custom-scrollbar::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 10px; }
-    </style>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+    }
+
+    .glass-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 249, 255, 0.9) 100%);
+      backdrop-filter: blur(16px);
+      border: 1px solid #F3F4F6;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    .sidebar-shadow {
+      box-shadow: 1px 0 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .amber-premium-glow {
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #E5E7EB;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+</body>
+
 </html>

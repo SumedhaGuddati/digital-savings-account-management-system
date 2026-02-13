@@ -59,6 +59,8 @@ import "@steveyuowo/vue-hot-toast/vue-hot-toast.css";
 import axios from "axios";
 import SignUp from "../components/SignUp.vue";
 import ApplyAccountModule from "../components/ApplyAccount.vue";
+import { TOKEN_KEY } from "@/utils/auth.token";
+import { signupRequest, applyForAccount } from "@/api/endpoints/auth/auth.api";
 
 const router = useRouter();
 const signupRef = ref(null);
@@ -94,25 +96,22 @@ const handleSubmit = async () => {
     isSubmitting.value = true;
 
     // STEP 1: Signup
-    const signupRes = await axios.post(
-      "http://localhost:8080/api/auth/signup",
-      {
-        name: s.name,
-        email: s.email,
-        password: s.password,
-      }
-    );
+    const signupRes = await signupRequest({
+      name: s.name,
+      email: s.email,
+      password: s.password,
+    });
 
     const token = signupRes.data.token;
     if (token) {
-      sessionStorage.setItem("zeta_token", token);
+      sessionStorage.setItem(TOKEN_KEY, token);
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     }
 
     toast.loading("Creating application...", { id: toastId });
 
     // STEP 2: Application
-    await axios.post("http://localhost:8080/api/accounts/apply", {
+    await applyForAccount({
       occupation: f.occupation,
       incomeSource: f.incomeSource,
       annualIncome: Number(f.annualIncome),

@@ -6,7 +6,7 @@
             </h3>
 
             <button @click="$router.push('/me/transactions')"
-                class="text-sm font-medium text-indigo-600 hover:text-indigo-700 transition">
+                class="text-sm font-medium text-indigo-600 hover:text-indigo-700 transition cursor-pointer">
                 View all
             </button>
         </div>

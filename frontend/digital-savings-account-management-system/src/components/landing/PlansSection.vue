@@ -17,11 +17,6 @@
                     :class="plan.recommended
                         ? 'border-indigo-300 shadow-xl scale-lg:scale-105 ring-2 ring-indigo-500 ring-opacity-20'
                         : 'border-gray-200'">
-                    <div v-if="plan.recommended"
-                        class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1 shadow-lg whitespace-nowrap">
-                        <FontAwesomeIcon :icon="faCrown" class="text-yellow-300" />
-                        MOST POPULAR
-                    </div>
 
                     <div class="p-6 text-center border-b" :class="plan.headerClass">
                         <div class="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4"
@@ -56,7 +51,7 @@
                     </div>
 
                     <div class="p-6 pt-0">
-                        <button @click="$emit('apply', plan)"
+                        <button @click="$router.push('/apply')"
                             class="w-full py-3 rounded-xl font-semibold transition-all" :class="plan.recommended
                                 ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-lg shadow-indigo-200'
                                 : 'border-2 border-indigo-200 text-indigo-700 hover:border-indigo-400 hover:bg-indigo-50'">
@@ -67,8 +62,8 @@
             </div>
 
             <div class="text-center mt-12">
-                <button @click="$emit('compare')"
-                    class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-medium group">
+                <button
+                    class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-medium group cursor-not-allowed">
                     <span>Detailed plan comparison</span>
                     <FontAwesomeIcon :icon="faArrowRight" class="group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -91,7 +86,6 @@ import type { AccountPlan } from '@/types/app/landing'
 export default defineComponent({
     name: 'PlansSection',
     components: { FontAwesomeIcon },
-    emits: ['apply', 'compare'],
     props: {
         plans: {
             type: Array as PropType<AccountPlan[]>,

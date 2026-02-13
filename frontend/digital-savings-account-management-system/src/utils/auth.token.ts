@@ -1,4 +1,4 @@
-const TOKEN_KEY = 'zeta_token'
+export const TOKEN_KEY = 'zeta_token'
 
 export const getAuthToken = (): string | null => {
   return sessionStorage.getItem(TOKEN_KEY)

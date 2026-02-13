@@ -24,13 +24,13 @@
 
                 <!-- Menu -->
                 <div class="py-1">
-                    <button @click="emitAndClose('profile')"
+                    <button @click="$router.push('/me/profile'); close()"
                         class="w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center gap-3 transition-colors">
                         <FontAwesomeIcon :icon="faUser" class="w-4 text-gray-400" />
                         View Profile
                     </button>
 
-                    <button @click="emitAndClose('statements')"
+                    <button @click="$router.push('/me/transactions'); close()"
                         class="w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center gap-3 transition-colors">
                         <FontAwesomeIcon :icon="faFileLines" class="w-4 text-gray-400" />
                         Statements
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="border-t border-gray-100 py-1">
-                    <button @click="emitAndClose('logout')"
+                    <button @click="logout()"
                         class="w-full px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors">
                         <FontAwesomeIcon :icon="faSignOutAlt" class="w-4" />
                         Sign Out
@@ -66,7 +66,6 @@ export default defineComponent({
         userName: { type: String, required: true },
         userEmail: { type: String, required: true }
     },
-    emits: ['profile', 'statements', 'logout'],
     data() {
         return {
             open: false as boolean
@@ -93,15 +92,16 @@ export default defineComponent({
         close() {
             this.open = false
         },
-        emitAndClose(event: 'profile' | 'statements' | 'logout') {
-            this.close()
-            this.$emit(event)
-        },
         onClickOutside(event: MouseEvent) {
             const wrapper = this.$refs.wrapper as HTMLElement
             if (wrapper && !wrapper.contains(event.target as Node)) {
                 this.close()
             }
+        },
+        logout() {
+            this.$store.dispatch('auth/logout')
+            this.$router.push('/')
+            this.close()
         }
     },
     mounted() {

@@ -54,7 +54,7 @@
       <div
         v-for="app in applications"
         :key="app.applicationId"
-        class="bg-white p-6 rounded-xl shadow border hover:shadow-md transition-shadow"
+        class="bg-white p-6 rounded-xl shadow border border-gray-300 hover:shadow-md transition-shadow"
       >
         <div class="flex justify-between items-start">
           <!-- Application Info -->
@@ -131,7 +131,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, reactive } from "vue";
-import { getPendingApplications, approveApplication, rejectApplication } from "@/services/adminApi";
+import { getPendingApplications, approveApplication, rejectApplication } from "@/api/endpoints/admin/admin.api";
 import { AdminApplicationViewResponse } from "@/types/adminTypes";
 
 const applications = ref<AdminApplicationViewResponse[]>([]);

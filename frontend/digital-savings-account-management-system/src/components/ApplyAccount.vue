@@ -92,6 +92,7 @@ defineExpose({ formData });
             v-model="formData.annualIncome"
             type="number"
             placeholder="e.g. 800000"
+            min="1"
             class="zeta-input currency-input"
           />
         </div>

@@ -27,6 +27,8 @@
                         LIVE · TRENDING NOW
                     </div>
 
+                    <AppLogo class="text-4xl mb-6" />
+
                     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
                         <span class="block">Live Big with</span>
                         <span
@@ -42,7 +44,7 @@
 
                     <div class="flex flex-col sm:flex-row gap-4 mt-8 justify-center lg:justify-start">
                         <button @click="$emit('apply')"
-                            class="group relative px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-105 hover:shadow-2xl shadow-lg shadow-indigo-200 flex items-center justify-center gap-3">
+                            class="group relative px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-105 hover:shadow-2xl shadow-lg shadow-indigo-200 flex items-center justify-center gap-3 cursor-pointer">
                             <span>Apply for Savings Account</span>
                             <FontAwesomeIcon :icon="faArrowRight"
                                 class="group-hover:translate-x-1 transition-transform" />
@@ -52,7 +54,7 @@
                         </button>
 
                         <button @click="$emit('login')"
-                            class="px-8 py-4 bg-white border-2 border-indigo-200 text-indigo-700 font-semibold rounded-xl hover:border-indigo-400 hover:bg-indigo-50 transition-all flex items-center justify-center gap-2">
+                            class="px-8 py-4 bg-white border-2 border-indigo-200 text-indigo-700 font-semibold rounded-xl hover:border-indigo-400 hover:bg-indigo-50 transition-all flex items-center justify-center gap-2 cursor-pointer">
                             <FontAwesomeIcon :icon="faRightToBracket" />
                             Already Applied? Login
                         </button>
@@ -126,10 +128,14 @@ import {
     faBuildingColumns,
     faCheck
 } from '@fortawesome/free-solid-svg-icons'
+import AppLogo from '../AppLogo.vue';
 
 export default defineComponent({
     name: 'HeroSection',
-    components: { FontAwesomeIcon },
+    components: {
+        FontAwesomeIcon,
+        AppLogo
+    },
     emits: ['apply', 'login'],
     setup() {
         const features = ['6.5% interest rate', 'Airport lounge access', 'Zero ATM fees worldwide']

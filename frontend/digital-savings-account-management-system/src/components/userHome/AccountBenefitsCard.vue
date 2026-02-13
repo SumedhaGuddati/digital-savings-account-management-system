@@ -24,8 +24,8 @@
             </div>
         </div>
 
-        <button @click="$emit('explore')"
-            class="w-full mt-5 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-sm flex items-center justify-center gap-2">
+        <button
+            class="w-full mt-5 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-medium rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-sm flex items-center justify-center gap-2 cursor-not-allowed">
             <FontAwesomeIcon :icon="faArrowRight" />
             Explore Benefits
         </button>
@@ -46,7 +46,6 @@ export default defineComponent({
             required: true
         }
     },
-    emits: ['explore'],
     computed: {
         faCrown() { return faCrown },
         faCheck() { return faCheck },

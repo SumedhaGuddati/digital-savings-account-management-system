@@ -1,7 +1,11 @@
 import { Module } from "vuex";
-import axios from "axios";
+import { clearAuthToken, setAuthToken, TOKEN_KEY } from "@/utils/auth.token";
+import { getApplicationStatus, loginRequest } from "@/api/endpoints/auth/auth.api";
 
-// Your Interfaces
+/* =======================
+   Interfaces
+======================= */
+
 export interface SignupRequest {
   name: string;
   email: string;
@@ -15,190 +19,178 @@ export interface LoginRequest {
 
 export interface AuthResponse {
   token: string;
-  role: "USER" | "ADMIN";
+  role: string; // backend may return lowercase
 }
 
-// Extended User interface with more fields
+export type Role = "USER" | "ADMIN" | "SUPER_ADMIN"
+
 export interface User {
   id: number;
   name: string;
   email: string;
-  role: "USER" | "ADMIN";
+  role: Role;
   createdAt: string;
 }
 
-// State interface
+export type AccountStatus =
+  | "ACTIVE"
+  | "PENDING"
+  | "REJECTED"
+  | "NONE";
+
+/* =======================
+   State
+======================= */
+
 export interface AuthState {
   user: User | null;
   token: string | null;
   loading: boolean;
   error: string | null;
+  accountStatus: AccountStatus;
+  accountStatusLoading: boolean;
 }
 
-// Initial state
 const state: AuthState = {
-  user: JSON.parse(sessionStorage.getItem("user") || "null"),
-  token: sessionStorage.getItem("token"),
+  user: safelyParseUser(),
+  token: sessionStorage.getItem(TOKEN_KEY),
   loading: false,
   error: null,
+  accountStatus: "NONE",
+  accountStatusLoading: false,
 };
 
-// Getters
+/* =======================
+   Helpers
+======================= */
+
+function safelyParseUser(): User | null {
+  try {
+    return JSON.parse(sessionStorage.getItem("user") || "null");
+  } catch {
+    return null;
+  }
+}
+
+/* =======================
+   Getters
+======================= */
+
 const getters = {
-  isAuthenticated: (state: AuthState): boolean => !!state.token,
+  isAuthenticated: (state: AuthState) => !!state.token,
 
-  isAdmin: (state: AuthState): boolean => state.user?.role === "ADMIN",
+  isAdmin: (state: AuthState) =>
+    state.user?.role === "ADMIN" ||
+    state.user?.role === "SUPER_ADMIN",
 
-  isUser: (state: AuthState): boolean => state.user?.role === "USER",
+  isUser: (state: AuthState) => state.user?.role === "USER",
 
-  currentUser: (state: AuthState): User | null => state.user,
-
-  authToken: (state: AuthState): string | null => state.token,
-
-  authLoading: (state: AuthState): boolean => state.loading,
-
-  authError: (state: AuthState): string | null => state.error,
+  accountStatus: (state: AuthState) => state.accountStatus,
 };
 
-// Mutations
+/* =======================
+   Mutations
+======================= */
+
 const mutations = {
-  SET_LOADING(state: AuthState, payload: boolean): void {
+  SET_LOADING(state: AuthState, payload: boolean) {
     state.loading = payload;
   },
 
-  SET_ERROR(state: AuthState, payload: string | null): void {
+  SET_ERROR(state: AuthState, payload: string | null) {
     state.error = payload;
   },
 
-  SET_AUTH(state: AuthState, payload: { user: User; token: string }): void {
+  SET_AUTH(state: AuthState, payload: { user: User; token: string }) {
     state.user = payload.user;
     state.token = payload.token;
     state.error = null;
+
+    setAuthToken(payload.token);
   },
 
-  CLEAR_AUTH(state: AuthState): void {
+  CLEAR_AUTH(state: AuthState) {
     state.user = null;
     state.token = null;
-    state.error = null;
+    state.accountStatus = "NONE";
+
+    clearAuthToken();
+    sessionStorage.removeItem("accountStatus");
+  },
+
+  SET_ACCOUNT_STATUS(state: AuthState, payload: AccountStatus) {
+    state.accountStatus = payload;
+  },
+
+  SET_ACCOUNT_STATUS_LOADING(state: AuthState, payload: boolean) {
+    state.accountStatusLoading = payload;
   },
 };
 
-// Actions
+/* =======================
+   Actions
+======================= */
+
 const actions = {
-  // Signup Action
-  async signup(
-    { commit }: any,
-    signupData: SignupRequest
-  ): Promise<AuthResponse> {
+  async login({ commit }: any, credentials: LoginRequest) {
     commit("SET_LOADING", true);
     commit("SET_ERROR", null);
 
     try {
-      const response = await axios.post<AuthResponse>(
-        "/auth/signup",
-        signupData
-      );
-      const { token, role } = response.data;
+      const response = await loginRequest(credentials);
 
-      // Create user object from signup data and response
+      const token = response.data.token;
+      const role = response.data.role.toUpperCase();
+
       const user: User = {
-        id: Date.now(), // This will come from backend
-        name: signupData.name,
-        email: signupData.email,
-        role: role,
-        createdAt: new Date().toISOString(),
-      };
-
-      // Save to sessionStorage
-      sessionStorage.setItem("token", token);
-      sessionStorage.setItem("user", JSON.stringify(user));
-
-      // Set default Authorization header
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-      commit("SET_AUTH", { user, token });
-      return response.data;
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || "Signup failed";
-      commit("SET_ERROR", errorMessage);
-      throw error;
-    } finally {
-      commit("SET_LOADING", false);
-    }
-  },
-
-  // Login Action
-  async login(
-    { commit }: any,
-    credentials: LoginRequest
-  ): Promise<AuthResponse> {
-    commit("SET_LOADING", true);
-    commit("SET_ERROR", null);
-
-    try {
-      const response = await axios.post<AuthResponse>(
-        "/auth/login",
-        credentials
-      );
-      const { token, role } = response.data;
-
-      // Fetch full user details after login
-      // You'll need to get user details from backend
-      const user: User = {
-        id: 1, // This will come from backend
-        name: credentials.email.split("@")[0], // Temporary - replace with actual user data
+        id: 0, // Replace when backend returns actual user
+        name: credentials.email.split("@")[0],
         email: credentials.email,
-        role: role,
+        role: role as Role,
         createdAt: new Date().toISOString(),
       };
 
-      // Save to sessionStorage
-      sessionStorage.setItem("token", token);
-      sessionStorage.setItem("user", JSON.stringify(user));
-
-      // Set default Authorization header
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
       commit("SET_AUTH", { user, token });
-      return response.data;
+
+      return { role };
     } catch (error: any) {
-      const errorMessage = error.response?.data?.message || "Login failed";
-      commit("SET_ERROR", errorMessage);
+      const msg =
+        error.response?.data?.message || "Login failed";
+      commit("SET_ERROR", msg);
       throw error;
     } finally {
       commit("SET_LOADING", false);
     }
   },
 
-  // Logout Action
-  logout({ commit }: any): void {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("user");
-    delete axios.defaults.headers.common["Authorization"];
+  logout({ commit }: any) {
     commit("CLEAR_AUTH");
   },
 
-  // Clear Error
-  clearError({ commit }: any): void {
-    commit("SET_ERROR", null);
-  },
+  async fetchAccountStatus({ commit }: any) {
+    commit("SET_ACCOUNT_STATUS_LOADING", true);
 
-  // Fetch User Profile (call after login to get full user data)
-  async fetchUserProfile({ commit, state }: any): Promise<User> {
     try {
-      const response = await axios.get<User>("/auth/profile");
-      const user = response.data;
-
-      sessionStorage.setItem("user", JSON.stringify(user));
-      commit("SET_AUTH", { user, token: state.token });
-      return user;
-    } catch (error) {
+      const response = await getApplicationStatus();
+      const status = response.data.status?.toUpperCase() || "NONE";
+      commit("SET_ACCOUNT_STATUS", status);
+      return status;
+    } catch (error: any) {
+      if (error.response?.status === 404) {
+        commit("SET_ACCOUNT_STATUS", "NONE");
+        return "NONE";
+      }
       throw error;
+    } finally {
+      commit("SET_ACCOUNT_STATUS_LOADING", false);
     }
   },
 };
 
-// Module
+/* =======================
+   Module
+======================= */
+
 const authModule: Module<AuthState, any> = {
   namespaced: true,
   state,

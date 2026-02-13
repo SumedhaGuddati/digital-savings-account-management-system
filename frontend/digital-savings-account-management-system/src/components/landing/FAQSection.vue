@@ -34,8 +34,8 @@
             <div class="mt-12 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-3xl p-8 text-center">
                 <h3 class="text-xl font-bold text-gray-900 mb-2">Still have questions?</h3>
                 <p class="text-gray-600 mb-6">Our support team is ready to help you 24/7</p>
-                <button @click="$emit('contact')"
-                    class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200">
+                <button
+                    class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200 cursor-not-allowed">
                     Contact Support
                 </button>
             </div>
@@ -52,7 +52,6 @@ import type { FAQ } from '@/types/app/landing'
 export default defineComponent({
     name: 'FAQSection',
     components: { FontAwesomeIcon },
-    emits: ['contact'],
     props: {
         faqs: {
             type: Array as PropType<FAQ[]>,

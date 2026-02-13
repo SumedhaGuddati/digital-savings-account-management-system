@@ -337,7 +337,7 @@ import { defineComponent, ref, onMounted } from "vue";
 import { 
   getDashboardStats, 
   getApprovedApplications,  
-} from "@/services/adminApi";
+} from "@/api/endpoints/admin/admin.api";
 import { AdminApplicationViewResponse, AdminDashboardStatsResponse } from "@/types/adminTypes";
 
 export default defineComponent({

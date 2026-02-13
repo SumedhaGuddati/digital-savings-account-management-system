@@ -8,7 +8,7 @@
                         class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center shadow-sm">
                         <span class="text-white font-bold text-lg">Z</span>
                     </div>
-                    <span class="font-semibold text-gray-900">ZetaFi</span>
+                    <span class="font-semibold text-gray-900">ZetaRise</span>
                 </div>
 
                 <!-- Right -->
@@ -21,8 +21,7 @@
                     </button>
 
                     <!-- Profile -->
-                    <ProfileDropdown :user-name="userName" :user-email="userEmail" @profile="onProfile"
-                        @statements="onStatements" @logout="onLogout" />
+                    <ProfileDropdown :user-name="userName" :user-email="userEmail" />
                 </div>
             </div>
         </div>
@@ -42,22 +41,10 @@ export default defineComponent({
         userName: { type: String, required: true },
         userEmail: { type: String, required: true }
     },
-    emits: ['profile', 'statements', 'logout'],
     computed: {
         faBell() {
             return faBell
         }
     },
-    methods: {
-        onProfile() {
-            this.$emit('profile')
-        },
-        onStatements() {
-            this.$emit('statements')
-        },
-        onLogout() {
-            this.$emit('logout')
-        }
-    }
 })
 </script>

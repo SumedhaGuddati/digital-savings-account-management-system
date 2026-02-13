@@ -145,18 +145,14 @@ export function useLandingData() {
                 "Prime Advantage customers get 4 complimentary lounge accesses per year, while Aurora Elite customers get 12 accesses. You'll receive a Priority Pass that can be used at 1000+ lounges worldwide."
         },
         {
-            question: 'Is my money safe with ZetaFi?',
+            question: 'Is my money safe with ZetaRise?',
             answer:
                 'Yes, your deposits are insured up to ₹5 lakhs by DICGC. We use bank-grade 256-bit encryption and are fully regulated by RBI. Your security is our top priority.'
         }
     ]
 
     const productLinks: FooterLink[] = [
-        { text: 'Savings Account', url: '#' },
-        { text: 'Fixed Deposits', url: '#' },
-        { text: 'Recurring Deposits', url: '#' },
-        { text: 'NRI Accounts', url: '#' },
-        { text: 'Senior Citizen', url: '#' }
+        { text: 'Savings Account', url: '/apply' },
     ]
 
     const companyLinks: FooterLink[] = [

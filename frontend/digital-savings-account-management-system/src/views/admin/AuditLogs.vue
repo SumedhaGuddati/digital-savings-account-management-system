@@ -157,7 +157,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive, onMounted, computed, watch } from "vue";
-import { getAuditLogs, getAuditLogsCount, getEventTypes } from "@/services/auditApi";
+import { getAuditLogs, getAuditLogsCount, getEventTypes } from "@/api/endpoints/admin/admin.api";
 import type { AuditEventResponse } from "@/types/auditTypes";
 
 

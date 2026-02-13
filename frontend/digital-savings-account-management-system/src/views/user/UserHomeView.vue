@@ -56,8 +56,8 @@
                     </div>
 
                     <div class="lg:col-span-1 space-y-6">
-                        <AccountBenefitsCard :benefits="benefits" @explore="goBenefits" />
-                        <HelpCard @contact="contactSupport" />
+                        <AccountBenefitsCard :benefits="benefits" />
+                        <HelpCard />
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@ import { TransactionType } from '@/types/api/banking';
 import { getUserHomeDetails, getUserTransactions } from '@/api/endpoints/users/users.api';
 import { mapApiTransactionsToUi } from '@/mapper/banking/transaction.mapper';
 import AppLoader from '@/components/ui/loader/AppLoader.vue';
-import TransactionSuccessfulAnimation from '@/components/ui/TransactionSuccessfulAnimation.vue';
+// import TransactionSuccessfulAnimation from '@/components/ui/TransactionSuccessfulAnimation.vue';
 
 export default defineComponent({
     name: 'UserHomeView',
@@ -175,12 +175,6 @@ export default defineComponent({
             ]);
 
             console.log(`${this.transactionType} of ₹${amount} successful`)
-        },
-        goBenefits() {
-            this.$router.push('/account-types')
-        },
-        contactSupport() {
-            console.log('Contact support')
         },
         async fetchAccountDetails() {
             try {
