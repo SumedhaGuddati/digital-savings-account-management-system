@@ -5,7 +5,7 @@
 
         <div v-if="filteredTransactions" class="max-w-7xl mx-auto"
             :class="{ 'pointer-events-none opacity-50': isLoading }">
-            <TransactionsHeader :count="filteredTransactions.length" @export="exportTransactions" />
+            <TransactionsHeader :count="filteredTransactions.length" />
 
             <TransactionsFilters v-model:searchQuery="searchQuery" v-model:dateFilter="dateFilter"
                 v-model:typeFilter="typeFilter" @clear="clearAllFilters" />
@@ -13,7 +13,7 @@
             <TransactionsSummary :summary="summary" />
 
             <TransactionsList :transactions="filteredTransactions" :has-active-filters="hasActiveFilters as boolean"
-                :empty-state-message="emptyStateMessage" @select="viewTransactionDetails" @clear="clearAllFilters" />
+                :empty-state-message="emptyStateMessage" @clear="clearAllFilters" />
 
             <TransactionsQuickFilters :quick-filters="quickFilters" v-model:sortOrder="sortOrder"
                 @apply="applyQuickFilter" />
@@ -199,14 +199,6 @@ export default defineComponent({
                     break
             }
             this.pagination.page = 1
-        },
-
-        viewTransactionDetails(txn: Transaction) {
-            console.log('Viewing transaction:', txn)
-        },
-
-        exportTransactions() {
-            console.log('Exporting transactions...')
         },
 
         async fetchTransactions() {

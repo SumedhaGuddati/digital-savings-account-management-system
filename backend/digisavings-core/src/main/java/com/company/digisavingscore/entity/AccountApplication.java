@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @Data
 @Getter
 @Setter
+@Builder
 public class AccountApplication {
 
     @Id

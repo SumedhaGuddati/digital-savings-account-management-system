@@ -166,7 +166,6 @@ export default defineComponent({
         this.otpSent = true;
         toast.success("OTP sent! It will expire in 5 minutes.");
       } catch (err: any) {
-        console.error(err);
         if (err.response?.data?.message) {
           alert(err.response.data.message);
         } else {
@@ -193,7 +192,6 @@ export default defineComponent({
           alert("Invalid OTP or OTP expired");
         }
       } catch (err) {
-        console.error(err);
         alert("OTP verification failed");
       } finally {
         this.verifyingOtp = false;

@@ -98,7 +98,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, Prop } from 'vue'
+import { defineComponent, nextTick } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
     faCirclePlus,
@@ -354,7 +354,6 @@ export default defineComponent({
                 this.$emit('close')
             } catch (error: any) {
                 toast.error(error.message || 'Transaction failed. Please try again.')
-                console.error('Error processing transaction:', error)
             }
             finally {
                 this.isProcessing = false

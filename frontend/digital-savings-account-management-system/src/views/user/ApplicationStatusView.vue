@@ -116,7 +116,6 @@ export default defineComponent({
                 const response = await getUserApplicationStatus()
                 this.application = mapApiApplicationToUi(response.data)
             } catch (error) {
-                console.error('Error fetching application status:', error)
                 toast.error('Failed to fetch application status. Please try again later.')
                 this.application = null
             } finally {

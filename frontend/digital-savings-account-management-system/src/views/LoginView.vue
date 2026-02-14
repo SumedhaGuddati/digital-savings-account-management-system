@@ -332,7 +332,6 @@ export default defineComponent({
           this.$router.push("/");
         }
       } catch (error: any) {
-        console.error("Login failed:", error);
         const msg =
           error.response?.data?.message ||
           "Login failed. Please check your credentials.";
