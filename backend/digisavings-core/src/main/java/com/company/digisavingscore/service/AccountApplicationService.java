@@ -40,17 +40,17 @@ public class AccountApplicationService implements IAccountApplicationService {
 
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-        AccountApplication entity = new AccountApplication();
-        entity.setUser(user);
-        entity.setAccountType(request.getAccountType());
-        entity.setApplicationDate(LocalDateTime.now());
-        entity.setStatus(ApplicationStatus.PENDING);
-
-        entity.setParentName(request.getParentName());
-        entity.setOccupation(request.getOccupation());
-        entity.setIncomeSource(request.getIncomeSource());
-        entity.setAnnualIncome(request.getAnnualIncome());
-        entity.setDob(java.time.LocalDate.parse(request.getDob()));
+        AccountApplication entity = AccountApplication.builder()
+                .user(user)
+                .accountType(request.getAccountType())
+                .applicationDate(LocalDateTime.now())
+                .status(ApplicationStatus.PENDING)
+                .parentName(request.getParentName())
+                .occupation(request.getOccupation())
+                .incomeSource(request.getIncomeSource())
+                .annualIncome(request.getAnnualIncome())
+                .dob(java.time.LocalDate.parse(request.getDob()))
+                .build();
 
         AccountApplication saved = repository.save(entity);
         return mapper.toResponse(saved);

@@ -415,7 +415,6 @@ export default defineComponent({
           second: '2-digit'
         });
       } catch (err: any) {
-        console.error('Error fetching dashboard data:', err);
         
         if (err.response) {
           if (err.response.status === 404) {

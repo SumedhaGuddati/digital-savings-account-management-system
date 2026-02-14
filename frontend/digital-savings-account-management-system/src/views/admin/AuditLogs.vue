@@ -333,7 +333,6 @@ export default defineComponent({
         this.totalEvents = count;
         this.eventTypes = types;
       } catch (err) {
-        console.error('Error fetching audit logs:', err);
         this.error = 'Failed to load audit logs from database. Please try again.';
       } finally {
         this.loading = false;

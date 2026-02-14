@@ -6,8 +6,10 @@ import com.company.digisavingscore.dto.response.TransactionHistoryResponse;
 import com.company.digisavingscore.dto.response.TransactionResponse;
 import com.company.digisavingscore.dto.response.UserProfileDetailsResponse;
 import com.company.digisavingscore.service.IAccountService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -41,8 +43,8 @@ public class AccountController {
      * User: deposit transaction
      * URL: POST /api/accounts/me/deposit
      */
-    @PostMapping("/deposit")
-    public ResponseEntity<TransactionResponse> deposit(@RequestBody TransactionRequest request) {
+    @PostMapping(value = "/deposit", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TransactionResponse> deposit(@Valid @RequestBody TransactionRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(accountService.deposit(request));
     }
@@ -51,8 +53,8 @@ public class AccountController {
      * User: withdraw transaction
      * URL: POST /api/accounts/me/withdraw
      */
-    @PostMapping("/withdraw")
-    public ResponseEntity<TransactionResponse> withdraw(@RequestBody TransactionRequest request) {
+    @PostMapping(value = "/withdraw", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TransactionResponse> withdraw(@Valid @RequestBody TransactionRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(accountService.withdraw(request));
     }
