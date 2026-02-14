@@ -5,6 +5,7 @@ import com.company.digisavingscore.dto.response.AccountApplicationResponse;
 import com.company.digisavingscore.entity.AccountApplication;
 import com.company.digisavingscore.entity.User;
 import com.company.digisavingscore.entity.enums.AccountType;
+import com.company.digisavingscore.entity.enums.ApplicationStatus;
 import com.company.digisavingscore.exception.AccountAlreadyExistsException;
 import com.company.digisavingscore.mapper.AccountApplicationMapper;
 import com.company.digisavingscore.repository.AccountApplicationRepository;
@@ -19,6 +20,8 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -43,6 +46,7 @@ public class AccountApplicationServiceTest {
     private MockedStatic<SecurityUtils> mockedSecurityUtils;
     private User mockUser;
     private AccountApplicationRequest validRequest;
+    private AccountApplication mockApplication;
 
     @BeforeEach
     void setUp() {
@@ -50,15 +54,29 @@ public class AccountApplicationServiceTest {
         mockedSecurityUtils.when(SecurityUtils::getCurrentUserEmail).thenReturn("test@example.com");
 
         mockUser = new User();
-        mockUser.setId(Long.valueOf(1L));
+        mockUser.setId(1L);
         mockUser.setEmail("test@example.com");
 
         validRequest = new AccountApplicationRequest();
         validRequest.setAccountType(AccountType.ZETA_PRIME);
         validRequest.setDob("1995-01-01");
-        validRequest.setAnnualIncome(Double.valueOf(500000.0));
+        validRequest.setAnnualIncome(500000.0);
         validRequest.setOccupation("ENGINEER");
         validRequest.setIncomeSource("SALARY");
+
+        mockApplication = AccountApplication.builder()
+                .id(1L)
+                .user(mockUser)
+                .occupation("ENGINEER")
+                .incomeSource("SALARY")
+                .annualIncome(500000.0)
+                .dob(LocalDate.parse("1995-01-01"))
+                .accountType(AccountType.ZETA_PRIME)
+                .status(ApplicationStatus.PENDING)
+                .applicationDate(LocalDateTime.now())
+                .reviewDate(LocalDateTime.now())
+                .reviewedBy(null)
+                .build();
     }
 
     @AfterEach
@@ -70,11 +88,11 @@ public class AccountApplicationServiceTest {
 
     @Test
     void applyForAccount_Success() {
-        Long uId = Long.valueOf(1L);
+        Long uId = 1L;
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(mockUser));
         when(repository.findByUserId(uId)).thenReturn(Optional.empty());
         when(userRepository.findById(uId)).thenReturn(Optional.of(mockUser));
-        when(repository.save(any(AccountApplication.class))).thenReturn(new AccountApplication());
+        when(repository.save(any(AccountApplication.class))).thenReturn(mockApplication);
         when(mapper.toResponse(any())).thenReturn(AccountApplicationResponse.builder().status("PENDING").build());
 
         AccountApplicationResponse response = service.applyForAccount(validRequest);
@@ -86,9 +104,9 @@ public class AccountApplicationServiceTest {
 
     @Test
     void applyForAccount_ThrowsException_WhenDuplicate() {
-        Long uId = Long.valueOf(1L);
+        Long uId = 1L;
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(mockUser));
-        when(repository.findByUserId(uId)).thenReturn(Optional.of(new AccountApplication()));
+        when(repository.findByUserId(uId)).thenReturn(Optional.of(mockApplication));
 
         assertThrows(AccountAlreadyExistsException.class, () -> service.applyForAccount(validRequest));
         verify(repository, never()).save(any());
@@ -96,13 +114,24 @@ public class AccountApplicationServiceTest {
 
     @Test
     void getApplicationStatus_Success() {
-        Long uId = Long.valueOf(1L);
-        AccountApplication application = new AccountApplication();
-        application.setUser(mockUser);
+        Long uId = 1L;
+        AccountApplication application = AccountApplication.builder()
+                .id(100L)
+                .user(mockUser)
+                .occupation("ENGINEER")
+                .incomeSource("SALARY")
+                .annualIncome(500000.0)
+                .dob(LocalDate.parse("1995-01-01"))
+                .accountType(AccountType.ZETA_PRIME)
+                .status(ApplicationStatus.PENDING)
+                .applicationDate(LocalDateTime.now())
+                .reviewDate(LocalDateTime.now())
+                .reviewedBy(null)
+                .build();
 
         when(userRepository.findByEmail("test@example.com")).thenReturn(Optional.of(mockUser));
         when(repository.findByUserId(uId)).thenReturn(Optional.of(application));
-        when(mapper.toResponse(any())).thenReturn(AccountApplicationResponse.builder().id(Long.valueOf(100L)).build());
+        when(mapper.toResponse(any())).thenReturn(AccountApplicationResponse.builder().id(100L).build());
 
         AccountApplicationResponse response = service.getApplicationStatus();
 
