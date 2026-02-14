@@ -8,6 +8,6 @@ class DigiSavingsCoreApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("Tests done....");
 	}
-
 }
