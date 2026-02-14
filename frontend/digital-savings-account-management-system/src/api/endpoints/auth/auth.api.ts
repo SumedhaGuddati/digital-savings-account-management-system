@@ -1,6 +1,5 @@
 import apiManager from "@/api/apiManager";
 import { AUTH_ENDPOINTS } from "./auth.endpoints";
-import { p } from "vue-router/dist/router-CWoNjPRp.mjs";
 
 export const loginRequest = (data: {
     email: string;

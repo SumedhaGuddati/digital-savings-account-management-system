@@ -9,7 +9,7 @@
         </div>
 
         <div v-if="transactions.length > 0">
-            <TransactionRow v-for="txn in transactions" :key="txn.id" :transaction="txn" @click="$emit('select', txn)"
+            <TransactionRow v-for="txn in transactions" :key="txn.id" :transaction="txn"
                 class="cursor-pointer hover:bg-gray-50/80 transition-colors" />
         </div>
 
@@ -32,6 +32,6 @@ export default defineComponent({
         hasActiveFilters: { type: Boolean, required: true },
         emptyStateMessage: { type: String, required: true }
     },
-    emits: ['select', 'clear']
+    emits: ['clear']
 })
 </script>

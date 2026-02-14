@@ -32,13 +32,6 @@
                         </p>
                     </div>
                 </div>
-
-                <!-- Export -->
-                <button @click="$emit('export')"
-                    class="px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-gray-700 text-sm font-medium hover:bg-gray-50 hover:border-gray-300 transition-all flex items-center gap-2 shadow-sm">
-                    <FontAwesomeIcon :icon="faDownload" />
-                    Export Statement
-                </button>
             </div>
         </div>
     </div>
@@ -68,8 +61,6 @@ export default defineComponent({
         }
     },
 
-    emits: ["export"],
-
     data() {
         return {
             faArrowLeft,
@@ -78,11 +69,5 @@ export default defineComponent({
             faDownload
         };
     },
-
-    methods: {
-        export() {
-            this.$emit("export");
-        }
-    }
 });
 </script>
