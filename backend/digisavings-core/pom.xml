@@ -14,7 +14,7 @@
 
     <groupId>com.company</groupId>
     <artifactId>digisavings-core</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>DigiSavingsCore</name>
     <description>Backend system for managing digital savings accounts</description>
 
@@ -114,14 +114,6 @@
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-inline</artifactId>
-            <version>5.5.0</version>
-            <scope>test</scope>
-        </dependency>
-
     </dependencies>
 
     <build>

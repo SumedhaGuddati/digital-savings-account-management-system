@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 px-6">
 

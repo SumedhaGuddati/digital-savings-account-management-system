@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
   <div class="min-h-screen bg-gradient-to-br from-gray-50 via-gray-50 to-gray-100">
 

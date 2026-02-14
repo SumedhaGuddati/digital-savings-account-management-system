@@ -1,6 +1,8 @@
 import apiManager from "@/api/apiManager";
 import { AUTH_ENDPOINTS } from "./auth.endpoints";
 
+// @author Guddati Venkata Sri Sumedha
+
 export const loginRequest = (data: {
     email: string;
     password: string;

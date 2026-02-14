@@ -6,6 +6,9 @@ import com.company.digisavingscore.dto.response.TransactionHistoryResponse;
 import com.company.digisavingscore.dto.response.TransactionResponse;
 import com.company.digisavingscore.dto.response.UserProfileDetailsResponse;
 
+/**
+ * @author Khamitkar Sai Chandan
+ */
 public interface IAccountService {
 
     AccountDetailsResponse getAccountDetails();

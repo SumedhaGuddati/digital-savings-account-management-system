@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * @author Bharadi Harshitha
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -34,6 +37,7 @@ public class AdminAccountService implements IAdminAccountService {
     private final AccountApplicationRepository applicationRepository;
     private final SavingsAccountRepository savingsAccountRepository;
     private final AdminAccountMapper adminAccountMapper;
+    private final EmailService emailService;
 
     @Override
     @Transactional(readOnly = true)
@@ -109,6 +113,12 @@ public class AdminAccountService implements IAdminAccountService {
 
         SavingsAccount savedAccount = savingsAccountRepository.save(account);
 
+        emailService.sendApplicationApprovalEmail(
+                user.getEmail(),
+                user.getName(),
+                savedAccount.getAccountNumber()
+        );
+
         return SavingsAccountResponse.builder()
                 .id(savedAccount.getId())
                 .accountNumber(savedAccount.getAccountNumber())
@@ -153,6 +163,11 @@ public class AdminAccountService implements IAdminAccountService {
         application.setReviewedBy(adminUsername);
         application.setReviewDate(LocalDateTime.now());
         applicationRepository.save(application);
+
+        emailService.sendApplicationRejectionEmail(
+                user.getEmail(),
+                user.getName()
+        );
 
         return SavingsAccountResponse.builder()
                 .id(null)

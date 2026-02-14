@@ -1,3 +1,6 @@
+/*
+ @author Bharadi Harshitha
+*/
 describe('AuditLogs Logic Tests', () => {
 
   // Test 1: formatAction

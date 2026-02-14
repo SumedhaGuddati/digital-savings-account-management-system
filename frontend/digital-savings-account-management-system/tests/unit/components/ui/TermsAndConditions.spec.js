@@ -1,6 +1,9 @@
 import { mount } from '@vue/test-utils';
 import TermsAndConditions from '@/components/ui/TermsAndConditions.vue';
 
+/*
+  @author Karanam Hima Varsha
+*/
 describe('TermsAndConditions.vue', () => {
   it('renders and covers internal methods', async () => {
     const wrapper = mount(TermsAndConditions, {

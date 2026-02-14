@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="relative" ref="wrapper">
         <button ref="profileButton" @click="toggle"
@@ -19,7 +20,7 @@
                 <!-- User Info -->
                 <div class="px-4 py-3 border-b border-gray-100">
                     <p class="text-sm font-medium text-gray-900">{{ userName }}</p>
-                    <p class="text-xs text-gray-500 mt-0.5">{{ userEmail }}</p>
+                    <p class="text-xs text-gray-500 mt-0.5">{{ this.$store.getters['auth/getEmail'] }}</p>
                 </div>
 
                 <!-- Menu -->

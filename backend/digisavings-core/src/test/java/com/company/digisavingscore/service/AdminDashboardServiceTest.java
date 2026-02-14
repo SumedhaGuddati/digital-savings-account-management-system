@@ -21,6 +21,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
+/**
+ * @author Bharadi Harshitha
+ */
 @ExtendWith(MockitoExtension.class)
 class AdminDashboardServiceTest {
 
@@ -63,7 +66,7 @@ class AdminDashboardServiceTest {
         assertNotNull(stats);
         assertEquals(1100.0, stats.getManagedAssets().doubleValue());
         assertEquals(10.0, stats.getManagedAssetsGrowth()); // (1100-1000)/1000 * 100
-        assertEquals(50L, stats.getApprovedAppsCount());
+        assertEquals(50L, stats.getApprovedUsersCount());
         assertEquals(2L, stats.getAdminCount());
         assertEquals(100L, stats.getCustomerCount());
         assertEquals(5, stats.getNewUsersToday());
@@ -87,7 +90,7 @@ class AdminDashboardServiceTest {
         // Assert
         assertEquals(BigDecimal.ZERO, stats.getManagedAssets());
         assertEquals(0.0, stats.getManagedAssetsGrowth());
-        assertEquals(0L, stats.getApprovedAppsCount());
+        assertEquals(0L, stats.getApprovedUsersCount());
         assertEquals(0, stats.getNewUsersToday());
     }
 

@@ -1,3 +1,4 @@
+// @author Bharadi Harshitha
 export interface AdminApplicationViewResponse {
     applicationId: number;
     applicantName: string;
@@ -9,10 +10,11 @@ export interface AdminApplicationViewResponse {
     reviewedBy?: string | null;
 }
 
+// @author Bharadi Harshitha
 export interface AdminDashboardStatsResponse {
     managedAssets: number;
     managedAssetsGrowth: number;
-    approvedAppsCount: number;
+    approvedUsersCount: number;
     activeUsersCount: number;
     newUsersToday: number;
     averageYield: number;
@@ -21,11 +23,13 @@ export interface AdminDashboardStatsResponse {
     customerCount: number;
 }
 
+// @author Bharadi Harshitha
 export interface ApplicationAction {
     remarks: string;
     reviewedBy?: string;
 }
 
+// @author Bharadi Harshitha
 export interface SavingsAccountResponse {
     id: number;
     accountNumber: string;
@@ -35,17 +39,20 @@ export interface SavingsAccountResponse {
     openedDate: string;
 }
 
+// @author Bharadi Harshitha
 export interface ApiResponse {
     success: boolean;
     message: string;
     data?: Record<string, unknown>;
 }
 
+// @author Bharadi Harshitha
 export interface AccountApprovalRequest {
     remarks: string;
     reviewedBy: string;
 }
 
+// @author Bharadi Harshitha
 export interface BulkActionRequest {
     ids: number[];
     remarks: string;

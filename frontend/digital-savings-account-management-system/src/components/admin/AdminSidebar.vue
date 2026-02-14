@@ -1,3 +1,4 @@
+<!-- @author Bharadi Harshitha -->
 <template>
     <aside class="w-14 xs:w-16 sm:w-20 lg:w-24 flex flex-col items-center py-3 xs:py-4 sm:py-6 lg:py-8 bg-white sidebar-shadow z-50">
         <nav class="flex-1 flex flex-col gap-3 xs:gap-4 sm:gap-5 lg:gap-6 mt-6 xs:mt-10 sm:mt-16 lg:mt-12">

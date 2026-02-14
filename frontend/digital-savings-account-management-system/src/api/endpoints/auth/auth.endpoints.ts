@@ -1,3 +1,4 @@
+// @author Guddati Venkata Sri Sumedha
 export const AUTH_ENDPOINTS = {
     LOGIN: "/auth/login",
     SIGNUP: "/auth/signup",

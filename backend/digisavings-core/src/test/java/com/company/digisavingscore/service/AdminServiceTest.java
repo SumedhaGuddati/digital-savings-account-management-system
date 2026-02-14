@@ -12,6 +12,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * @author Guddati Venkata Sri Sumedha
+ */
 class AdminServiceTest {
 
     private UserRepository userRepository;

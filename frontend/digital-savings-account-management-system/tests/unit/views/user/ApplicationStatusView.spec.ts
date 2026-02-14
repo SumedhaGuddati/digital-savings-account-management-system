@@ -4,6 +4,10 @@ import { getUserApplicationStatus } from '@/api/endpoints/users/users.api'
 import * as applicationMapper from '@/mapper/application/application.mapper'
 import { Application } from '@/types/app/application'
 
+/*
+  @author Karanam Hima Varsha
+*/
+
 const stubs = {
     FontAwesomeIcon: true,
     StatusHeader: true,

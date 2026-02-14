@@ -10,6 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author Guddati Venkata Sri Sumedha
+ */
 @Configuration
 public class SuperAdminInitializer {
 

@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author Bharadi Harshitha
+ */
 @Data
 @Builder
 @NoArgsConstructor

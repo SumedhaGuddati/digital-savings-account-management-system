@@ -7,6 +7,9 @@ import com.company.digisavingscore.dto.response.AdminDashboardStatsResponse;
 
 import java.util.List;
 
+/**
+ * @author Bharadi Harshitha
+ */
 public interface IAdminAccountService {
     List<AdminApplicationViewResponse> getPendingApplications();
     List<AdminApplicationViewResponse> getApprovedApplications();

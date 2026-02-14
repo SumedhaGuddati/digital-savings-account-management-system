@@ -1,3 +1,4 @@
+<!-- @author Bharadi Harshitha -->
 <template>
     <div class="min-h-screen flex overflow-hidden bg-slate-100">
         <AdminSidebar />

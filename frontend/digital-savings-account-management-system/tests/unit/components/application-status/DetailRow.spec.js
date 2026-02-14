@@ -1,6 +1,9 @@
 import { mount } from '@vue/test-utils';
 import DetailRow from '@/components/application-status/DetailRow.vue';
 
+/*
+  @author Karanam Hima Varsha
+*/
 describe('DetailRow.vue', () => {
   it('checks if label and value are visible in the DOM', () => {
     const wrapper = mount(DetailRow, {

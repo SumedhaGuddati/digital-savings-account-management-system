@@ -17,6 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Guddati Venkata Sri Sumedha
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -48,9 +51,6 @@ public class AuthService implements IAuthService {
             log.warn("Signup failed. Email already exists: {}", request.getEmail());
             throw new EmailAlreadyExistsException("Email already registered");
         }
-//       if (!otpService.validateOtp(request.getEmail(), request.getOtp())) {
-//           throw new InvalidCredentialsException("Invalid or expired OTP");
-//       }
 
         User user = userMapper.toEntity(request, passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);

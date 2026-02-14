@@ -3,15 +3,16 @@ package com.company.digisavingscore.dto.response;
 import com.company.digisavingscore.entity.enums.AccountStatus;
 import com.company.digisavingscore.entity.enums.AccountType;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+/**
+ * @author Khamitkar Sai Chandan
+ */
+@Data
 @Builder
 public class UserProfileDetailsResponse {
     private Long accountId;

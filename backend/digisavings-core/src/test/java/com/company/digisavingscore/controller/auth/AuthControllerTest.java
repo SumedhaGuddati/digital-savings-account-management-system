@@ -17,6 +17,9 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * @author Guddati Venkata Sri Sumedha
+ */
 class AuthControllerTest {
 
     @Mock

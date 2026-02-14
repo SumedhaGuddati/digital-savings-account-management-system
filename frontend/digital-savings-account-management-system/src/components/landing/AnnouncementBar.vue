@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="bg-gradient-to-r from-indigo-900 via-purple-900 to-indigo-900 text-white py-3 relative overflow-hidden">
         <div class="absolute inset-0 opacity-10">

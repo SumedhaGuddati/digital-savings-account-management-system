@@ -1,3 +1,4 @@
+<!-- @author Karanam Hima Varsha -->
 <template>
     <div class="flex justify-between items-center py-3 border-b border-gray-100">
         <span class="text-sm text-gray-600">{{ label }}</span>

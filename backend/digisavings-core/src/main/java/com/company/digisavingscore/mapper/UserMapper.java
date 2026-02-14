@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author Guddati Venkata Sri Sumedha
+ */
 @Component
 public class UserMapper {
     public User toEntity(SignupRequest dto, String encodedPassword) {

@@ -2,6 +2,10 @@ import { shallowMount, VueWrapper } from '@vue/test-utils';
 import DashboardView from '@/views/admin/DashboardView.vue';
 import * as adminApi from '@/api/endpoints/admin/admin.api';
 
+/*
+ @author Bharadi Harshitha
+*/
+
 /**
  * MODULE MOCKING
  * We abstract the API layer to ensure the unit test remains isolated
@@ -23,7 +27,7 @@ const flushPromises = () => new Promise(resolve => setTimeout(resolve, 0));
 const mockStats = {
   managedAssets: 2000000,
   managedAssetsGrowth: 5.2,
-  approvedAppsCount: 12,
+  approvedUsersCount: 12,
   activeUsersCount: 50,
   newUsersToday: 3,
   averageYield: 4.5,
@@ -46,10 +50,10 @@ const mockApprovedApps = [
 ];
 
 describe('DashboardView.vue - Unit Tests', () => {
-  
+
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     // Default Stubbing: Define successful behavior for primary data fetch
     mockedGetStats.mockResolvedValue(mockStats);
     mockedGetApproved.mockResolvedValue(mockApprovedApps);
@@ -89,8 +93,8 @@ describe('DashboardView.vue - Unit Tests', () => {
    */
   it('should gracefully manage exception states during API failures', async () => {
     // Intercept console.error to maintain clean test output
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
+
     // Simulate Service Failure
     mockedGetStats.mockRejectedValue({ response: { status: 500 } });
     mockedGetApproved.mockRejectedValue({ response: { status: 500 } });
@@ -101,7 +105,7 @@ describe('DashboardView.vue - Unit Tests', () => {
     // Assertions for error state management
     expect(wrapper.vm.error).toMatch(/Server error/i);
     expect(wrapper.vm.loading).toBe(false);
-    
+
     // Cleanup: Restore original console behavior
     consoleSpy.mockRestore();
   });
@@ -112,7 +116,7 @@ describe('DashboardView.vue - Unit Tests', () => {
    */
   it('should accurately format currency values using the internal utility', () => {
     const wrapper = shallowMount(DashboardView) as any;
-    
+
     expect(wrapper.vm.formatCurrency(1500)).toBe('₹1.5K');
     expect(wrapper.vm.formatCurrency(0)).toBe('₹0');
   });

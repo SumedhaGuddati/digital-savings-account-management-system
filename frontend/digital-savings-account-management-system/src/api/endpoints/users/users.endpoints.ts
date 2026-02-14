@@ -1,3 +1,4 @@
+// @author Khamitkar Sai Chandan
 export const USER_ACCOUNT_ENDPOINTS = {
     GET_USER_HOME_DETAILS: '/accounts/me',
     GET_USER_PROFILE_DETAILS: '/accounts/me/profile',

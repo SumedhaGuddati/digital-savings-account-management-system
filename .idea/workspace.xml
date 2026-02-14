@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="643f257b-d6e5-49e5-b785-f54de194e422" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/backend/digisavings-core/src/main/java/com/company/digisavingscore/entity/enums/AccountType.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/digisavings-core/src/main/java/com/company/digisavingscore/entity/enums/AccountType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/digisavings-core/src/main/java/com/company/digisavingscore/repository/AccountApplicationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/digisavings-core/src/main/java/com/company/digisavingscore/repository/AccountApplicationRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/digisavings-core/src/main/java/com/company/digisavingscore/service/AccountApplicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/digisavings-core/src/main/java/com/company/digisavingscore/service/AccountApplicationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/digisavings-core/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/digisavings-core/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/components/ApplyAccount.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/components/ApplyAccount.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/components/landing/PlansSection.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/components/landing/PlansSection.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/composables/landing/useLandingData.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/composables/landing/useLandingData.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/types/app/landing.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/types/app/landing.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/views/LandingPageView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/views/LandingPageView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/views/MainRegistration.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/digital-savings-account-management-system/src/views/MainRegistration.vue" afterDir="false" />
-    </list>
+    <list default="true" id="643f257b-d6e5-49e5-b785-f54de194e422" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,6 +25,9 @@
     &quot;accountId&quot;: &quot;39986256-2912-449e-adbd-4e9bd69dc24a&quot;
   }
 }</component>
+  <component name="MavenRunner">
+    <option name="jreName" value="17" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -45,16 +36,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.DigiSavingsCoreApplication.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/himavarshak/capstonemain/zeta-digital-savings-account-management-system&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.DigiSavingsCoreApplication.executor": "Run",
+    "JUnit.All in digisavings-core.executor": "Coverage",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "prod",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/saichandank/IdeaProjects/capstone/zeta-digital-savings-account-management-system",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.runner"
   }
-}</component>
+}]]></component>
+  <component name="RunManager">
+    <configuration name="All in digisavings-core" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="digisavings-core" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.All in digisavings-core" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

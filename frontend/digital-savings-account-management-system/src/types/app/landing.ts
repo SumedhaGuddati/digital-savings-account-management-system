@@ -1,10 +1,12 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 
+// @author Khamitkar Sai Chandan
 export interface TrustBadge {
     icon: IconDefinition
     text: string
 }
 
+// @author Khamitkar Sai Chandan
 export interface Benefit {
     icon: IconDefinition
     title: string
@@ -13,11 +15,13 @@ export interface Benefit {
     iconColor: string
 }
 
+// @author Khamitkar Sai Chandan
 export interface PlanFeature {
     name: string
     included: boolean
 }
 
+// @author Karanam Hima Varsha
 export interface AccountPlan {
     name: string;
     code: string; 
@@ -32,11 +36,13 @@ export interface AccountPlan {
     features: PlanFeature[];
 }
 
+// @author Khamitkar Sai Chandan
 export interface FAQ {
     question: string
     answer: string
 }
 
+// @author Khamitkar Sai Chandan
 export interface FooterLink {
     text: string
     url: string

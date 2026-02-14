@@ -1,9 +1,10 @@
+// @author Khamitkar Sai Chandan
+
 import axios from 'axios';
 import { getAuthToken } from '@/utils/auth.token';
 
 const apiManager = axios.create({
     baseURL: process.env.VUE_APP_API_BASE_URL,
-    timeout: 15000,
     headers: {
         'Content-Type': 'application/json',
     },

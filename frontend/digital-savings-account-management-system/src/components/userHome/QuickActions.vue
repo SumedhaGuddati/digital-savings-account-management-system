@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <button v-for="action in actions" :key="action.label" @click="$emit(action.emit as any)" class="group relative p-5 bg-white rounded-xl border border-gray-200

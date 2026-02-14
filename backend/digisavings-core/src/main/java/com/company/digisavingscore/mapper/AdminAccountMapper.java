@@ -5,6 +5,9 @@ import com.company.digisavingscore.entity.AccountApplication;
 import com.company.digisavingscore.entity.User;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Bharadi Harshitha
+ */
 @Component
 public class AdminAccountMapper {
 

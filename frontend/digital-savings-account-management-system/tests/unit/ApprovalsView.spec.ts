@@ -2,6 +2,9 @@ import { shallowMount } from '@vue/test-utils'
 import { describe, it, expect } from '@jest/globals'
 import ApprovalsView from '@/views/admin/ApprovalsView.vue'
 
+/*
+ @author Bharadi Harshitha
+*/
 describe('ApprovalsView Logic Tests', () => {
 
   it('formatDate formats valid date correctly', () => {

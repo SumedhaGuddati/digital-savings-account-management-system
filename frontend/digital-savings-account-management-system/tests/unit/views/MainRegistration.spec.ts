@@ -1,6 +1,9 @@
 import { mount } from '@vue/test-utils';
 import MainRegistration from '@/views/MainRegistration.vue';
 
+/*
+@author Guddati Venkata Sri Sumedha
+*/
 describe('MainRegistration.vue', () => {
   let wrapper: any;
 

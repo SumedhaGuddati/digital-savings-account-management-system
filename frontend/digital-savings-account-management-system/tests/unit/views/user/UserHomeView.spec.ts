@@ -5,6 +5,11 @@ import { mapApiTransactionsToUi } from '@/mapper/banking/transaction.mapper';
 import { TransactionType, Transaction } from '@/types/api/banking';
 import { toast } from '@steveyuowo/vue-hot-toast';
 import { Account, AccountStatus } from '@/types/app/banking';
+import { createStore } from 'vuex'
+
+/*
+ @author Khamitkar Sai Chandan
+*/
 
 jest.mock('@/api/endpoints/users/users.api');
 jest.mock('@/mapper/banking/transaction.mapper');
@@ -13,15 +18,9 @@ jest.mock('@steveyuowo/vue-hot-toast', () => ({
     Toaster: { render: jest.fn() },
 }));
 
-const mockedGetUserHomeDetails = usersApi.getUserHomeDetails as jest.MockedFunction<
-    typeof usersApi.getUserHomeDetails
->;
-const mockedGetUserTransactions = usersApi.getUserTransactions as jest.MockedFunction<
-    typeof usersApi.getUserTransactions
->;
-const mockedMapApiTransactionsToUi = mapApiTransactionsToUi as jest.MockedFunction<
-    typeof mapApiTransactionsToUi
->;
+const mockedGetUserHomeDetails = usersApi.getUserHomeDetails as jest.MockedFunction<typeof usersApi.getUserHomeDetails>;
+const mockedGetUserTransactions = usersApi.getUserTransactions as jest.MockedFunction<typeof usersApi.getUserTransactions>;
+const mockedMapApiTransactionsToUi = mapApiTransactionsToUi as jest.MockedFunction<typeof mapApiTransactionsToUi>;
 const mockedToast = toast as jest.Mocked<typeof toast>;
 
 const flushPromises = () => new Promise(resolve => setTimeout(resolve, 0));
@@ -70,9 +69,30 @@ const uiTransactionsMock = [
 
 describe('UserHomeView.vue - Unit Tests', () => {
     let wrapper: VueWrapper<any>;
+    let mockStore: any;
+    let consoleErrorSpy: jest.SpyInstance;
 
     beforeEach(async () => {
         jest.clearAllMocks();
+
+        consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
+
+        mockStore = createStore({
+            modules: {
+                auth: {
+                    namespaced: true,
+                    state: {
+                        user: {
+                            email: 'test@example.com',
+                            name: 'Test User'
+                        }
+                    },
+                    getters: {
+                        getEmail: (state) => state.user.email
+                    }
+                }
+            }
+        });
 
         // Default API stubs
         mockedGetUserHomeDetails.mockResolvedValue({
@@ -82,6 +102,7 @@ describe('UserHomeView.vue - Unit Tests', () => {
             headers: {},
             config: {},
         } as any);
+
         mockedGetUserTransactions.mockResolvedValue({
             data: { transactions: transactionsMock },
             status: 200,
@@ -89,11 +110,25 @@ describe('UserHomeView.vue - Unit Tests', () => {
             headers: {},
             config: {},
         } as any);
+
         mockedMapApiTransactionsToUi.mockReturnValue(uiTransactionsMock);
 
         wrapper = shallowMount(UserHomeView, {
             global: {
-                stubs: ['AppNavbar', 'AppLoader', 'AccountCard', 'BalanceCard', 'QuickActions', 'TransactionsPreview', 'AccountBenefitsCard', 'HelpCard', 'TransactionModal', 'Toaster'],
+                plugins: [mockStore], 
+                stubs: {
+                    'AppNavbar': true,
+                    'AppLoader': true,
+                    'AccountCard': true,
+                    'BalanceCard': true,
+                    'QuickActions': true,
+                    'TransactionsPreview': true,
+                    'AccountBenefitsCard': true,
+                    'HelpCard': true,
+                    'TransactionModal': true,
+                    'Toaster': true,
+                    'FontAwesomeIcon': true
+                },
                 mocks: {
                     $router: { push: jest.fn() },
                 },
@@ -101,6 +136,13 @@ describe('UserHomeView.vue - Unit Tests', () => {
         });
 
         await flushPromises();
+    });
+
+    afterEach(() => {
+        consoleErrorSpy.mockRestore();
+        if (wrapper) {
+            wrapper.unmount();
+        }
     });
 
     it('should render component and show loader initially', () => {
@@ -135,7 +177,7 @@ describe('UserHomeView.vue - Unit Tests', () => {
         await wrapper.vm.handleTransactionConfirmation(1000);
 
         expect(mockedToast.success).toHaveBeenCalledWith('DEPOSIT of ₹1000 successful!');
-        expect(mockedGetUserHomeDetails).toHaveBeenCalledTimes(2); // initial + refresh
+        expect(mockedGetUserHomeDetails).toHaveBeenCalledTimes(2);
         expect(mockedGetUserTransactions).toHaveBeenCalledTimes(2);
     });
 
@@ -155,23 +197,36 @@ describe('UserHomeView.vue - Unit Tests', () => {
     });
 
     it('sets error toast on API failure', async () => {
-        const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => { });
         mockedGetUserHomeDetails.mockRejectedValue(new Error('API Error'));
         mockedGetUserTransactions.mockRejectedValue(new Error('API Error'));
 
         const errorWrapper = shallowMount(UserHomeView, {
             global: {
-                stubs: ['AppNavbar', 'AppLoader', 'AccountCard', 'BalanceCard', 'QuickActions', 'TransactionsPreview', 'AccountBenefitsCard', 'HelpCard', 'TransactionModal', 'Toaster'],
+                plugins: [mockStore],  // ✅ Add store here too
+                stubs: {
+                    'AppNavbar': true,
+                    'AppLoader': true,
+                    'AccountCard': true,
+                    'BalanceCard': true,
+                    'QuickActions': true,
+                    'TransactionsPreview': true,
+                    'AccountBenefitsCard': true,
+                    'HelpCard': true,
+                    'TransactionModal': true,
+                    'Toaster': true,
+                    'FontAwesomeIcon': true
+                },
                 mocks: {
                     $router: { push: jest.fn() },
                 },
             },
         });
+
         await flushPromises();
 
         expect(mockedToast.error).toHaveBeenCalledWith('Failed to fetch account details. Please try again later.');
         expect(mockedToast.error).toHaveBeenCalledWith('Failed to fetch transactions. Please try again later.');
 
-        consoleSpy.mockRestore();
+        errorWrapper.unmount();
     });
 });

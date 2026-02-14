@@ -3,6 +3,10 @@ import UserProfileView from '@/views/user/UserProfileView.vue';
 import * as usersApi from '@/api/endpoints/users/users.api';
 import { toast } from '@steveyuowo/vue-hot-toast';
 
+/*
+ @author Khamitkar Sai Chandan
+*/
+
 jest.mock('@/api/endpoints/users/users.api');
 jest.mock('@steveyuowo/vue-hot-toast', () => ({
     toast: { success: jest.fn(), error: jest.fn() },

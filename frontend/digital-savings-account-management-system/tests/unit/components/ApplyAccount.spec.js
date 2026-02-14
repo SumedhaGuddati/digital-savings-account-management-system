@@ -1,6 +1,9 @@
 import { mount } from '@vue/test-utils';
 import ApplyAccount from '@/components/ApplyAccount.vue';
 
+/*
+  @author Karanam Hima Varsha
+*/
 describe('ApplyAccount.vue', () => {
   let wrapper;
 

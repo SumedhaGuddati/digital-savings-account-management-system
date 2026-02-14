@@ -10,6 +10,9 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
+/**
+ * @author Guddati Venkata Sri Sumedha
+ */
 @Component
 public class JwtUtils {
 

@@ -1,3 +1,4 @@
+<!-- @author Guddati Venkata Sri Sumedha, Karanam Hima Varsha -->
 <template>
   <div class="registration-grid bg-geometric">
     <aside class="branding-sidebar">

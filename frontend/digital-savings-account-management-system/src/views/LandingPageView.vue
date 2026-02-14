@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="min-h-screen bg-white">
         <AnnouncementBar />

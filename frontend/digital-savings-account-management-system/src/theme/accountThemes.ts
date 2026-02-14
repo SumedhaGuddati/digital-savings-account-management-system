@@ -1,6 +1,7 @@
+// @author Khamitkar Sai Chandan
 export const accountThemes = {
     ELITE: {
-        name: 'Aurora Elite Savings',
+        name: 'Ultra Savings',
         gradient: 'from-yellow-400 via-amber-300 to-yellow-500',
         badge: 'bg-yellow-100 text-yellow-700',
         accent: 'text-yellow-600'

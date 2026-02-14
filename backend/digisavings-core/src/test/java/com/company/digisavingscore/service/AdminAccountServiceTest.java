@@ -26,6 +26,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * @author Bharadi Harshitha
+ */
 @ExtendWith(MockitoExtension.class)
 class AdminAccountServiceTest {
 
@@ -35,6 +38,8 @@ class AdminAccountServiceTest {
     private SavingsAccountRepository savingsAccountRepository;
     @Mock
     private AdminAccountMapper adminAccountMapper;
+    @Mock
+    private EmailService emailService;
 
     @InjectMocks
     private AdminAccountService adminAccountService;
@@ -65,19 +70,18 @@ class AdminAccountServiceTest {
     @Test
     @DisplayName("Approve: Success - Should create new savings account")
     void approveApplication_Success() {
-        // Arrange
         when(applicationRepository.findById(10L)).thenReturn(Optional.of(pendingApplication));
         when(savingsAccountRepository.existsByUser(testUser)).thenReturn(false);
         when(savingsAccountRepository.save(any(SavingsAccount.class))).thenAnswer(i -> {
             SavingsAccount sa = i.getArgument(0);
-            sa.setId(100L); // Simulate DB ID generation
+            sa.setId(100L);
             return sa;
         });
 
-        // Act
+        doNothing().when(emailService).sendApplicationApprovalEmail(anyString(), anyString(), anyString());
+
         SavingsAccountResponse response = adminAccountService.approveApplication(10L, approvalRequest, "admin_user");
 
-        // Assert
         assertNotNull(response);
         assertEquals(ApplicationStatus.APPROVED, pendingApplication.getStatus());
         assertEquals("admin_user", pendingApplication.getReviewedBy());
@@ -85,6 +89,12 @@ class AdminAccountServiceTest {
         assertTrue(response.getAccountNumber().startsWith("SAV-"));
         verify(applicationRepository).save(pendingApplication);
         verify(savingsAccountRepository).save(any(SavingsAccount.class));
+
+        verify(emailService).sendApplicationApprovalEmail(
+                anyString(),
+                anyString(),
+                anyString()
+        );
     }
 
     @Test
@@ -121,17 +131,19 @@ class AdminAccountServiceTest {
     @Test
     @DisplayName("Reject: Success - Should mark status as REJECTED")
     void rejectApplication_Success() {
-        // Arrange
         when(applicationRepository.findById(10L)).thenReturn(Optional.of(pendingApplication));
+        doNothing().when(emailService).sendApplicationRejectionEmail(anyString(), anyString());
 
-        // Act
         SavingsAccountResponse response = adminAccountService.rejectApplication(10L, approvalRequest, "admin_user");
 
-        // Assert
         assertEquals(ApplicationStatus.REJECTED, pendingApplication.getStatus());
         assertEquals(AccountStatus.CLOSED, response.getStatus());
         assertNull(response.getAccountNumber());
         verify(applicationRepository).save(pendingApplication);
+        verify(emailService).sendApplicationRejectionEmail(
+                pendingApplication.getUser().getEmail(),
+                pendingApplication.getUser().getName()
+        );
     }
 
     @Test

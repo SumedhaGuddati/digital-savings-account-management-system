@@ -4,6 +4,9 @@ import com.company.digisavingscore.dto.response.AccountApplicationResponse;
 import com.company.digisavingscore.entity.AccountApplication;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Karanam Hima Varsha
+ */
 @Component
 public class AccountApplicationMapper {
 

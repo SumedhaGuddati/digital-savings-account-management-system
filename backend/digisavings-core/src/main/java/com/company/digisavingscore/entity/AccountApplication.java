@@ -10,6 +10,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * @author Karanam Hima Varsha
+ */
 @Entity
 @Table(name = "account_applications", indexes = {
         @Index(name = "idx_user_id", columnList = "user_id"),
@@ -27,7 +30,7 @@ public class AccountApplication {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne //@OneToOne
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;

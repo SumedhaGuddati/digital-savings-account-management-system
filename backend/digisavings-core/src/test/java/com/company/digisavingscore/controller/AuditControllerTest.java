@@ -22,6 +22,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * @author Bharadi Harshitha
+ */
 @WebMvcTest(value = AuditController.class, excludeAutoConfiguration = {
         SecurityAutoConfiguration.class,
         UserDetailsServiceAutoConfiguration.class

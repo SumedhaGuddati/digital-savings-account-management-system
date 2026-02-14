@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50/80 transition-colors">
     

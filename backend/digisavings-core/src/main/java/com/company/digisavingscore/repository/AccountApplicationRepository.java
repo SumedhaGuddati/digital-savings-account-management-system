@@ -11,20 +11,38 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author Karanam Hima Varsha
+ */
 @Repository
 public interface AccountApplicationRepository extends JpaRepository<AccountApplication, Long> {
 
     Optional<AccountApplication> findByUserId(Long userId);
 
+    /**
+     * @author Khamitkar Sai Chandan
+     */
     List<AccountApplication> findByStatus(ApplicationStatus status);
 
+    /**
+     * @author Bharadi Harshitha
+     */
     Long countByStatus(ApplicationStatus status);
 
+    /**
+     * @author Bharadi Harshitha
+     */
     @Query("SELECT a FROM AccountApplication a JOIN FETCH a.user WHERE a.status = :status ORDER BY a.applicationDate DESC")
     List<AccountApplication> findAllByStatusWithUser(@Param("status") ApplicationStatus status);
 
+    /**
+     * @author Bharadi Harshitha
+     */
     List<AccountApplication> findByReviewDateBetween(LocalDateTime start, LocalDateTime end);
 
+    /**
+     * @author Bharadi Harshitha
+     */
     @Query("SELECT a FROM AccountApplication a WHERE a.reviewDate IS NOT NULL ORDER BY a.reviewDate DESC")
     List<AccountApplication> findAllByOrderByReviewDateDesc();
 }

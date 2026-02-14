@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * @author Guddati Venkata Sri Sumedha
+ */
 @Service
 @Slf4j
 public class OtpService {

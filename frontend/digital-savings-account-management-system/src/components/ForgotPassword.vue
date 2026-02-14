@@ -1,3 +1,4 @@
+<!-- @author Guddati Venkata Sri Sumedha -->
 <template>
   <div class="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
     <div class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl">

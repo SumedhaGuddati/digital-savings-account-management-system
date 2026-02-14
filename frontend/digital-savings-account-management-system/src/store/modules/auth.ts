@@ -1,4 +1,5 @@
-// store/modules/auth.module.ts
+// @author Guddati Venkata Sri Sumedha
+
 import { Module } from "vuex";
 import { clearAuthToken, setAuthToken, TOKEN_KEY } from "@/utils/auth.token";
 import { getApplicationStatus, loginRequest, signupRequest, resetPassword, sendForgotPasswordOtp, sendVerificationToken } from "@/api/endpoints/auth/auth.api";
@@ -79,6 +80,7 @@ const getters = {
     state.user?.role === "ADMIN" || state.user?.role === "SUPER_ADMIN",
   isUser: (state: AuthState) => state.user?.role === "USER",
   accountStatus: (state: AuthState) => state.accountStatus,
+  getEmail: (state: AuthState) => state.user?.email
 };
 
 /* =======================

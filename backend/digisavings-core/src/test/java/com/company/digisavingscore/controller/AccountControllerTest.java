@@ -12,14 +12,15 @@ import com.company.digisavingscore.exception.AccountInactiveException;
 import com.company.digisavingscore.exception.BusinessRuleViolationException;
 import com.company.digisavingscore.exception.InsufficientBalanceException;
 import com.company.digisavingscore.exception.ResourceNotFoundException;
+import com.company.digisavingscore.security.CustomUserDetailsService;
+import com.company.digisavingscore.security.JwtUtils;
 import com.company.digisavingscore.service.IAccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -38,9 +39,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
-@SpringBootTest
-@AutoConfigureMockMvc
+/**
+ * @author Khamitkar Sai Chandan
+ */
+@WebMvcTest(AccountController.class)
 class AccountControllerTest {
 
     @Autowired
@@ -51,6 +53,12 @@ class AccountControllerTest {
 
     @MockBean
     private IAccountService accountService;
+
+    @MockBean
+    private JwtUtils jwtUtils;
+
+    @MockBean
+    private CustomUserDetailsService customUserDetailsService;
 
     private AccountDetailsResponse accountDetailsResponse;
     private UserProfileDetailsResponse profileDetailsResponse;
@@ -277,6 +285,7 @@ class AccountControllerTest {
     @DisplayName("Edge: Should return 400 when deposit request body is empty")
     void testDeposit_EmptyBody() throws Exception {
         mockMvc.perform(post("/api/accounts/me/deposit")
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isBadRequest());

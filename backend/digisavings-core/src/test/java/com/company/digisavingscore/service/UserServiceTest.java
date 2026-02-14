@@ -14,6 +14,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * @author Guddati Venkata Sri Sumedha
+ */
 class UserServiceTest {
 
     private UserRepository userRepository;

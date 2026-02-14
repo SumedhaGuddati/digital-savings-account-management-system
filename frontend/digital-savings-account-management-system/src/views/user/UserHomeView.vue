@@ -1,7 +1,8 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 relative">
 
-        <AppNavbar :user-name="account?.accountHolderName || 'Guest'" :user-email="userEmail" @profile="goProfile"
+        <AppNavbar :user-name="account?.accountHolderName || 'Guest'" :user-email="this.$store.getters['auth/getEmail']" @profile="goProfile"
             @statements="goStatements" @logout="handleLogout" />
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
@@ -32,7 +33,7 @@
 
                     <div class="flex-1 sm:flex-none">
                         <AccountCard :accountNumber="account?.accountNumber || 'N/A'"
-                            :tier="account?.accountType || 'N/A'" @view-details="viewAccountDetails" />
+                            :tier="account?.accountType || 'N/A'" :accountHolderName="account?.accountHolderName" @view-details="viewAccountDetails" />
                     </div>
 
                     <div class="w-full lg:w-96 shrink-0">
@@ -110,7 +111,6 @@ export default defineComponent({
         return {
             isLoading: false,
             account: null as Account | null,
-            userEmail: 'rahul.sharma@example.com',
             showTransactionModal: false,
             transactionType: TransactionType.DEPOSIT as TransactionType,
             transactions: [

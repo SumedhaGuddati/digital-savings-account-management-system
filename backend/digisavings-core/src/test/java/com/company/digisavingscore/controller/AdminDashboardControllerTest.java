@@ -19,6 +19,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/**
+ * @author Bharadi Harshitha
+ */
 @WebMvcTest(value = AdminDashboardController.class, excludeAutoConfiguration = {
         SecurityAutoConfiguration.class,
         UserDetailsServiceAutoConfiguration.class
@@ -43,7 +46,7 @@ class AdminDashboardControllerTest {
         AdminDashboardStatsResponse mockStats = AdminDashboardStatsResponse.builder()
                 .managedAssets(new BigDecimal("1500000.00"))
                 .managedAssetsGrowth(12.5)
-                .approvedAppsCount(150L)
+                .approvedUsersCount(150L)
                 .activeUsersCount(1200L)
                 .newUsersToday(10)
                 .averageYield(4.5)

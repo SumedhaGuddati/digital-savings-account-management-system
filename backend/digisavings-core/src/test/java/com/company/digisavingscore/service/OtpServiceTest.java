@@ -9,6 +9,9 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * @author Guddati Venkata Sri Sumedha
+ */
 class OtpServiceTest {
 
     private OtpService otpService;

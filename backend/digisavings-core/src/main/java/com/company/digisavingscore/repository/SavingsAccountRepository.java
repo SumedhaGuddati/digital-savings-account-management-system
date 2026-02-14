@@ -22,6 +22,9 @@ public interface SavingsAccountRepository extends JpaRepository<SavingsAccount, 
 
     Optional<SavingsAccount> findByUser(User user);
 
+    /**
+     * @author Khamitkar Sai Chandan
+     */
     @Query("SELECT s FROM SavingsAccount s WHERE s.user.email = :email")
     Optional<SavingsAccount> findByUserEmail(String email);
 

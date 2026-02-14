@@ -1,6 +1,9 @@
 import { mount } from "@vue/test-utils";
 import LoginView from "@/views/LoginView.vue";
 
+/*
+@author Guddati Venkata Sri Sumedha
+*/
 describe("LoginView DOM rendering", () => {
   it("renders the login email input with bound value", async () => {
     const wrapper = mount(LoginView);
@@ -26,9 +29,9 @@ describe("LoginView DOM rendering", () => {
     const features = wrapper.findAll(".flex.flex-wrap.gap-3 div");
     expect(features).toHaveLength(4); 
     expect(features[0].text()).toContain("6.5% Interest");
-    expect(features[1].text()).toContain("Zero Balance");
+    expect(features[1].text()).toContain("Minimum Balance");
     expect(features[2].text()).toContain("Lounge Access");
-    expect(features[3].text()).toContain("24/7 Support");
+    expect(features[3].text()).toContain("Quick Approval");
   });
 
   it("shows forgot password modal when clicked", async () => {

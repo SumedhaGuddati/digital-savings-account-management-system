@@ -2,6 +2,7 @@ import { Router } from "vue-router";
 import store from "@/store";
 import { TOKEN_KEY } from "@/utils/auth.token";
 
+// @author Khamitkar Sai Chandan
 export function setupAuthGuard(router: Router) {
     router.beforeEach(async (to, from, next) => {
         const token = sessionStorage.getItem(TOKEN_KEY);

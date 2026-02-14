@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="relative w-full sm:min-w-md aspect-[1.586/1] rounded-2xl p-6 text-white shadow-md overflow-hidden border border-white/10 bg-cover bg-center flex flex-col justify-between"
         :style="{ backgroundImage: `url(${cardBg})` }">
@@ -28,7 +29,7 @@
                     Account Holder
                 </p>
                 <p class="text-sm font-semibold tracking-wide text-white">
-                    John Doe
+                    {{ accountHolderName }}
                 </p>
             </div>
 
@@ -47,6 +48,7 @@ export default defineComponent({
     name: 'AccountCard',
     props: {
         accountNumber: { type: String, required: true },
+        accountHolderName: { type: String, required: true },
         tier: { type: String, required: true }
     },
     computed: {

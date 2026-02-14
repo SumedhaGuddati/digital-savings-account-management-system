@@ -1,3 +1,4 @@
+// @author Bharadi Harshitha
 export interface AuditEventResponse {
     id: number;
     timestamp: string;
@@ -11,6 +12,7 @@ export interface AuditEventResponse {
     ipAddress?: string;
 }
 
+// @author Bharadi Harshitha
 export interface AuditLogsResponse {
     logs: AuditEventResponse[];
     total: number;

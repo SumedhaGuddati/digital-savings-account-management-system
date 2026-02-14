@@ -7,6 +7,9 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+/**
+ * @author Bharadi Harshitha
+ */
 @Entity
 @Table(
         name = "savings_accounts",

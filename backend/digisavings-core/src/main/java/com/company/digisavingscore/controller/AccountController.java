@@ -14,6 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @author Khamitkar Sai Chandan
+ */
 @RestController
 @RequestMapping("/api/accounts/me")
 @RequiredArgsConstructor

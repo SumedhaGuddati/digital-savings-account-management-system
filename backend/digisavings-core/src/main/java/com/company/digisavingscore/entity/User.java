@@ -6,6 +6,9 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author Guddati Venkata Sri Sumedha
+ */
 @Entity
 @Table(
         name = "users",

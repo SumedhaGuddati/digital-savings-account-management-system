@@ -7,8 +7,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter
-@Setter
+/**
+ * @author Khamitkar Sai Chandan
+ */
+@Data
 @AllArgsConstructor
 @Builder
 public class TransactionHistoryResponse {

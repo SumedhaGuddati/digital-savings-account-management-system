@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+/**
+ * @author Bharadi Harshitha
+ */
 @Data
 @Builder
 @NoArgsConstructor
@@ -14,7 +17,7 @@ import java.math.BigDecimal;
 public class AdminDashboardStatsResponse {
     private BigDecimal managedAssets;
     private Double managedAssetsGrowth;
-    private Long approvedAppsCount;
+    private Long approvedUsersCount;
     private Long activeUsersCount;
     private Integer newUsersToday;
     private Double averageYield;

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Controller for Module 2: Account Application management.
  * Handles user requests to apply for a savings account and check status.
+ * @author Karanam Hima Varsha
  */
 @RestController
 @RequestMapping("/api/accounts")

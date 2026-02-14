@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-6 shadow-lg">
         <div class="flex items-center gap-3 mb-3">

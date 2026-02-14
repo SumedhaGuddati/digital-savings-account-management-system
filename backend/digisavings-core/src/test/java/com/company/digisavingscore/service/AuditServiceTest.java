@@ -20,8 +20,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+/**
+ * @author Bharadi Harshitha
+ */
 @ExtendWith(MockitoExtension.class)
-class AuditServiceTransactionTest {
+class AuditServiceTest {
 
     @Mock
     private AccountApplicationRepository applicationRepository;

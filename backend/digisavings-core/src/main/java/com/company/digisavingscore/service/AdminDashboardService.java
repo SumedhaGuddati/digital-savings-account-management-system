@@ -17,6 +17,9 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * @author Bharadi Harshitha
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -45,7 +48,7 @@ public class AdminDashboardService {
             Double managedAssetsGrowth = calculateGrowthPercentage(previousManagedAssets, currentManagedAssets);
 
             // Get counts - FIXED: Use Role enum directly, not String
-            Long approvedAppsCount = applicationRepository.countByStatus(ApplicationStatus.APPROVED);
+            Long approvedUsersCount = applicationRepository.countByStatus(ApplicationStatus.APPROVED);
             Long activeUsersCount = userRepository.countByRole(Role.USER); // This expects Role enum
             Long newUsersToday = userRepository.countNewUsersTodayByRole(Role.USER.name()); // This expects String
             Double averageYield = savingsAccountRepository.getAverageInterestRate();
@@ -72,7 +75,7 @@ public class AdminDashboardService {
             if (newUsersToday == null) newUsersToday = 0L;
             if (currentManagedAssets == null) currentManagedAssets = BigDecimal.ZERO;
             if (previousManagedAssets == null) previousManagedAssets = BigDecimal.ZERO;
-            if (approvedAppsCount == null) approvedAppsCount = 0L;
+            if (approvedUsersCount == null) approvedUsersCount = 0L;
             if (activeUsersCount == null) activeUsersCount = 0L;
             if (pendingAppsCount == null) pendingAppsCount = 0L;
             if (adminCount == null) adminCount = 0L;
@@ -81,7 +84,7 @@ public class AdminDashboardService {
             return AdminDashboardStatsResponse.builder()
                     .managedAssets(currentManagedAssets)
                     .managedAssetsGrowth(managedAssetsGrowth)
-                    .approvedAppsCount(approvedAppsCount)
+                    .approvedUsersCount(approvedUsersCount)
                     .activeUsersCount(activeUsersCount)
                     .newUsersToday(newUsersToday.intValue())
                     .averageYield(averageYield)

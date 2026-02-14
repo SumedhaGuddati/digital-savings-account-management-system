@@ -4,6 +4,10 @@ import { getUserTransactions } from '@/api/endpoints/users/users.api'
 import * as transactionMapper from '@/mapper/banking/transaction.mapper'
 import { TransactionType } from '@/types/api/banking'
 
+/*
+ @author Khamitkar Sai Chandan
+*/
+
 const stubs = {
     TransactionsHeader: true,
     TransactionsFilters: true,

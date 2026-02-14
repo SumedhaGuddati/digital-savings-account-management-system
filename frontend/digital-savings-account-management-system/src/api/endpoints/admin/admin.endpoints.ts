@@ -1,3 +1,5 @@
+// @author Bharadi Harshitha
+
 export const ADMIN_ENDPOINTS = {
     // Dashboard
     GET_DASHBOARD_STATS: '/admin/dashboard/stats',

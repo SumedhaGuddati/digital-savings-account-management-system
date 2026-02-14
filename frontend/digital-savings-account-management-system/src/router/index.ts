@@ -5,11 +5,13 @@ import LandingPageView from "@/views/LandingPageView.vue";
 import { setupAuthGuard } from "./authGuard";
 
 const routes: RouteRecordRaw[] = [
+  // @author Khamitkar Sai Chandan, Guddati Venkata Sri Sumedha
   // Public
   { path: "/", component: LandingPageView },
   { path: "/login", component: LoginView },
   { path: "/apply", component: MainRegistration },
 
+  // @author Khamitkar Sai Chandan, Karanam Hima Varsha
   // USER
   {
     path: "/me",
@@ -32,6 +34,7 @@ const routes: RouteRecordRaw[] = [
     meta: { requiresAuth: true }
   },
 
+  // @author Bharadi Harshitha
   // ADMIN
   {
     path: "/admin",
@@ -53,6 +56,7 @@ const routes: RouteRecordRaw[] = [
     ],
   },
 
+  // @author Khamitkar Sai Chandan
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',

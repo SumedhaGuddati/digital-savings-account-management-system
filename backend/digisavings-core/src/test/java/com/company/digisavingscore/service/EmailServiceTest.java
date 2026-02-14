@@ -9,6 +9,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * @author Guddati Venkata Sri Sumedha
+ */
 class EmailServiceTest {
 
     private JavaMailSender mailSender;
@@ -33,9 +36,9 @@ class EmailServiceTest {
         SimpleMailMessage sentMessage = messageCaptor.getValue();
 
         assertEquals(email, sentMessage.getTo()[0], "Recipient email should match");
-        assertEquals("OTP for Registration", sentMessage.getSubject(), "Subject should match");
+        assertEquals("Your ZetaRise Verification Code", sentMessage.getSubject(), "Subject should match");
         assertTrue(sentMessage.getText().contains(otp), "OTP should be in the message body");
-        assertTrue(sentMessage.getText().contains("expire in 5 minutes"), "Message should mention expiration");
+        assertTrue(sentMessage.getText().contains("This code will expire in 5 minutes"), "Message should mention expiration");
     }
 }
 

@@ -2,11 +2,12 @@ package com.company.digisavingscore.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+/**
+ * @author Guddati Venkata Sri Sumedha
+ */
+@Data
 public class SignupRequest {
     @NotBlank
     private String name;
@@ -17,7 +18,4 @@ public class SignupRequest {
 
     @NotBlank
     private String password;
-
-//    @NotBlank
-//    private String otp;
 }

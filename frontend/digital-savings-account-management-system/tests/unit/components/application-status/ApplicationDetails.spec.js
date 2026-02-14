@@ -1,6 +1,9 @@
 import { mount } from '@vue/test-utils';
 import ApplicationDetails from '@/components/application-status/ApplicationDetails.vue';
 
+/*
+  @author Karanam Hima Varsha
+*/
 describe('ApplicationDetails.vue', () => {
   const mockApplication = {
     id: 101,

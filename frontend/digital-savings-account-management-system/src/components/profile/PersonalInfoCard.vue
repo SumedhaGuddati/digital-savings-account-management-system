@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="bg-white rounded-2xl border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow">
         <div class="p-6 border-b border-gray-100">
@@ -23,7 +24,7 @@
 
                 <!-- Right -->
                 <div class="space-y-4">
-                    <InfoField label="Email Address" :value="`test@example.com`" />
+                    <InfoField label="Email Address" :value="this.$store.getters['auth/getEmail']" />
                     <InfoField label="Income Source" :value="userProfile.incomeSource" />
                     <InfoField label="Annual Income" :value="userProfile.annualIncome ? `₹${userProfile.annualIncome.toLocaleString()}` : 'N/A'" />
                 </div>

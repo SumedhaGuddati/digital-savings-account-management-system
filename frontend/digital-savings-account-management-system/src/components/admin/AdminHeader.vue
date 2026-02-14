@@ -1,3 +1,4 @@
+<!-- @author Bharadi Harshitha -->
 <template>
     <header class="h-16 sm:h-20 flex items-center justify-between px-3 sm:px-4 md:px-6 bg-white border-b border-slate-200 sticky top-0 z-50">
         <div class="flex items-center gap-1 sm:gap-2 md:gap-4 -ml-12 sm:-ml-16 md:-ml-25">

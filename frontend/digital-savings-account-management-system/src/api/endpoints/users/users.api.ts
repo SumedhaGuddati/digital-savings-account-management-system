@@ -1,6 +1,7 @@
 import apiManager from "@/api/apiManager";
 import { USER_ACCOUNT_ENDPOINTS } from "./users.endpoints";
 
+// @author Khamitkar Sai Chandan
 export const getUserHomeDetails = () => apiManager.get(USER_ACCOUNT_ENDPOINTS.GET_USER_HOME_DETAILS);
 export const getUserProfileDetails = () => apiManager.get(USER_ACCOUNT_ENDPOINTS.GET_USER_PROFILE_DETAILS);
 export const depositToAccount = (amount: number) => apiManager.post(USER_ACCOUNT_ENDPOINTS.DEPOSIT, { amount });

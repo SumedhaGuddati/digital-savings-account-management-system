@@ -1,11 +1,12 @@
-
 import { AccountStatus } from "../app/banking"
 
+// @author Khamitkar Sai Chandan
 export enum UserRole {
     ADMIN = "ADMIN",
     USER = "USER",
     SUPER_ADMIN = "SUPER_ADMIN"
 }
+// @author Khamitkar Sai Chandan
 export interface UserProfile {
     accountId: number
     accountNumber: string

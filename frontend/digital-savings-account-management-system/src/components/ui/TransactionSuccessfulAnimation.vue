@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="absolute inset-0 flex items-center justify-center max-h-screen backdrop-blur-md z-50">
         <LottieAnimation :animationData="transactionSuccessfull" :height="200" :width="200" :loop="false"

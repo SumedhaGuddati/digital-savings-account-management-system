@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="mt-6 flex items-center justify-between">
         <div class="flex items-center gap-3">

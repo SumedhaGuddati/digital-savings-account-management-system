@@ -3,6 +3,7 @@ import auth, { AuthState } from "./modules/auth";
 import axios from "axios";
 import { TOKEN_KEY } from "@/utils/auth.token";
 
+// @author Guddati Venkata Sri Sumedha
 export interface RootState {
   auth: AuthState;
 }

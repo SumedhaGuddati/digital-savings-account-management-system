@@ -7,6 +7,9 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * @author Khamitkar Sai Chandan
+ */
 @Entity
 @Table(name = "account_transactions",
         indexes = {

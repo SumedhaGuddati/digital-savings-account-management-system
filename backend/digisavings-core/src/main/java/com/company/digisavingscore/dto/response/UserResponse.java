@@ -1,14 +1,14 @@
 package com.company.digisavingscore.dto.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+/**
+ * @author Guddati Venkata Sri Sumedha
+ */
+@Data
 @Builder
 public class UserResponse {
     private Long id;

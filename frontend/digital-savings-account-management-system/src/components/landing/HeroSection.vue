@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="relative bg-gradient-to-br from-indigo-50 via-white to-purple-50 overflow-hidden">
         <!-- Animated Background -->
@@ -33,12 +34,12 @@
                         <span class="block">Live Big with</span>
                         <span
                             class="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mt-2">
-                            Elite Savings
+                            Ultra Savings
                         </span>
                     </h1>
 
                     <p class="text-xl text-gray-600 mt-6 max-w-2xl mx-auto lg:mx-0">
-                        Unlock 6.5% interest rate, zero balance options, and premium lifestyle benefits.
+                        Unlock 6.5% interest rate, and premium lifestyle benefits.
                         Your money works harder here.
                     </p>
 
@@ -84,7 +85,7 @@
                         <div class="flex justify-between items-start mb-6">
                             <div>
                                 <p class="text-xs text-gray-500 uppercase tracking-wider">Premium Savings</p>
-                                <p class="text-2xl font-bold text-gray-900 mt-1">Aurora Elite</p>
+                                <p class="text-2xl font-bold text-gray-900 mt-1">Ultra</p>
                             </div>
                             <div
                                 class="w-12 h-12 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-xl flex items-center justify-center">
@@ -146,7 +147,7 @@ export default defineComponent({
             features: [
                 "6.5% interest rate",
                 "Airport lounge access",
-                "Zero ATM fees worldwide"
+                "Zero ATM fees Indiawide"
             ],
             faArrowRight,
             faRightToBracket,

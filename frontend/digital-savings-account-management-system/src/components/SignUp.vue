@@ -1,3 +1,4 @@
+<!-- @author Guddati Venkata Sri Sumedha -->
 <template>
   <div class="apply-account-container animate-fade-in">
     <div class="section-branding">

@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="bg-white rounded-2xl border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow">
         <div class="p-6 border-b border-gray-100">

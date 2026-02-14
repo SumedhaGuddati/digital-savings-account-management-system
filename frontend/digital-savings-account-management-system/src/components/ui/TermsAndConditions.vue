@@ -1,3 +1,4 @@
+<!-- @author Karanam Hima Varsha -->
 <template>
   <Teleport to="body">
     <div v-if="show" class="modal-overlay" @click.self="closeModal">

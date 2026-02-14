@@ -1,3 +1,5 @@
+// @author Khamitkar Sai Chandan
+
 import {
     faBolt as faBoltSolid,
     faCrown,
@@ -5,7 +7,7 @@ import {
     faShield,
     faCheckCircle,
     faClock,
-    faHeadset,
+    faChartLine,
     faGauge,
     faPercent,
     faPlane
@@ -20,10 +22,10 @@ import type {
 
 export function useLandingData() {
     const trustBadges: TrustBadge[] = [
-        { icon: faShield, text: 'RBI Regulated' },
-        { icon: faCheckCircle, text: '100% Secure' },
-        { icon: faClock, text: 'Instant Activation' },
-        { icon: faHeadset, text: '24/7 Support' },
+        { icon: faShield, text: 'Secured Platform' },
+        { icon: faCheckCircle, text: 'Verified Accounts' },
+        { icon: faClock, text: 'Quick Approval' },
+        { icon: faChartLine, text: 'Track Transactions' },
         { icon: faGauge, text: 'Zero Hidden Fees' }
     ]
 
@@ -44,7 +46,7 @@ export function useLandingData() {
         },
         {
             icon: faWallet,
-            title: 'Zero Balance Option',
+            title: 'Minimum Balance Option',
             description: 'Start saving with zero minimum balance requirements on select plans.',
             bgColor: 'bg-purple-100',
             iconColor: 'text-purple-600'
@@ -123,34 +125,34 @@ export function useLandingData() {
 
     const faqs: FAQ[] = [
         {
-            question: 'How quickly can I open a savings account?',
+            question: 'How do I apply for a savings account?',
             answer:
-                "You can open a savings account in under 5 minutes! Just fill our online application, complete e-KYC with Aadhaar and PAN, and your account will be activated instantly. You'll receive your virtual debit card immediately."
+                "Simply click 'Apply Now' and fill out the online application form with your personal details. Our verification team will review your application, and you'll be notified of the status via email."
         },
         {
-            question: 'What documents do I need to open an account?',
+            question: 'What information do I need to provide?',
             answer:
-                'You need your PAN Card and Aadhaar Card for e-KYC. If your address is different from Aadhaar, you may need additional address proof like passport, driving license, or utility bill.'
+                'You need to provide your full name, date of birth, email, occupation, income source, annual income, and parent/guardian name. All fields are required for application processing.'
         },
         {
-            question: 'Is there any maintenance fee?',
+            question: 'How long does application approval take?',
             answer:
-                'No, we believe in transparent banking. There are no hidden charges or monthly maintenance fees. You only pay for specific services like demand drafts or statement requests.'
+                'Our verification team typically reviews applications within 24-48 hours. You can track your application status anytime from your dashboard once you log in.'
         },
         {
-            question: 'Can I upgrade my account plan later?',
+            question: 'What are the different account types?',
             answer:
-                'Absolutely! You can upgrade your account anytime through our mobile app or website. As your balance grows, you can move to higher-tier plans with more benefits.'
+                'We offer three account tiers: Zeta Basic (standard savings), Zeta Prime (enhanced benefits with higher balance), and Zeta Ultra (premium features with maximum interest rates). Choose based on your savings goals.'
         },
         {
-            question: 'How do I get airport lounge access?',
+            question: 'Can I deposit and withdraw money?',
             answer:
-                "Prime Advantage customers get 4 complimentary lounge accesses per year, while Aurora Elite customers get 12 accesses. You'll receive a Priority Pass that can be used at 1000+ lounges worldwide."
+                'Yes! Once your account is approved and activated, you can deposit and withdraw funds directly from your dashboard. All transactions are recorded and visible in your transaction history.'
         },
         {
-            question: 'Is my money safe with ZetaRise?',
+            question: 'Is my information secure?',
             answer:
-                'Yes, your deposits are insured up to ₹5 lakhs by DICGC. We use bank-grade 256-bit encryption and are fully regulated by RBI. Your security is our top priority.'
+                'Absolutely! We use industry-standard security practices including JWT authentication, encrypted passwords, and secure API endpoints. Your data is protected and never shared with third parties.'
         }
     ]
 

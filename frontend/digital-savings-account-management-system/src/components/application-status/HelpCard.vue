@@ -1,3 +1,4 @@
+<!-- @author Karanam Hima Varsha -->
 <template>
     <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 shadow-lg">
         <div class="flex items-center justify-between">

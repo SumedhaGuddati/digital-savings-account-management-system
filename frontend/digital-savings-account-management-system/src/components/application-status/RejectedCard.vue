@@ -1,3 +1,4 @@
+<!-- @author Karanam Hima Varsha -->
 <template>
     <div class="bg-gradient-to-r from-red-50 to-rose-50 rounded-2xl border border-red-200 p-6">
         <div class="flex items-start gap-4">

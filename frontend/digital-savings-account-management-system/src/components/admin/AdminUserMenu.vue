@@ -1,3 +1,4 @@
+<!-- @author Bharadi Harshitha -->
 <template>
     <div class="relative" ref="menuRef">
         <button @click.stop="toggleMenu" class="flex items-center gap-2 sm:gap-3 rounded-full py-1 px-1 sm:px-2 hover:bg-slate-50 cursor-pointer">

@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
         <div class="flex items-start justify-between mb-4">
@@ -6,7 +7,7 @@
                     Account Benefits
                 </p>
                 <h3 class="font-semibold text-gray-900 mt-1">
-                    Elite Savings Plan
+                    Ultra Savings Plan
                 </h3>
             </div>
             <div

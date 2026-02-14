@@ -1,3 +1,4 @@
+// @author Khamitkar Sai Chandan
 export interface Application {
     id: number
     userId: number

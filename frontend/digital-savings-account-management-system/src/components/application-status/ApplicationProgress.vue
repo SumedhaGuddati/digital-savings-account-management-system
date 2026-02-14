@@ -1,3 +1,4 @@
+<!-- @author Karanam Hima Varsha -->
 <template>
     <div class="px-8 py-6 border-b border-gray-100 bg-gray-50/50">
         <p class="text-sm font-medium text-gray-700 mb-4">Application Progress</p>

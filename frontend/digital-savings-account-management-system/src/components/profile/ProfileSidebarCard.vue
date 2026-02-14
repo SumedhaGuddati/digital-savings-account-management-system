@@ -1,3 +1,4 @@
+<!-- @author Khamitkar Sai Chandan -->
 <template>
     <div
         class="bg-white rounded-2xl border border-gray-200/80 shadow-sm hover:shadow-md transition-shadow overflow-hidden sticky top-24 h-fit">
@@ -18,13 +19,12 @@
 
         <!-- Info -->
         <div class="pt-16 pb-6 px-6">
-            <div class="flex justify-between items-start">
+            <div class="flex flex-col justify-between items-start gap-4">
                 <div>
                     <h2 class="text-xl font-bold text-gray-900">{{ userProfile.accountHolderName }}</h2>
                     <p class="text-sm text-gray-500 mt-1 flex items-center gap-1.5">
                         <FontAwesomeIcon :icon="faEnvelope" class="text-xs" />
-                        <!-- {{ userProfile.email }} -->
-                          test@example.com
+                          {{ this.$store.getters['auth/getEmail'] }}
                     </p>
                     <p class="text-xs text-gray-400 mt-2 flex items-center gap-1.5">
                         <FontAwesomeIcon :icon="faCalendar" class="text-xs" />
@@ -32,17 +32,9 @@
                     </p>
                 </div>
                 <span
-                    class="px-3 py-1.5 bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 text-xs font-medium rounded-full border border-indigo-200 text-nowrap">
+                    class="px-3 py-1.5 bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 text-xs font-medium rounded-full border border-indigo-200 text-nowrap float-right">
                     {{ userProfile.accountType }} Tier
                 </span>
-            </div>
-
-            <!-- Stats -->
-            <div class="flex justify-center items-center mt-6 pt-6 border-t border-gray-100">
-                <div class="text-center">
-                    <p class="text-2xl font-bold text-gray-900">{{ userProfile.transactionsCount }}</p>
-                    <p class="text-xs text-gray-500 mt-1">Transactions</p>
-                </div>
             </div>
 
             <!-- Verification -->

@@ -1,3 +1,4 @@
+<!-- @author Karanam Hima Varsha -->
 <template>
     <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
         <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">

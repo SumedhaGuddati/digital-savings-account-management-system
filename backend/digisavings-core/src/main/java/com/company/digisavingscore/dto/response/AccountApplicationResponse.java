@@ -5,8 +5,9 @@ import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+/**
+ * @author Karanam Hima Varsha
+ */
 @Builder
 @Data
 public class AccountApplicationResponse {
