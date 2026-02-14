@@ -46,14 +46,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-<<<<<<< Updated upstream
-=======
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
         <dependency>
->>>>>>> Stashed changes
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>

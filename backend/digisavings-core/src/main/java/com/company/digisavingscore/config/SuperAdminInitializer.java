@@ -16,14 +16,15 @@ public class SuperAdminInitializer {
     @Bean
     CommandLineRunner createSuperAdmin(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            // Check if SUPER_ADMIN already exists
             if (userRepository.findByEmail("superadmin@bank.com").isEmpty()) {
-                User superAdmin = new User();
-                superAdmin.setName("Super Admin");
-                superAdmin.setEmail("superadmin@bank.com");
-                superAdmin.setPassword(passwordEncoder.encode("superpassword"));
-                superAdmin.setRole(Role.SUPER_ADMIN);
-                superAdmin.setCreatedAt(LocalDateTime.now());
+
+                User superAdmin = User.builder()
+                        .name("Super Admin")
+                        .email("superadmin@bank.com")
+                        .password(passwordEncoder.encode("superpassword"))
+                        .role(Role.SUPER_ADMIN)
+                        .createdAt(LocalDateTime.now())
+                        .build();
 
                 userRepository.save(superAdmin);
                 System.out.println("SUPER_ADMIN created successfully!");
@@ -33,4 +34,3 @@ public class SuperAdminInitializer {
         };
     }
 }
-

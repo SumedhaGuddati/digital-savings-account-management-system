@@ -1,9 +1,9 @@
-import 'vue'
-import type { Router, RouteLocationNormalizedLoaded } from 'vue-router'
+import "vue";
+import type { Router, RouteLocationNormalizedLoaded } from "vue-router";
 
-declare module '@vue/runtime-core' {
-    interface ComponentCustomProperties {
-        $router: Router
-        $route: RouteLocationNormalizedLoaded
-    }
+declare module "@vue/runtime-core" {
+  interface ComponentCustomProperties {
+    $router: Router;
+    $route: RouteLocationNormalizedLoaded;
+  }
 }
