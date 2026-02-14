@@ -52,7 +52,7 @@
 
                     <div class="p-6 pt-0">
                         <button @click="$router.push({ path: '/apply', query: { type: plan.code } })"
-                            class="w-full py-3 rounded-xl font-semibold transition-all" :class="plan.recommended
+                            class="w-full py-3 rounded-xl font-semibold transition-all cursor-pointer" :class="plan.recommended
                                 ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-lg shadow-indigo-200'
                                 : 'border-2 border-indigo-200 text-indigo-700 hover:border-indigo-400 hover:bg-indigo-50'">
                             {{ plan.recommended ? 'Get Started' : 'Choose Plan' }}

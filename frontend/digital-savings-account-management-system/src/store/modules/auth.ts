@@ -105,7 +105,6 @@ const mutations = {
     state.accountStatus = "NONE";
     clearAuthToken();
     sessionStorage.removeItem("user");
-    sessionStorage.removeItem("accountStatus");
   },
   SET_ACCOUNT_STATUS(state: AuthState, payload: AccountStatus) {
     state.accountStatus = payload;

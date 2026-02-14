@@ -15,7 +15,7 @@
                 <div class="flex items-center gap-4">
                     <!-- Notifications -->
                     <button
-                        class="relative p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-all">
+                        class="relative p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-all cursor-pointer">
                         <FontAwesomeIcon :icon="faBell" class="text-lg" />
                         <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
                     </button>
@@ -32,7 +32,7 @@
 import { defineComponent } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faBell } from '@fortawesome/free-solid-svg-icons'
-import ProfileDropdown from '@/components/layout/ProfileDropdown.vue'
+import ProfileDropdown from '@/components/layout/user/ProfileDropdown.vue'
 
 export default defineComponent({
     name: 'AppNavbar',

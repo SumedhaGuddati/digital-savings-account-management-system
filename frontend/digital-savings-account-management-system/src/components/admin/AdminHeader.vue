@@ -3,7 +3,7 @@
         <div class="flex items-center gap-1 sm:gap-2 md:gap-4 -ml-12 sm:-ml-16 md:-ml-25">
             <AppLogo />
             <span class="text-lg sm:text-xl md:text-2xl font-light text-slate-300">|</span>
-            <h1 class="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-indigo-700 truncate max-w-[120px] xs:max-w-[180px] sm:max-w-[250px] md:max-w-[300px] lg:max-w-full">{{ pageTitle }}</h1>
+            <h1 class="text-sm sm:text-base md:text-lg lg:text-xl font-bold text-indigo-700 truncate max-w-[120px] xs:max-w-[180px] sm:max-w-[250px] md:max-w-[300px] lg:max-w-full">Dashboard</h1>
         </div>
 
         <AdminUserMenu :user="user" @logout="handleLogout" />
@@ -28,18 +28,6 @@ export default defineComponent({
         }
     },
 
-    computed: {
-        pageTitle(): string {
-            const path = this.$route.path
-            if (path === '/admin') return 'Dashboard'
-            if (path === '/admin/approvals') return 'Pending Applications'
-            if (path === '/admin/audit-logs') return 'Audit Logs'
-            if (path.includes('/profile')) return 'Profile'
-            if (path.includes('/settings')) return 'Settings'
-            return 'Dashboard'
-        }
-    },
-
     methods: {
         handleLogout() {
             localStorage.clear()
@@ -55,7 +43,7 @@ export default defineComponent({
                 this.user = {
                     name: 'Admin User',
                     email: 'superadmin@bank.com',
-                    avatar: 'https://i.pravatar.cc/100?img=12'
+                    avatar: 'https://avatars.githubusercontent.com/u/141998868?v=4'
                 }
             }
         }

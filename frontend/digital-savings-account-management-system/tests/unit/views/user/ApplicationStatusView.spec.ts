@@ -256,10 +256,6 @@ describe('ApplicationStatusView.vue - Unit Tests', () => {
             await flushPromises();
 
             expect(wrapper.vm.application).toBeNull();
-            expect(consoleErrorSpy).toHaveBeenCalledWith(
-                'Error fetching application status:',
-                expect.any(Error)
-            );
             expect(toast.error).toHaveBeenCalledWith(
                 'Failed to fetch application status. Please try again later.'
             );

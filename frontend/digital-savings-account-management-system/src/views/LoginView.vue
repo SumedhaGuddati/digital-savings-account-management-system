@@ -71,7 +71,7 @@
                     Password
                   </label>
                   <button type="button" @click="forgotModalOpen = true"
-                    class="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors underline underline-offset-2">
+                    class="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors underline underline-offset-2 cursor-pointer">
                     Forgot?
                   </button>
 
@@ -96,7 +96,7 @@
                       class="w-full pl-12 pr-12 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 transition-all"
                       required />
                     <button type="button" @click="showPassword = !showPassword"
-                      class="absolute right-4 text-gray-400 hover:text-indigo-600 transition-colors">
+                      class="absolute right-4 text-gray-400 hover:text-indigo-600 transition-colors cursor-pointer">
                       <svg v-if="showPassword" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -113,7 +113,7 @@
                 </div>
               </div>
   
-              <button type="submit" :disabled="isLoading" class="relative w-full group mt-4">
+              <button type="submit" :disabled="isLoading" class="relative w-full group mt-4 cursor-pointer">
                 <div
                   class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl blur-lg opacity-60 group-hover:opacity-80 transition-opacity">
                 </div>

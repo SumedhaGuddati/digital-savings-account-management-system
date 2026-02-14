@@ -54,7 +54,7 @@
                     <div class="grid grid-cols-4 gap-2 pt-4">
                         <button v-for="quickAmount in quickAmounts" :key="quickAmount" type="button"
                             @click="setQuickAmount(quickAmount)"
-                            class="px-3 py-2.5 text-sm font-medium border rounded-xl transition-all" :class="[
+                            class="px-3 py-2.5 text-sm font-medium border rounded-xl transition-all cursor-pointer" :class="[
                                 isQuickAmountSelected(quickAmount)
                                     ? type === TransactionType.DEPOSIT
                                         ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
@@ -68,11 +68,11 @@
                     <!-- Action Buttons -->
                     <div class="flex gap-3 pt-6">
                         <button type="button" @click="$emit('close')"
-                            class="flex-1 px-4 py-3.5 border border-gray-200 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-all">
+                            class="flex-1 px-4 py-3.5 border border-gray-200 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-all cursor-pointer">
                             Cancel
                         </button>
                         <button type="button" @click="handleSubmit" :disabled="!isValid || isProcessing"
-                            class="flex-1 px-4 py-3.5 rounded-xl text-white font-medium transition-all transform active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100"
+                            class="flex-1 px-4 py-3.5 rounded-xl text-white font-medium transition-all transform active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 cursor-pointer"
                             :class="buttonGradientClass">
                             <span v-if="isProcessing" class="flex items-center justify-center gap-2">
                                 <FontAwesomeIcon :icon="faSpinner" spin />

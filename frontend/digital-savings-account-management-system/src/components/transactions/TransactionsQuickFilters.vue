@@ -3,7 +3,7 @@
         <div class="flex items-center gap-3">
             <span class="text-xs text-gray-500">Quick filters:</span>
             <button v-for="filter in quickFilters" :key="filter.label" @click="$emit('apply', filter.value)"
-                class="px-3 py-1.5 text-xs font-medium border border-gray-200 rounded-full hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700 transition-all"
+                class="px-3 py-1.5 text-xs font-medium border border-gray-200 rounded-full hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700 transition-all cursor-pointer"
                 :class="filter.active ? 'bg-indigo-50 border-indigo-300 text-indigo-700' : 'bg-white text-gray-600'">
                 {{ filter.label }}
             </button>

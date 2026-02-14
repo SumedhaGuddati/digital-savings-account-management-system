@@ -2,7 +2,6 @@ import { Router } from "vue-router";
 import store from "@/store";
 import { TOKEN_KEY } from "@/utils/auth.token";
 
-
 export function setupAuthGuard(router: Router) {
     router.beforeEach(async (to, from, next) => {
         const token = sessionStorage.getItem(TOKEN_KEY);
@@ -13,6 +12,7 @@ export function setupAuthGuard(router: Router) {
 
         const role = store.state.auth.user?.role;
 
+        // ADMIN ROUTES
         if (to.path.startsWith("/admin")) {
             if (role !== "ADMIN" && role !== "SUPER_ADMIN") {
                 store.dispatch("auth/logout");
@@ -21,46 +21,42 @@ export function setupAuthGuard(router: Router) {
             return next();
         }
 
+        // USER ROUTES
         if (to.path.startsWith("/me")) {
             if (role !== "USER") {
                 store.dispatch("auth/logout");
                 return next({ name: "NotFound" });
             }
-            else if (to.meta.requiresAuth && role === "USER") {
 
-                if (!sessionStorage.getItem("accountStatus")) {
-                    await store.dispatch("auth/fetchAccountStatus");
+            // Fetch account status from Vuex store
+            let status = store.getters["auth/accountStatus"];
+
+            if (status === "NONE" || !status) {
+                try {
+                    status = await store.dispatch("auth/fetchAccountStatus");
+                } catch (error) {
+                    console.error("Failed to fetch account status:", error);
+                    return next("/me/application");
                 }
+            }
 
-                const status = store.getters["auth/accountStatus"];
-
-                if (status === "APPROVED" && to.path === "/") {
-                    return next("/me");
-                }
-
+            if (["PENDING", "REJECTED"].includes(status)) {
                 if (to.path === "/me/application") {
                     return next();
                 }
+                return next("/me/application");
+            }
 
-                if (
-                    (to.path === "/me" ||
-                        to.path.startsWith("/me/profile") ||
-                        to.path.startsWith("/me/transactions")) &&
-                    status !== "APPROVED"
-                ) {
-                    return next("/me/application");
-                }
-
-                if (to.path === "/apply") {
-                    if (status === "PENDING") {
-                        return next("/me/application");
-                    }
-                }
-
+            if (status === "APPROVED") {
                 return next();
             }
-        }
 
+            if (status === "NONE") {
+                return next("/");
+            }
+
+            return next("/me/application");
+        }
         next();
     });
 }

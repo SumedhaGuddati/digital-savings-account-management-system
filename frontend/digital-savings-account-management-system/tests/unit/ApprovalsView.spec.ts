@@ -27,9 +27,27 @@ describe('ApprovalsView Logic Tests', () => {
     const wrapper = shallowMount(ApprovalsView)
 
     wrapper.vm.applications = [
-      { applicationId: 1 },
-      { applicationId: 2 },
-      { applicationId: 3 }
+      {
+        applicationId: 1,
+        applicantName: 'Chandan Khamitkar',
+        applicantEmail: 'chandan@gmail.com',
+        status: 'Pending',
+        applicationDate: '2024-01-01'
+      },
+      {
+        applicationId: 2,
+        applicantName: 'Harshitha',
+        applicantEmail: 'harshitha@gmail.com',
+        status: 'Approved',
+        applicationDate: '2024-01-02'
+      },
+      {
+        applicationId: 3,
+        applicantName: 'Varsha',
+        applicantEmail: 'varsha@gmail.com',
+        status: 'Rejected',
+        applicationDate: '2024-01-03'
+      }
     ]
 
     wrapper.vm.applications =

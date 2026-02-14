@@ -27,7 +27,7 @@
                             <p class="mt-1 font-mono text-gray-900">ZETA0001971</p>
                         </div>
                         <button @click="$emit('copy', 'ZETA0001971')"
-                            class="p-2 hover:bg-white rounded-lg transition-colors">
+                            class="p-2 hover:bg-white rounded-lg transition-colors cursor-pointer">
                             <FontAwesomeIcon :icon="faCopy" class="text-gray-400 hover:text-indigo-600" />
                         </button>
                     </div>

@@ -4,7 +4,7 @@
       <div class="modal-container">
         <div class="modal-header">
           <h2>Terms and Conditions</h2>
-          <button class="close-btn" @click="closeModal">✕</button>
+          <button class="close-btn cursor-pointer" @click="closeModal">✕</button>
         </div>
 
         <div class="modal-content">
@@ -84,7 +84,7 @@
             <span class="read-only-badge">📄 Digital Contract</span>
           </div>
           <div class="footer-right">
-            <button class="btn-secondary" @click="closeModal">Close</button>
+            <button class="btn-secondary cursor-pointer" @click="closeModal">Close</button>
           </div>
         </div>
       </div>

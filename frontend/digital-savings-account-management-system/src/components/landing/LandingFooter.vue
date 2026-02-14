@@ -51,7 +51,7 @@
                 <p class="text-sm text-gray-400">
                     © 2026 ZetaRise. All rights reserved. | RBI Licensed Bank
                 </p>
-                <div class="flex gap-6 text-sm text-gray-400">
+                <div class="flex gap-6 text-sm text-gray-400 cursor-not-allowed">
                     <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
                     <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
                     <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>

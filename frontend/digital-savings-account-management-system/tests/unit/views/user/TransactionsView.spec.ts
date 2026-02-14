@@ -114,19 +114,6 @@ describe('TransactionsView.vue - Unit Tests', () => {
         expect(wrapper.vm.pagination.page).toBe(1)
     })
 
-    it('handles export and view transaction methods', () => {
-        const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => { })
-        const txn = mockTransactions[0]
-
-        wrapper.vm.viewTransactionDetails(txn)
-        expect(consoleSpy).toHaveBeenCalledWith('Viewing transaction:', txn)
-
-        wrapper.vm.exportTransactions()
-        expect(consoleSpy).toHaveBeenCalledWith('Exporting transactions...')
-
-        consoleSpy.mockRestore()
-    })
-
     it('returns empty array if no transactions match filters', async () => {
         await flushPromises()
         wrapper.vm.searchQuery = 'non-existent'

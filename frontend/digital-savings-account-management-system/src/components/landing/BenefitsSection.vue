@@ -19,13 +19,6 @@
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-2">{{ benefit.title }}</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">{{ benefit.description }}</p>
-
-                    <div class="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span class="text-indigo-600 text-sm font-medium flex items-center gap-1">
-                            Learn more
-                            <FontAwesomeIcon :icon="faArrowRight" class="text-xs" />
-                        </span>
-                    </div>
                 </div>
             </div>
         </div>

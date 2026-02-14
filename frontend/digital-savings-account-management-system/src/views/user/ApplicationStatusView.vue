@@ -7,7 +7,7 @@
         <div class="max-w-5xl mx-auto" :class="{ 'pointer-events-none opacity-50': isLoading }">
 
             <div class="flex items-start sm:items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
-                <button @click="$router.back()" class="p-2 hover:bg-white rounded-lg transition-colors shrink-0">
+                <button @click="$router.back()" class="p-2 hover:bg-white rounded-lg transition-colors shrink-0 cursor-pointer">
                     <FontAwesomeIcon :icon="faArrowLeft" class="text-gray-600 text-sm sm:text-base" />
                 </button>
 
@@ -38,7 +38,7 @@
                     </p>
 
                     <button @click="$router.push('/')"
-                        class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all shadow-sm">
+                        class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all shadow-sm cursor-pointer">
                         Apply for Savings Account
                     </button>
                 </div>

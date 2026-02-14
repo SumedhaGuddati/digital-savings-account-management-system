@@ -8,7 +8,7 @@
             {{ message }}
         </p>
         <button v-if="hasActiveFilters" @click="$emit('clear')"
-            class="mt-4 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors">
+            class="mt-4 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors cursor-pointer">
             Clear Filters
         </button>
     </div>

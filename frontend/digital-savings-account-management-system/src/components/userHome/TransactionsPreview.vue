@@ -6,14 +6,28 @@
             </h3>
 
             <button @click="$router.push('/me/transactions')"
-                class="text-sm font-medium text-indigo-600 hover:text-indigo-700 transition cursor-pointer">
+                class="text-sm font-medium text-indigo-600 hover:text-indigo-700 transition">
                 View all
             </button>
         </div>
 
-        <TransactionRow v-for="txn in previewTransactions" :key="txn.id" :transaction="txn" />
+        <template v-if="previewTransactions.length > 0">
+            <TransactionRow v-for="txn in previewTransactions" :key="txn.id" :transaction="txn" />
+        </template>
+
+        <div v-else class="flex flex-col items-center justify-center text-center py-10 px-4">
+            <div class="text-4xl mb-3">💳</div>
+            <p class="text-sm font-medium text-gray-700">
+                No transactions yet
+            </p>
+            <p class="text-xs text-gray-500 mt-1 max-w-xs">
+                Start your first transaction and watch your savings grow.
+                Your activity will appear here.
+            </p>
+        </div>
     </div>
 </template>
+
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'

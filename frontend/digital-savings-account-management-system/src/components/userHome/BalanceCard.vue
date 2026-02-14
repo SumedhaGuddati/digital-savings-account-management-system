@@ -14,7 +14,7 @@
             </p>
 
             <button @click="toggle"
-                class="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition cursor-pointer flex items-center gap-1"
+                class="text-xs font-medium text-indigo-600 hover:text-indigo-700 transition cursor-pointer flex items-center gap-1 cursor-pointer"
                 aria-label="Toggle balance visibility">
                 <span>{{ visible ? 'Hide' : 'View Balance' }}</span>
                 <FontAwesomeIcon :icon="visible ? faEyeSlash : faEye" class="text-base" />

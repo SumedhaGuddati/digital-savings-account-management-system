@@ -1,7 +1,7 @@
 <template>
     <div class="flex items-center justify-between mb-8">
         <div class="flex items-center gap-4">
-            <button @click="$router.back()" class="p-2.5 hover:bg-white rounded-xl transition-all group">
+            <button @click="$router.back()" class="p-2.5 hover:bg-white rounded-xl transition-all group cursor-pointer">
                 <FontAwesomeIcon :icon="faArrowLeft" class="text-gray-500 group-hover:text-indigo-600 text-lg" />
             </button>
             <div>

@@ -137,23 +137,20 @@
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1 sm:gap-2">
               <span class="w-2 sm:w-2.5 h-2 sm:h-2.5 bg-amber-glow rounded-full"></span>
-              <span class="text-[10px] sm:text-xs text-slate-muted">Premium</span>
+              <span class="text-[10px] sm:text-xs text-slate-muted">Ultra</span>
             </div>
-            <span class="text-xs sm:text-sm font-bold text-primary-indigo">8</span>
           </div>
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1 sm:gap-2">
               <span class="w-2 sm:w-2.5 h-2 sm:h-2.5 bg-primary-indigo rounded-full"></span>
-              <span class="text-[10px] sm:text-xs text-slate-muted">High-Yield</span>
+              <span class="text-[10px] sm:text-xs text-slate-muted">Prime</span>
             </div>
-            <span class="text-xs sm:text-sm font-bold text-primary-indigo">12</span>
           </div>
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-1 sm:gap-2">
               <span class="w-2 sm:w-2.5 h-2 sm:h-2.5 bg-mint-accent rounded-full"></span>
-              <span class="text-[10px] sm:text-xs text-slate-muted">Standard</span>
+              <span class="text-[10px] sm:text-xs text-slate-muted">Basic</span>
             </div>
-            <span class="text-xs sm:text-sm font-bold text-primary-indigo">{{ stats.activeUsersCount }}</span>
           </div>
         </div>
       </div>
@@ -213,16 +210,6 @@
             <p class="text-xs sm:text-sm font-bold text-success-green">Operational</p>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-1 sm:gap-2 mt-1 sm:mt-2">
-          <div class="bg-slate-50 p-1.5 sm:p-2 rounded-lg">
-            <p class="text-[8px] sm:text-[9px] text-slate-400">Response</p>
-            <p class="text-[10px] sm:text-xs font-bold text-primary-indigo">124ms</p>
-          </div>
-          <div class="bg-slate-50 p-1.5 sm:p-2 rounded-lg">
-            <p class="text-[8px] sm:text-[9px] text-slate-400">Uptime</p>
-            <p class="text-[10px] sm:text-xs font-bold text-primary-indigo">99.9%</p>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -237,7 +224,7 @@
           <span class="text-[10px] sm:text-xs text-slate-muted order-2 sm:order-1">Last updated: {{ lastUpdated }}</span>
           <button 
             @click="refreshData" 
-            class="flex items-center justify-center gap-2 text-xs font-bold text-primary-indigo px-3 sm:px-4 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 transition-all border border-indigo-100 w-full sm:w-auto order-1 sm:order-2"
+            class="flex items-center justify-center gap-2 text-xs font-bold text-primary-indigo px-3 sm:px-4 py-2 rounded-lg bg-indigo-50 hover:bg-indigo-100 transition-all border border-indigo-100 w-full sm:w-auto order-1 sm:order-2 cursor-pointer"
             :disabled="loading"
           >
             <span class="material-icons-round text-sm" :class="{ 'animate-spin': loading }">refresh</span>
@@ -261,7 +248,7 @@
           <p class="text-xs sm:text-sm text-slate-muted text-center px-4">{{ error }}</p>
           <button 
             @click="refreshData" 
-            class="px-3 sm:px-4 py-2 text-xs font-bold text-primary-indigo bg-indigo-50 rounded-lg hover:bg-indigo-100"
+            class="px-3 sm:px-4 py-2 text-xs font-bold text-primary-indigo bg-indigo-50 rounded-lg hover:bg-indigo-100 cursor-pointer"
           >
             Try Again
           </button>
@@ -361,17 +348,17 @@ export default defineComponent({
   methods: {
     // Helper functions
     formatCurrency(value: number): string {
-      if (!value) return '$0';
+      if (!value) return '₹0';
       if (value >= 1000000000) {
-        return `$${(value / 1000000000).toFixed(2)}B`;
+        return `₹${(value / 1000000000).toFixed(2)}B`;
       }
       if (value >= 1000000) {
-        return `$${(value / 1000000).toFixed(2)}M`;
+        return `₹${(value / 1000000).toFixed(2)}M`;
       }
       if (value >= 1000) {
-        return `$${(value / 1000).toFixed(1)}K`;
+        return `₹${(value / 1000).toFixed(1)}K`;
       }
-      return `$${value.toLocaleString()}`;
+      return `₹${value.toLocaleString()}`;
     },
 
     formatNumber(value: number): string {

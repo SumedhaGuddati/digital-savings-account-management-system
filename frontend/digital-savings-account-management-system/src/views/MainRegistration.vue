@@ -5,7 +5,7 @@
       <div class="sidebar-overlay"></div>
       <div class="content-layer">
         <div class="brand-top">
-          <div class="brand-logo">Zeta<span>rise</span></div>
+          <div @click="$router.push('/')" class="brand-logo cursor-pointer">Zeta<span>rise</span></div>
           <h1 class="sidebar-hero">
             Elevate your <br /><span class="text-indigo-400">Financial Future.</span>
           </h1>
@@ -41,7 +41,7 @@
             </p>
           </div>
 
-          <button @click="handleSubmit" :disabled="!isAgreed || isSubmitting" class="submit-button">
+          <button @click="handleSubmit" :disabled="!isAgreed || isSubmitting" class="submit-button cursor-pointer">
             <span v-if="!isSubmitting">Submit Application</span>
             <span v-else>Processing...</span>
           </button>
@@ -100,6 +100,7 @@ export default {
       const s = this.$refs.signupRef?.formData;
       const f = this.$refs.financialModuleRef?.formData;
       const termsChecked = this.$refs.financialModuleRef?.termsChecked;
+      const otpVerified = this.$refs.signupRef?.otpVerified;
 
       if (!s || !f) {
         toast.error("Form data is missing. Please refresh.");
@@ -108,6 +109,11 @@ export default {
 
       if (!s.name || !s.email || !s.password) {
         toast.error("Please fill in all Sign Up fields.");
+        return;
+      }
+
+      if (!otpVerified) {
+        toast.error("Please verify your email OTP before submitting.");
         return;
       }
 
@@ -140,7 +146,7 @@ export default {
 
       try {
         this.isSubmitting = true;
-        
+
         await this.$store.dispatch("auth/signup", {
           name: s.name,
           email: s.email,

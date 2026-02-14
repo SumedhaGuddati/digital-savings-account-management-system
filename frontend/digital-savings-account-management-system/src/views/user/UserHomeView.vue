@@ -23,7 +23,7 @@
 
                         <p class="text-xs sm:text-sm text-gray-500 mt-2 flex items-center gap-2">
                             <FontAwesomeIcon :icon="faCircle" class="text-[8px] text-emerald-500" />
-                            Account active · Last login today at 9:42 AM
+                            Account active
                         </p>
                     </div>
                 </div>
@@ -74,7 +74,7 @@ import { faCircle, faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { toast, Toaster } from '@steveyuowo/vue-hot-toast';
 import "@steveyuowo/vue-hot-toast/vue-hot-toast.css";
 
-import AppNavbar from '@/components/layout/AppNavbar.vue'
+import AppNavbar from '@/components/layout/user/AppNavbar.vue'
 import QuickActions from '@/components/userHome/QuickActions.vue'
 import AccountBenefitsCard from '@/components/userHome/AccountBenefitsCard.vue'
 import HelpCard from '@/components/userHome/HelpCard.vue'

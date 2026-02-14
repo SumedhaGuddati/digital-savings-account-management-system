@@ -14,7 +14,7 @@
       <div class="space-y-4">
         <div v-for="(faq, index) in faqs" :key="index"
           class="bg-white border border-gray-200 rounded-2xl hover:border-indigo-200 transition-all">
-          <button @click="toggle(index)" class="w-full px-6 py-5 flex items-center justify-between text-left">
+          <button @click="toggle(index)" class="w-full px-6 py-5 flex items-center justify-between text-left cursor-pointer">
             <span class="font-semibold text-gray-900">{{ faq.question }}</span>
             <FontAwesomeIcon :icon="openFaqs.includes(index) ? faMinus : faPlus"
               class="text-indigo-600 transition-transform" :class="openFaqs.includes(index) ? 'rotate-180' : ''" />
@@ -29,7 +29,7 @@
         </div>
       </div>
 
-      <div class="mt-12 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-3xl p-8 text-center">
+      <div class="mt-12 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-3xl p-8 text-center cursor-pointer">
         <h3 class="text-xl font-bold text-gray-900 mb-2">Still have questions?</h3>
         <p class="text-gray-600 mb-6">Our support team is ready to help you 24/7</p>
         <button

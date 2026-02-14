@@ -51,7 +51,7 @@
             <span v-if="searchQuery"
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 text-indigo-700 text-xs rounded-full">
                 Search: "{{ searchQuery }}"
-                <button @click="$emit('update:searchQuery', '')" class="hover:text-indigo-900">
+                <button @click="$emit('update:searchQuery', '')" class="hover:text-indigo-900 cursor-pointer">
                     <FontAwesomeIcon :icon="faXmark" />
                 </button>
             </span>
@@ -59,7 +59,7 @@
             <span v-if="dateFilter !== 'all'"
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 text-indigo-700 text-xs rounded-full">
                 {{ dateFilterLabel }}
-                <button @click="$emit('update:dateFilter', 'all')" class="hover:text-indigo-900">
+                <button @click="$emit('update:dateFilter', 'all')" class="hover:text-indigo-900 cursor-pointer">
                     <FontAwesomeIcon :icon="faXmark" />
                 </button>
             </span>
@@ -67,12 +67,12 @@
             <span v-if="typeFilter !== 'all'"
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-50 text-indigo-700 text-xs rounded-full">
                 {{ typeFilter === 'DEPOSIT' ? 'Deposits only' : 'Withdrawals only' }}
-                <button @click="$emit('update:typeFilter', 'all')" class="hover:text-indigo-900">
+                <button @click="$emit('update:typeFilter', 'all')" class="hover:text-indigo-900 cursor-pointer">
                     <FontAwesomeIcon :icon="faXmark" />
                 </button>
             </span>
 
-            <button @click="$emit('clear')" class="text-xs text-gray-500 hover:text-gray-700 underline ml-2">
+            <button @click="$emit('clear')" class="text-xs text-gray-500 hover:text-gray-700 underline ml-2 cursor-pointer">
                 Clear all
             </button>
         </div>

@@ -113,7 +113,7 @@ describe('DashboardView.vue - Unit Tests', () => {
   it('should accurately format currency values using the internal utility', () => {
     const wrapper = shallowMount(DashboardView) as any;
     
-    expect(wrapper.vm.formatCurrency(1500)).toBe('$1.5K');
-    expect(wrapper.vm.formatCurrency(0)).toBe('$0');
+    expect(wrapper.vm.formatCurrency(1500)).toBe('₹1.5K');
+    expect(wrapper.vm.formatCurrency(0)).toBe('₹0');
   });
 });

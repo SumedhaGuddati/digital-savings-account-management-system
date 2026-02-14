@@ -50,10 +50,11 @@ class AdminAccountServiceTest {
         testUser.setEmail("test@example.com");
         testUser.setName("John Doe");
 
-        pendingApplication = new AccountApplication();
-        pendingApplication.setId(10L);
-        pendingApplication.setStatus(ApplicationStatus.PENDING);
-        pendingApplication.setUser(testUser);
+        pendingApplication = AccountApplication.builder()
+                .id(10L)
+                .status(ApplicationStatus.PENDING)
+                .user(testUser)
+                .build();
 
         approvalRequest = new AccountApprovalRequest();
         approvalRequest.setDecision("APPROVE");

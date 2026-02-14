@@ -10,7 +10,7 @@
             <!-- Back -->
             <div class="flex items-center gap-4 mb-4">
                 <button @click="$router.back()"
-                    class="group flex items-center gap-2 px-3 py-2 -ml-3 text-gray-600 hover:text-indigo-600 transition-all rounded-lg hover:bg-white/50 backdrop-blur-sm">
+                    class="group flex items-center gap-2 px-3 py-2 -ml-3 text-gray-600 hover:text-indigo-600 transition-all rounded-lg hover:bg-white/50 backdrop-blur-sm cursor-pointer">
                     <FontAwesomeIcon :icon="faArrowLeft"
                         class="text-sm group-hover:-translate-x-0.5 transition-transform" />
                     <span class="text-sm font-medium">Back</span>

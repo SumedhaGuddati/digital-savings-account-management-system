@@ -1,7 +1,7 @@
 <template>
     <div class="relative" ref="wrapper">
         <button ref="profileButton" @click="toggle"
-            class="flex items-center gap-3 p-1.5 pr-3 rounded-full hover:bg-gray-100 transition-all border border-transparent hover:border-gray-200">
+            class="flex items-center gap-3 p-1.5 pr-3 rounded-full hover:bg-gray-100 transition-all border border-transparent hover:border-gray-200 cursor-pointer">
             <div
                 class="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-medium shadow-sm">
                 {{ initials }}
@@ -24,22 +24,17 @@
 
                 <!-- Menu -->
                 <div class="py-1">
-                    <button @click="$router.push('/me/profile'); close()"
-                        class="w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center gap-3 transition-colors">
-                        <FontAwesomeIcon :icon="faUser" class="w-4 text-gray-400" />
-                        View Profile
-                    </button>
-
-                    <button @click="$router.push('/me/transactions'); close()"
-                        class="w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center gap-3 transition-colors">
-                        <FontAwesomeIcon :icon="faFileLines" class="w-4 text-gray-400" />
-                        Statements
+                    <button v-for="item in menuItems" :key="item.label" @click="$router.push(item.route); close()"
+                        class="w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center gap-3 transition-colors cursor-pointer">
+                        <FontAwesomeIcon :icon="item.icon" class="w-4 text-gray-400" />
+                        {{ item.label }}
                     </button>
                 </div>
 
+
                 <div class="border-t border-gray-100 py-1">
                     <button @click="logout()"
-                        class="w-full px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors">
+                        class="w-full px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors cursor-pointer">
                         <FontAwesomeIcon :icon="faSignOutAlt" class="w-4" />
                         Sign Out
                     </button>
@@ -56,7 +51,8 @@ import {
     faChevronDown,
     faUser,
     faFileLines,
-    faSignOutAlt
+    faSignOutAlt,
+    faBarsStaggered
 } from '@fortawesome/free-solid-svg-icons'
 
 export default defineComponent({
@@ -83,7 +79,27 @@ export default defineComponent({
         faChevronDown() { return faChevronDown },
         faUser() { return faUser },
         faFileLines() { return faFileLines },
-        faSignOutAlt() { return faSignOutAlt }
+        faSignOutAlt() { return faSignOutAlt },
+        faBarsStaggered() { return faBarsStaggered },
+        menuItems() {
+            return [
+                {
+                    label: 'View Profile',
+                    icon: faUser,
+                    route: '/me/profile'
+                },
+                {
+                    label: 'Statements',
+                    icon: faBarsStaggered,
+                    route: '/me/transactions'
+                },
+                {
+                    label: 'View Application',
+                    icon: faFileLines,
+                    route: '/me/application'
+                }
+            ]
+        }
     },
     methods: {
         toggle() {

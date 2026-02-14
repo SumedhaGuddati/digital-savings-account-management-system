@@ -18,7 +18,7 @@
                         Contact Support
                     </button>
                     <button @click="$router.push('/accounts/apply')"
-                        class="px-4 py-2 bg-white text-red-600 text-sm font-medium rounded-lg border border-red-300 hover:bg-red-50 transition-colors">
+                        class="px-4 py-2 bg-white text-red-600 text-sm font-medium rounded-lg border border-red-300 hover:bg-red-50 transition-colors cursor-pointer">
                         Reapply
                     </button>
                 </div>
