@@ -5,6 +5,7 @@ import com.company.digisavingscore.entity.User;
 import com.company.digisavingscore.repository.UserRepository;
 import com.company.digisavingscore.service.IUserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,13 +13,16 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService implements IUserService {
 
     private final UserRepository userRepository;
 
     @Override
     public List<UserResponse> getAllUsers() {
-        return userRepository.findAll().stream()
+        log.info("Fetching all users from database");
+
+        List<UserResponse> users = userRepository.findAll().stream()
                 .map(user -> UserResponse.builder()
                         .id(user.getId())
                         .name(user.getName())
@@ -28,5 +32,8 @@ public class UserService implements IUserService {
                         .build()
                 )
                 .collect(Collectors.toList());
+
+        log.info("Retrieved {} users", users.size());
+        return users;
     }
 }
