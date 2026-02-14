@@ -169,7 +169,6 @@ export default defineComponent({
                 const response = await getUserHomeDetails()
                 this.account = response.data
             } catch (error) {
-                console.error('Error fetching account details:', error)
                 toast.error('Failed to fetch account details. Please try again later.')
                 this.account = null
             }
@@ -182,7 +181,6 @@ export default defineComponent({
                 const response = await getUserTransactions()
                 this.transactions = mapApiTransactionsToUi(response.data.transactions)
             } catch (error) {
-                console.error('Error fetching transactions:', error)
                 toast.error('Failed to fetch transactions. Please try again later.')
             }
         }

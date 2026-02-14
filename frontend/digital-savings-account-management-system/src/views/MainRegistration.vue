@@ -167,7 +167,6 @@ export default {
 
         const msg = error.response?.data?.message;
 
-        console.log("ERROR: ", error);
         if (msg === "A savings account application already exists for this user.") {
           toast.success("Redirecting to your application...", { id: toastId });
           setTimeout(() => this.$router.push("/me/application"), 1000);

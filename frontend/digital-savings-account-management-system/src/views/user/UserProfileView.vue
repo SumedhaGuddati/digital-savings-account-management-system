@@ -74,7 +74,6 @@ export default defineComponent({
         const response = await getUserProfileDetails()
         this.userProfile = response.data;
       } catch (error) {
-        console.error('Error fetching user profile:', error)
         toast.error('Failed to load profile. Please try again later.')
       }
       finally {
